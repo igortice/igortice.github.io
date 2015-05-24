@@ -1,9 +1,10 @@
 # Title, decription, tagline and URL for your site
 # Can be used in your theme by calling 'site.title' and so on
-title: Igor Rocha
+title: Blog Igor Rocha
 description: Igor Rocha - Web Developer
 tagline: Web Developer
 url: localhost:4000
+type: TI
 
 # Used so Jekyll outputs the site correctly so Gulp can do what it wants
 source: src
