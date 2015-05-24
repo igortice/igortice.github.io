@@ -1,3 +1,0 @@
-# Blog
-
-[Describe the project.]
