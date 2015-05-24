@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
- <title>Igor Rocha</title>
+ <title>Blog Igor Rocha</title>
  <link href="igortice.github.io/atom.xml" rel="self"/>
  <link href="igortice.github.io/"/>
- <updated>2015-05-23T23:15:40-03:00</updated>
+ <updated>2015-05-24T09:38:37-03:00</updated>
  <id>igortice.github.io</id>
  <author>
    <name>Igor Rocha</name>
