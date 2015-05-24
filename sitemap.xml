@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>igortice.github.io/</loc>
-    <lastmod>2015-05-24T09:49:28-03:00</lastmod>
+    <lastmod>2015-05-24T17:23:37-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -37,20 +37,7 @@
   <url>
     <loc>igortice.github.io/404/</loc>
     
-      <lastmod>2015-05-24T09:49:28-03:00</lastmod>
-    
-    
-      <changefreq>monthly</changefreq>
-    
-    
-      <priority>0.3</priority>
-    
-  </url>
-  
-  <url>
-    <loc>igortice.github.io/about/</loc>
-    
-      <lastmod>2015-05-24T09:49:28-03:00</lastmod>
+      <lastmod>2015-05-24T17:23:37-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -63,7 +50,7 @@
   <url>
     <loc>igortice.github.io/atom.xml</loc>
     
-      <lastmod>2015-05-24T09:49:28-03:00</lastmod>
+      <lastmod>2015-05-24T17:23:37-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -76,7 +63,7 @@
   <url>
     <loc>igortice.github.io/</loc>
     
-      <lastmod>2015-05-24T09:49:28-03:00</lastmod>
+      <lastmod>2015-05-24T17:23:37-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -89,7 +76,20 @@
   <url>
     <loc>igortice.github.io/sitemap.xml</loc>
     
-      <lastmod>2015-05-24T09:49:28-03:00</lastmod>
+      <lastmod>2015-05-24T17:23:37-03:00</lastmod>
+    
+    
+      <changefreq>monthly</changefreq>
+    
+    
+      <priority>0.3</priority>
+    
+  </url>
+  
+  <url>
+    <loc>igortice.github.io/sobre/</loc>
+    
+      <lastmod>2015-05-24T17:23:37-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
