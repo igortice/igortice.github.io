@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt-br">
+<html ng-app="mainApp" xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt" lang="pt-br">
 
   {% include head.html %}
 
-  <body class="theme-base-0d layout-reverse">
-
+  <body class="theme-base-0d layout-reverse" ng-controller="MainController as mainCtrl">
     {% include sidebar.html %}
 
     {% include body.html %}
 
     <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    {% include footer.html %}
 
   </body>
 
