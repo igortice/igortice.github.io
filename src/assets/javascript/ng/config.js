@@ -3,8 +3,12 @@
 
   angular
     .module('mainApp')
-    .config(function ($interpolateProvider) {
-      $interpolateProvider.startSymbol('{[');
-      $interpolateProvider.endSymbol(']}');
-    });
+    .config(Config);
+
+  Config.$inject = ['$interpolateProvider'];
+
+  function Config($interpolateProvider) {
+    $interpolateProvider.startSymbol('{[');
+    $interpolateProvider.endSymbol(']}');
+  }
 }());
