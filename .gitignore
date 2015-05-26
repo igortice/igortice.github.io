@@ -71,3 +71,5 @@ rsync-credentials.json
 
 # IDE
 .idea
+
+src/_bower_components
