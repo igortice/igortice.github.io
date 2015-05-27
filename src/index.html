@@ -12,28 +12,28 @@ title: Home
       </a>
     </h1>
 
-    <span class="post-date">{{ post.date | date_to_string }}</span>
+    <span class="post-date">{{ post.date | date: "%d/%m/%Y" }}</span>
 
     {{ post.excerpt }}
 
-    <a href="{{ post.url }}">Read more &raquo;</a>
+    <a href="{{ post.url }}">Ler mais &raquo;</a>
   </div>
   {% endfor %}
 </div>
 
 <div class="pagination">
   {% if paginator.next_page %}
-    <a class="pagination-item older" href="/page{{paginator.next_page}}">Older</a>
+    <a class="pagination-item older" href="/page{{paginator.next_page}}">Antigos</a>
   {% else %}
-    <span class="pagination-item older">Older</span>
+    <span class="pagination-item older">Antigos</span>
   {% endif %}
   {% if paginator.previous_page %}
     {% if paginator.page == 2 %}
-      <a class="pagination-item newer" href="/">Newer</a>
+      <a class="pagination-item newer" href="/">Novos</a>
     {% else %}
-      <a class="pagination-item newer" href="/page{{paginator.previous_page}}">Newer</a>
+      <a class="pagination-item newer" href="/page{{paginator.previous_page}}">Novos</a>
     {% endif %}
   {% else %}
-    <span class="pagination-item newer">Newer</span>
+    <span class="pagination-item newer">Novos</span>
   {% endif %}
 </div>
