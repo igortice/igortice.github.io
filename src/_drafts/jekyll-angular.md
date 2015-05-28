@@ -25,25 +25,24 @@ Se você usa o Jekyll para criar seus sites estáticos, vai perceber que ele usa
 {% endhighlight %}
 
 O código acima serve, por exemplo, para mostrar o título e a data de publicação deste post que você está lendo.
-  
+
 Perceba que quem está fazendo todo processo de manipulação das variáveis é o template engine do
 <a href="#">Liquid</a>.
 
 Se eu tentar usar o AngularJS para processar algo dentro do Jekyll teremos um problema, pois o <a href="#">Liquid</a>
-utiliza o interpolador <code>{% raw %}{{ }}{% endraw %}</code> para fazer seu processamento, o mesmo que o AngularJS precisa
-para fazer o seu.
+utiliza o interpolador <code>{% raw %}{{ }}{% endraw %}</code> para fazer seu processamento, o mesmo do AngularJS.
 
-Então se eu tentar fazer uso deste interpolador com o Angular, nada deve acontecer. Veja o exemplo abaixo:
+Então se eu tentar fazer uso deste interpolador com o Angular no Jekyll, nada deve acontecer. Veja o exemplo abaixo:
 
 {% highlight html %}
 Digite seu nome: <input ng-model="nome">
 
 <h1 ng-show="nome">
-  Olá {% raw %}{{  nome }}{% endraw %}
+  Olá {% raw %}{{ nome }}{% endraw %}
 </h1>
 {% endhighlight %}
 
-Para podermos trabalhar com o AngularJS, vamos mudar o seu interpolador para ser diverente do <a href="#">Liquid</a>.
+Para podermos trabalhar com o AngularJS, vamos mudar o seu interpolador para ser diferente do interpolador do <a href="#">Liquid</a>.
 Para isso crie um arquivo chamado <em>config.js</em> (não esqueça de importá-lo) e adicone o trecho de código 
 abaixo no seu conteúdo:
  
