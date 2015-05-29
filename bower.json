@@ -1,5 +1,8 @@
 {
   "name": "igortice-github-io",
   "version": "0.0.0",
-  "dependencies": {}
+  "dependencies": {
+    "angular": "~1.4.0",
+    "animsition": "~3.5.2"
+  }
 }
