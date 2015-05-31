@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>igortice.github.io/</loc>
-    <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+    <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
     <url>
-      <loc>igortice.github.io/jekyll/2014/03/03/welcome-to-jekyll/</loc>
+      <loc>igortice.github.io/jekyll/2014/03/03/welcome-to-jekyll.html</loc>
       
         <lastmod>2014-03-03T00:00:00-03:00</lastmod>
       
@@ -21,7 +21,7 @@
     </url>
   
     <url>
-      <loc>igortice.github.io/jekyll/poole/2014/03/02/introducing-poole/</loc>
+      <loc>igortice.github.io/jekyll/poole/2014/03/02/introducing-poole.html</loc>
       
         <lastmod>2014-03-02T00:00:00-03:00</lastmod>
       
@@ -35,9 +35,9 @@
   
   
   <url>
-    <loc>igortice.github.io/404/</loc>
+    <loc>igortice.github.io/404.html</loc>
     
-      <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+      <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -50,7 +50,7 @@
   <url>
     <loc>igortice.github.io/atom.xml</loc>
     
-      <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+      <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -61,9 +61,9 @@
   </url>
   
   <url>
-    <loc>igortice.github.io/</loc>
+    <loc>igortice.github.io/index.html</loc>
     
-      <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+      <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -76,7 +76,7 @@
   <url>
     <loc>igortice.github.io/sitemap.xml</loc>
     
-      <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+      <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -87,9 +87,9 @@
   </url>
   
   <url>
-    <loc>igortice.github.io/sobre/</loc>
+    <loc>igortice.github.io/sobre.html</loc>
     
-      <lastmod>2015-05-26T14:58:45-03:00</lastmod>
+      <lastmod>2015-05-31T18:59:42-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
