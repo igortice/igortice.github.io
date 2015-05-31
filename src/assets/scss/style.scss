@@ -1,8 +1,26 @@
 /*
 The main SCSS file for everything, yep
 */
-
 @import "poole";
 @import "syntax";
 @import "lanyon";
 
+.sidebar {
+  .gravatar {
+    display         : block;
+    margin          : 0 auto;
+    text-align      : center;
+    left            : 0;
+    width           : 100px;
+    height          : 100px;
+    background      : #FFF;
+    background-size : 32px auto;
+    border-radius   : 9999px;
+    border          : 5px solid #FFF;
+    z-index         : 3;
+
+    img {
+      border-radius : 9999px;
+    }
+  }
+}

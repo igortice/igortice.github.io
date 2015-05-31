@@ -2,5 +2,5 @@
   'use strict';
 
   angular
-    .module('mainApp', []);
+    .module('mainApp', ['ui.gravatar']);
 }());

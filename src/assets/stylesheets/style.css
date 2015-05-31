@@ -899,3 +899,18 @@ a.pagination-item:hover {
   background-color: #8f5536; }
 .theme-base-0f .container a, .theme-base-0f .sidebar-toggle, .theme-base-0f .related-posts li a:hover {
   color: #8f5536; }
+
+.sidebar .gravatar {
+  display: block;
+  margin: 0 auto;
+  text-align: center;
+  left: 0;
+  width: 100px;
+  height: 100px;
+  background: #FFF;
+  background-size: 32px auto;
+  border-radius: 9999px;
+  border: 5px solid #FFF;
+  z-index: 3; }
+  .sidebar .gravatar img {
+    border-radius: 9999px; }
