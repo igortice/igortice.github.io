@@ -63,28 +63,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*
- * Container
- *
- * Center the page content.
- */
-
-.container {
-  max-width: 28rem;
-}
-
-@media (min-width: 38rem) {
-  .container {
-    max-width: 32rem;
-  }
-}
-
-@media (min-width: 56rem) {
-  .container {
-    max-width: 38rem;
-  }
-}
-
-/*
  * Masthead
  *
  * Super small header above the content for site name and short description.
@@ -432,10 +410,11 @@ a.pagination-item:hover {
   .sidebar {
     left: auto;
     right: -14rem;
+    z-index: 9999;
   }
   .sidebar-toggle {
     left: auto;
-    right: 1rem;
+    right: 1.1rem;
   }
   #sidebar-checkbox:checked ~ {
     .sidebar, .wrap, .sidebar-toggle {
