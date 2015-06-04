@@ -329,6 +329,9 @@ a.pagination-item:hover {
 .hll {
   background-color: #ffffcc; }
 
+.bg {
+  background: #f0f3f3; }
+
 .c {
   color: #999; }
 
@@ -914,3 +917,41 @@ a.pagination-item:hover {
   z-index: 3; }
   .sidebar .gravatar img {
     border-radius: 9999px; }
+
+.highlight {
+  border: 1px solid #dfdfdf;
+  border-radius: 0px; }
+
+.codepen-demo {
+  margin-top: 20px; }
+  .codepen-demo .tabs {
+    border-bottom: 1px solid #dfdfdf; }
+  .codepen-demo .highlight {
+    border: none;
+    margin-bottom: 0px; }
+
+.codepen-demo .tabs-content {
+  padding: 5px 15px;
+  background: #f9f9f9;
+  border: 1px solid #dfdfdf;
+  border-top-color: transparent; }
+
+.codepen-demo .tab-title > a {
+  background: #333;
+  color: #fff;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-right: 5px;
+  border: 1px solid #dfdfdf;
+  border-bottom: transparent;
+  margin-bottom: -1px !important; }
+
+.codepen-demo .tab-title > a:hover {
+  background: #525252; }
+
+.codepen-demo .tab-title.active a {
+  background: #f9f9f9;
+  color: #333; }
+
+.tabs .tab-title > a {
+  font-size: 0.7rem; }

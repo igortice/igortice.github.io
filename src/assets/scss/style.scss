@@ -24,3 +24,50 @@ The main SCSS file for everything, yep
     }
   }
 }
+
+.highlight {
+  border        : 1px solid #dfdfdf;
+  border-radius : 0px;
+}
+
+.codepen-demo {
+  margin-top : 20px;
+  .tabs {
+    border-bottom : 1px solid #dfdfdf;
+  }
+  .highlight {
+    border        : none;
+    margin-bottom : 0px;
+  }
+}
+
+.codepen-demo .tabs-content {
+  padding          : 5px 15px;
+  background       : #f9f9f9;
+  border           : 1px solid #dfdfdf;
+  border-top-color : transparent;
+}
+
+.codepen-demo .tab-title > a {
+  background     : #333;
+  color          : #fff;
+  padding-top    : 0.5rem;
+  padding-bottom : 0.5rem;
+  margin-right   : 5px;
+  border         : 1px solid #dfdfdf;
+  border-bottom  : transparent;
+  margin-bottom  : -1px !important;
+}
+
+.codepen-demo .tab-title > a:hover {
+  background : #525252;
+}
+
+.codepen-demo .tab-title.active a {
+  background : #f9f9f9;
+  color      : #333;
+}
+
+.tabs .tab-title > a {
+  font-size: 0.7rem;
+}

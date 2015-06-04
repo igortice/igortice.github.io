@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,8 +7,9 @@
 
   config.$inject = ['$interpolateProvider'];
 
-  function config($interpolateProvider) {
-    $interpolateProvider.startSymbol('{[');
-    $interpolateProvider.endSymbol(']}');
+  function config ($interpolateProvider) {
+    $interpolateProvider
+      .startSymbol('{[')
+      .endSymbol(']}');
   }
 }());

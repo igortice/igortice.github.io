@@ -5,8 +5,8 @@
     .module('mainApp')
     .controller('BaseController', baseController);
 
-  function baseController() {
-    var vm = this;
+  function baseController () {
+    var vm  = this;
     vm.nome = 'igor rocha';
   }
 }());
