@@ -13,25 +13,29 @@
   </div>
 
   <nav class="sidebar-nav">
-    <a class="sidebar-nav-item{% if page.title == 'Home' %} active{% endif %}" href="/">Início</a>
+    <a class="sidebar-nav-item{% if page.title == 'Home' %} active{% endif %}" href="/"><i class="fa fa-home"></i> Início</a>
 
-    {% comment %}
-      The code below dynamically generates a sidebar nav of pages with
-      `layout: page` in the front-matter. See readme for usage.
-    {% endcomment %}
+    <a class="sidebar-nav-item{% if page.title == 'Sobre' %} active{% endif %}" href="/sobre.html"><i class="fa fa-flag"></i> Sobre</a>
 
-    {% assign pages_list = site.pages %}
-    {% for node in pages_list %}
-      {% if node.title != null %}
-        {% if node.layout == "page" %}
-          <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>
-        {% endif %}
-      {% endif %}
-    {% endfor %}
+    <!--{% comment %}-->
+      <!--The code below dynamically generates a sidebar nav of pages with-->
+      <!--`layout: page` in the front-matter. See readme for usage.-->
+    <!--{% endcomment %}-->
 
-    <span class="sidebar-nav-item">twitter: <a href="https://twitter.com/{{ site.author.twitter}}">{{ site.author.twitter }}</a></span>
+    <!--{% assign pages_list = site.pages %}-->
+    <!--{% for node in pages_list %}-->
+      <!--{% if node.title != null %}-->
+        <!--{% if node.layout == "page" %}-->
+          <!--<a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a>-->
+        <!--{% endif %}-->
+      <!--{% endif %}-->
+    <!--{% endfor %}-->
 
-    <span class="sidebar-nav-item">email: <a href="mailto:{{ site.author.email}}">{{ site.author.email }}</a></span>
+    <span class="sidebar-nav-item"><a href="https://twitter.com/{{ site.author.twitter}}">
+      <i class="fa fa-twitter"></i></a>
+      |
+      <a href="mailto:{{ site.author.email}}"><i class="fa fa-envelope"></i></a>
+    </span>
   </nav>
 
   <div class="sidebar-item">

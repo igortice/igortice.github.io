@@ -12,11 +12,11 @@ title: Home
         </a>
       </h2>
 
-      <span class="post-date">{{ post.date | date: "%d/%m/%Y" }}</span>
+      <span class="post-date">- {{ post.date | date: "%d/%m/%Y" }}</span>
 
       {{ post.excerpt }}
 
-      <a href="{{ post.url }}">Visualizar Post Completo &raquo;</a>
+      <a href="{{ post.url }}"><i class="fa fa-search-plus"></i> Visualizar</a>
     </div>
   {% endfor %}
 </div>
