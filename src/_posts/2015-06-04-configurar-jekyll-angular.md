@@ -2,7 +2,7 @@
 layout: post
 date: 2015-06-04
 title: Configurar Jekyll e AngularJS
-permalink: /:categories/:title.html
+permalink: /:categories/:title
 categories: angular
 tags: angulas js, jekyll
 author: igor_rocha
@@ -11,7 +11,7 @@ keywords: "AngularJS Jekyll, angular jekyll, jekyll angular, angular with jekyll
 ---
 
 
-Neste Post vamos aprender como configurar o **AngularJS** para que ele funcione de forma correta com o **Jekyll**.
+> Neste Post vamos aprender como configurar o **AngularJS** para que ele funcione de forma correta com o **Jekyll**.
 
 <!--more-->
 
