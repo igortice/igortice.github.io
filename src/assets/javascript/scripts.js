@@ -11,7 +11,7 @@
       outClass:             'fade-out-right-sm',
       inDuration:           1500,
       outDuration:          1000,
-      linkElement:          'a:not([target="_blank"]):not([href^=#])',
+      linkElement:          'a:not([target="_blank"]):not([href^=#]):not(".not-animsition")',
       // e.g. linkElement   :   'a:not([target="_blank"]):not([href^=#])'
       loading:              true,
       loadingParentElement: 'body', //animsition wrapper element
