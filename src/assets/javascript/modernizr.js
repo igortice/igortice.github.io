@@ -1,1 +1,1 @@
-/Users/igortice/Desenvolvimento/Projetos/Web/igortice.github.io/src/_bower_components/modernizr/modernizr.js
+/home/igor/Desenvolvimento/Projetos/Web/igortice.github.io/src/_bower_components/modernizr/modernizr.js
