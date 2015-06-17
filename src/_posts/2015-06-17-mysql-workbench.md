@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2015-06-06
+date: 2015-06-17
 title: Usando o MySQL Workbench
 permalink: /:title
 categories: mysql
