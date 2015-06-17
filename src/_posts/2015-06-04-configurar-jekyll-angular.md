@@ -11,7 +11,7 @@ keywords: "AngularJS Jekyll, angular jekyll, jekyll angular, angular with jekyll
 ---
 
 
-> Neste Post vamos aprender como configurar o **AngularJS** para que ele funcione de forma correta com o **Jekyll**.
+Neste Post vamos aprender como configurar o **AngularJS** para que ele funcione de forma correta com o **Jekyll**.
 
 <!--more-->
 

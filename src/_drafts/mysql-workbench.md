@@ -10,8 +10,8 @@ desc: "Usando o MySQL Workbench"
 keywords: "mysql, mysql workbench, workbench, instalar mysql workbench, instalar workbench"
 ---
 
-Nesse Post vamos ver como usar o MySql Workbench. Vamos entender para que ele serve e como utilizá-lo para gerenciar
-nossos projetos com base de dados MySql.
+Nesse Post vamos ver como usar o *MySql Workbench*. Vamos entender para que ele serve e como utilizá-lo para gerenciar
+nossos projetos com Banco de Dados MySql.
 
 Veremos sua parte administrativa para DBAs, que nós desenvolvedores podemos usar perfeitamente para gerenciar bancos
 locais e remotos, e sua parte de modelagem visual, que pode ser utilizado tanto para importar quanto exportar um
@@ -22,17 +22,26 @@ projeto, bem como para manipular um banco específico.
 
 ## O que vamos fazer:
 
-* Instalar o MySql Workbench.
-* Configurar o Workbench com nossa conexão local do MySql.
-* Gerenciar um usuário a partir do Workbench.
-* Criar um Banco de Dados a partir da Modelagem do Workbench.
-* Gerar uma Modelagem de um Banco de Dados para o Workbench.
+<div class="message">
+  <ul class="disc">
+    <li>Instalar o <em>MySql Workbench</em>.</li>
+    <li>Configurar o <em>Workbench</em> com nossa conexão local do MySql.</li>
+    <li>Gerenciar um usuário a partir do <em>Workbench</em>.</li>
+    <li>Criar um Banco de Dados a partir da Modelagem do <em>Workbench</em>.</li>
+    <li>Gerar uma Modelagem de um Banco de Dados para o <em>Workbench</em>.</li>
+  </ul>
+</div>
+
 
 ## O que vamos precisar:
 
-* Ubuntu 12.04 ou 14.04(por fins didáticos, mas os procedimentos nesse sistema operacional são similares no Windows e no Mac OS X).
-* Do pacote do MySql.
-* Do Workbench.
+<div class="message">
+  <ul class="disc">
+    <li>Ubuntu 12.04 ou 14.04(por fins didáticos, mas os procedimentos nesse sistema operacional são similares no Windows e no Mac OS X).</li>
+    <li>Do pacote do MySql.</li>
+    <li>Do <em>Workbench</em>.</li>
+  </ul>
+</div>
 
 
 ## Passo 1 – Sobre Workbench:
@@ -40,15 +49,15 @@ projeto, bem como para manipular um banco específico.
 <div class="message">
   <strong>Sobre:</strong>
   <p>
-    MySql Workbench é uma ferramenta visual unificada para Arquitetos de Banco de Dados, Programadores e DBAs.
-    MySql Workbench fornece modelagem de dados, desenvolvimento de SQL e ferramentas de administração abrangentes para
-    administração e configuração do usuário do servidor, backup e muito mais. MySql Workbench está disponível no Windows,
+    <em>MySql Workbench</em> é uma ferramenta visual unificada para Arquitetos de Banco de Dados, Programadores e DBAs.
+    <em>MySql Workbench</em> fornece modelagem de dados, desenvolvimento de SQL e ferramentas de administração abrangentes para
+    administração e configuração do usuário do servidor, backup e muito mais. <em>MySql Workbench</em> está disponível no Windows,
     Linux e Mac OS X.
   </p>
 
   <strong>Projeto:</strong>
   <p>
-    MySql Workbench permite que um DBA , Desenvolvedor ou Arquiteto de Dados possa projetar visualmente o modelo,
+    <em>MySql Workbench</em> permite que um DBA , Desenvolvedor ou Arquiteto de Dados possa projetar visualmente o modelo,
     gerar e gerenciar  um Bancos de Dados . Ele inclui tudo o que um modelador de dados necessita para a criação de
     modelos complexos , para a criação e engenharia reversa, e, também, oferece recursos essenciais para a realização
     de gestão de mudanças e tarefas de documentação.
@@ -56,7 +65,7 @@ projeto, bem como para manipular um banco específico.
 
   <strong>Desenvolvedor:</strong>
   <p>
-    MySQL Workbench oferece ferramentas visuais para criar, executar e otimizar consultas SQL. O Editor de SQL fornece
+    <em>MySql Workbench</em> oferece ferramentas visuais para criar, executar e otimizar consultas SQL. O Editor de SQL fornece
     realce de cores de sintaxe, auto-completar, reutilização de trechos SQL e história execução de SQL. O painel de
     conexões de Banco de Dados permite aos desenvolvedores gerenciar facilmente as conexões com Banco de Dados .
     O Navegador de Objetos oferece acesso instantâneo a esquema de Banco de Dados e Objetos.
@@ -64,25 +73,25 @@ projeto, bem como para manipular um banco específico.
 
   <strong>Administrador:</strong>
   <p>
-    MySql Workbench fornece um console visual para administrar facilmente ambientes MySql e obter uma melhor
+    <em>MySql Workbench</em> fornece um console visual para administrar facilmente ambientes MySql e obter uma melhor
     visibilidade em bases de dados . Desenvolvedores e DBAs podem usar as ferramentas visuais para configuração de
     servidores, administração de usuários, realização de backups, inspecionamento de dados de auditoria.
   </p>
 
   <strong>Migração de Banco de Dados:</strong>
   <p>
-    MySql Workbench agora oferece um fácil solução completa para usar a migração de bancos como: Microsoft SQL Server,
+    <em>MySql Workbench</em> agora oferece um fácil solução completa para usar a migração de bancos como: Microsoft SQL Server,
     Sybase ASE , PostgreSQL , e outras tabelas RDBMS , objetos e dados para MySql . Desenvolvedores e DBAs podem
     rapidamente e facilmente converter aplicações existentes para serem executados no MySQL tanto no Windows como em
     outras plataformas. A migração também suporta a migração de versões anteriores do MySQL com os últimos lançamentos.
   </p>
 
-  <small class="right">Descrição traduzida da documentação do MySql Workbench.</small>
+  <small class="right">Descrição traduzida da documentação do <em>MySql Workbench</em>.</small>
 </div>
 
 ## Passo 2 – Instalar o MySql Workbench:
 
-Como nosso foco para esse tutorial é o MySql Workbench, precisamos do MySql rodando no nosso sistema operacional.
+Como nosso foco para esse tutorial é o *MySql Workbench*, precisamos do MySql rodando no nosso sistema operacional.
 Vamos usar o Ubuntu 12.04(homologado também para o Ubuntu 14.04) para fins didáticos, então, no terminal, digite o
 seguinte comando para verificar se você já possui o MySql como um serviço do Ubuntu:
 
@@ -159,12 +168,12 @@ Veja os teste que eu fiz:
 Agora você pode desenvolver qualquer projeto com MySql utilizado o terminal, mas como o foco desse tutorial não é esse,
 mas sim o MySql Wokbench vamos instalar ele.
 
-Para trabalhar com o MySql Workbench precisamos baixar e instalar ele. Como estamos usando o Sistema Operacional
+Para trabalhar com o *MySql Workbench* precisamos baixar e instalar ele. Como estamos usando o Sistema Operacional
 Ubuntu 12.04, como combinado para esse Post, precisamos apenas nos preocupar se vamos baixar a versão 32 ou 64 bits.
-Clique aqui para baixar uma versão para você(lembrando que para baixar essa ferramenta, você precisa ter uma conta na
+<a href="http://dev.mysql.com/downloads/tools/workbench" target="_blank">Clique aqui</a> para baixar uma versão para você(lembrando que para baixar essa ferramenta, você precisa ter uma conta na
 Oracle, não se preocupe, pois isso é free).
 
-Como você baixa um arquivo do tipo .deb, então só precisamos dar um duplo clique nesse arquivo para instalá-lo. Depois
+Como você baixa um arquivo do tipo **.deb**, então só precisamos dar um duplo clique nesse arquivo para instalá-lo. Depois
 de sua instalação, basta digitar mysql na busca do Ubuntu que ele estará visível para uso:
 
 <ul class="clearing-thumbs small-9 small-centered columns" data-clearing>
@@ -177,7 +186,7 @@ Veja o que apareceu para mim após clicar no Workbench:
   <li><a class="not-animsition" href="/assets/images/post_01/img_08.png"><img src="/assets/images/post_01/img_08.png"></a></li>
 </ul>
 
-Pela descrição que traduzi do MySql Workbench ele oferece vários recursos, mas vou abordar dois que, com eles,
+Pela descrição que traduzi do *MySql Workbench* ele oferece vários recursos, mas vou abordar dois que, com eles,
 conseguimos fazer tudo a nível de Banco de Dados para um projeto. São eles:
 
 <div class="message">
@@ -185,7 +194,7 @@ conseguimos fazer tudo a nível de Banco de Dados para um projeto. São eles:
     <li>
       <strong>MySql Connections:</strong>
       <p>
-        Com esse recurso podemos fazer o Workbench tanto gerenciar o MySql local como de um Servidor remoto. Esse blog
+        Com esse recurso podemos fazer o *Workbench* tanto gerenciar o MySql local como de um Servidor remoto. Esse blog
         que vocês estão lendo usa uma base de dados MySql e seu gerenciamento é feito através dele. Com ele gerencio os
         usuários do banco, monitoro as conexões com o banco, o trafego de dados, enfim, tenho uma ferramenta administrativa
         de DBA na minhas mãos.
@@ -205,12 +214,12 @@ conseguimos fazer tudo a nível de Banco de Dados para um projeto. São eles:
   </ul>
 </div>
 
-Pronto, agora temos o Workbench funcional para nossas necessidades.
+Pronto, agora temos o *Workbench* funcional para nossas necessidades.
 
 ## Passo 3 – Configurar o Workbench:
 
-Agora vamos configurar o Workbench com o MySql local, para isso abra o Workbench e click na imagem do + em 
-**MySQL Connections**. Veja nas imagens abaixo os procedimentos que eu fiz para isso:
+Agora vamos configurar o *Workbench* com o MySql local, para isso abra o *Workbench* e click na imagem do 
+<kbd>+</kbd> em **MySQL Connections**. Veja nas imagens abaixo os procedimentos que eu fiz para isso:
 
 <ul class="clearing-thumbs small-block-grid-3" data-clearing>
   <li><a class="not-animsition" href="/assets/images/post_01/img_09.png"><img data-caption="Criar conexão com MySql local. Perceba a configuração que eu fiz." src="/assets/images/post_01/img_09.png"></a></li>
@@ -218,9 +227,9 @@ Agora vamos configurar o Workbench com o MySql local, para isso abra o Workbench
   <li><a class="not-animsition" href="/assets/images/post_01/img_11.png"><img data-caption="Testar conexão com dados fornecidos do MySql(botão "Test Connection")." src="/assets/images/post_01/img_11.png"></a></li>
 </ul>
 
-Um passo muito importante antes de você apertar no botão "ok" e configurar o servidor local do MySql para ser 
-utilizado pelo Workbench. Para isso, antes de criar sua conexão local do Workbench com o MySql, clique no 
-botão "Configure Server Management …". Tente repetir os passos das imagens abaixo antes de 
+Um passo muito importante antes de você apertar no botão <kbd>ok</kbd> e configurar o servidor local do MySql para ser 
+utilizado pelo *Workbench*. Para isso, antes de criar sua conexão local do *Workbench* com o MySql, clique no 
+botão <kbd>Configure Server Management ...</kbd>. Tente repetir os passos das imagens abaixo antes de 
 criar sua conexão local:
 
 <ul class="clearing-thumbs small-block-grid-4" data-clearing>
@@ -249,8 +258,8 @@ Agora clique nessa conexão e navegue pelos recursos que temos a nossa disposiç
 Perceba que você pode gerenciar os usuários do MySql por essa tela, que você pode ver como está o trafego de 
 dados, manipular seu esquema e muito mais.
 
-Como teste, vamos criar um usuário para MySql através do Workbench chamado usertestmysql. Clique no menu 
-"Users and Privileges > Add Account". Veja como ficou minha tela para "Login" e "Administrative Rules" 
+Como teste, vamos criar um usuário para MySql através do *Workbench* chamado **usertestmysql**. Clique no menu 
+<kbd>Users and Privileges > Add Account</kbd>. Veja como ficou minha tela para **Login** e **Administrative Rules** 
 para esse usuário:
 
 <ul class="clearing-thumbs small-block-grid-2" data-clearing>
@@ -271,14 +280,14 @@ Faça outro teste. Abra o terminal e tente logar no MySql com esse usuário que 
 
 ## Passo 4 – Modelagem Workbench para MySql:
 
-Vamos aproveitar um exemplo de uma modelagem que o Workbench fornece para gente e gerar um Banco de Dados a 
-partir dele. Na página inicial do Workbench, clique no arquivo sakila_full em Models:
+Vamos aproveitar um exemplo de uma modelagem que o *Workbench* fornece para gente e gerar um Banco de Dados a 
+partir dele. Na página inicial do *Workbench*, clique no arquivo **sakila_full** em Models:
 
 <ul class="clearing-thumbs small-9 small-centered columns" data-clearing>
   <li><a class="not-animsition" href="/assets/images/post_01/img_24.png"><img src="/assets/images/post_01/img_24.png"></a></li>
 </ul>
 
-Perceba que estamos com dois menus abertos no topo do Workbench:
+Perceba que estamos com dois menus abertos no topo do *Workbench*:
 
 <ul class="clearing-thumbs small-block-grid-2" data-clearing>
   <li><a class="not-animsition" href="/assets/images/post_01/img_25.png"><img data-caption="modelagem visual" src="/assets/images/post_01/img_25.png"></a></li>
@@ -287,8 +296,8 @@ Perceba que estamos com dois menus abertos no topo do Workbench:
 
 
 Não cabe a mim ensinar os conceitos em cada menu sobre as opções para se trabalhar com o MySql através do 
-Workbench, vou passar apenas o que foi combinado para esse Post, criar um banco a partir de uma modelagem, 
-então siga os passos abaixo para criar o banco para a modelagem do arquivo de exemplo do Workbench:
+*Workbench*, vou passar apenas o que foi combinado para esse Post, criar um banco a partir de uma modelagem, 
+então siga os passos abaixo para criar o banco para a modelagem do arquivo de exemplo do *Workbench*:
 
 <ul class="clearing-thumbs small-block-grid-4" data-clearing>
   <li><a class="not-animsition" href="/assets/images/post_01/img_27.png"><img src="/assets/images/post_01/img_27.png"></a></li>
@@ -301,8 +310,8 @@ então siga os passos abaixo para criar o banco para a modelagem do arquivo de e
   <li><a class="not-animsition" href="/assets/images/post_01/img_34.png"><img src="/assets/images/post_01/img_34.png"></a></li>
 </ul>
 
-Se você for na nossa conexão localhost do Workbench vai perceber que temos agora dois bancos, um chamado test, 
-que não possui nada e o banco sakila, que acabamos de exportar:
+Se você for na nossa conexão localhost do *Workbench* vai perceber que temos agora dois bancos, um chamado **test**, 
+que não possui nada e o banco **sakila**, que acabamos de exportar:
 
 <ul class="clearing-thumbs small-9 small-centered columns" data-clearing>
   <li><a class="not-animsition" href="/assets/images/post_01/img_35.png"><img src="/assets/images/post_01/img_35.png"></a></li>
@@ -333,15 +342,15 @@ Agora siga os passos das imagens abaixo:
 </ul>
 
 Perceba que agora temos uma modelagem a partir de uma banco existente. Perceba também que nossa modelagem 
-não ficou igual ao exemplo que veio no Workbench. O que aconteceu foi que nós criamos nosso usuário apenas 
+não ficou igual ao exemplo que veio no *Workbench*. O que aconteceu foi que nós criamos nosso usuário apenas 
 com algumas permissões, então, na hora de criar o banco a partir da modelagem, ele só criou o que tinha 
 direito e na hora de criar uma modelagem a partir desse banco, ele gerou o que esse banco possuía para esse usuário.
 
 
 ## Passo 6 – Conclusão:
 
-Pelo pouco que mostrei, dar para perceber que o MySql Workbench é uma ferramenta com muitos recursos e ele 
+Pelo pouco que mostrei, dar para perceber que o *MySql Workbench* é uma ferramenta com muitos recursos e ele 
 não se limita apenas ao MySql, pois ele se integra com outros bancos como o Postgres.
 
-Eu considero o MySql Workbench uma ferramenta fantástica para nós desenvolvedores, então, se você não 
+Eu considero o *MySql Workbench* uma ferramenta fantástica para nós desenvolvedores, então, se você não 
 trabalha com essa ferramenta, passe a usá-lo, pois sua produtividade vai aumentar.

@@ -10,7 +10,7 @@ desc: "Comandos Básicos Git"
 keywords: "git, comandos git, github, git init"
 ---
 
-> Neste Post vamos aprender os comandos mais básico do **Git** e exemplos para esses comandos, bem como sugestões de
+Neste Post vamos aprender os comandos mais básico do **Git** e exemplos para esses comandos, bem como sugestões de
 quando e como utilizá-los.
 
 <!--more-->
