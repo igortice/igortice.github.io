@@ -4,7 +4,7 @@
  <title>Blog Igor Rocha</title>
  <link href="igortice.com.br/atom.xml" rel="self"/>
  <link href="igortice.com.br/"/>
- <updated>2015-06-17T15:24:47-03:00</updated>
+ <updated>2015-06-17T17:00:17-03:00</updated>
  <id>igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
@@ -15,7 +15,7 @@
  <entry>
    <title>Usando o MySQL Workbench</title>
    <link href="igortice.com.br/mysql-workbench"/>
-   <updated>2015-06-06T00:00:00-03:00</updated>
+   <updated>2015-06-17T00:00:00-03:00</updated>
    <id>igortice.com.br/mysql-workbench</id>
    <content type="html">&lt;p&gt;Nesse Post vamos ver como usar o &lt;em&gt;MySql Workbench&lt;/em&gt;. Vamos entender para que ele serve e como utilizá-lo para gerenciar
 nossos projetos com Banco de Dados MySql.&lt;/p&gt;
