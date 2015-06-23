@@ -1,6 +1,6 @@
 ---
 layout: post
-date: 2015-06-06
+date: 2015-06-23
 title: Expressão Regular CPF CNPJ
 permalink: /:title
 categories: regex
@@ -10,12 +10,12 @@ desc: "Expressão Regular CPF CNPJ"
 keywords: 'expressão regular cpf,expressão regular cnpj,expressão regular cpf cnpj,epressão regular cpf/cnpj,regex cpf,regex cnpj,regex cpf cnpj,regex cpf/cnpj,expressão regular,javascript'
 ---
 
-Neste Post vamos ver como criar uma **Expressão Regular** que possa ser usada para validar tanto um CPF como um
-CNPJ
+Neste Post vamos ver como criar uma **Expressão Regular** que possa ser usada para validar tanto um 
+**CPF** como um **CNPJ** ou os dois a mesmo tempo.
 
 <!--more-->
 
-Precisava validar um campo de input para ser CPF ou CNPJ contendo números e caracteres apenas.
+Certo dia, no trabalho, precisava validar um campo de input para ser CPF ou CNPJ contendo números e caracteres apenas.
 
 Se fosse **CPF** deveria seguir o seguinte estilo: <kbd>XXX.XXX.XXX-XX</kbd>
 
