@@ -4,13 +4,93 @@
  <title>Blog Igor Rocha</title>
  <link href="igortice.com.br/atom.xml" rel="self"/>
  <link href="igortice.com.br/"/>
- <updated>2015-06-18T09:02:39-03:00</updated>
+ <updated>2015-06-23T15:18:05-03:00</updated>
  <id>igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
    <email>igortice@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Expressão Regular CPF CNPJ</title>
+   <link href="igortice.com.br/expressao-regular-cpf-cnpj"/>
+   <updated>2015-06-23T00:00:00-03:00</updated>
+   <id>igortice.com.br/expressao-regular-cpf-cnpj</id>
+   <content type="html">&lt;p&gt;Neste Post vamos ver como criar uma &lt;strong&gt;Expressão Regular&lt;/strong&gt; que possa ser usada para validar tanto um 
+&lt;strong&gt;CPF&lt;/strong&gt; como um &lt;strong&gt;CNPJ&lt;/strong&gt; ou os dois a mesmo tempo.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Certo dia, no trabalho, precisava validar um campo de input para ser CPF ou CNPJ contendo números e caracteres apenas.&lt;/p&gt;
+
+&lt;p&gt;Se fosse &lt;strong&gt;CPF&lt;/strong&gt; deveria seguir o seguinte estilo: &lt;kbd&gt;XXX.XXX.XXX-XX&lt;/kbd&gt;&lt;/p&gt;
+
+&lt;p&gt;Se fosse &lt;strong&gt;CNPJ&lt;/strong&gt; devereia seguir esse estilo: &lt;kbd&gt;XX.XXX.XXX/XXXX-XX&lt;/kbd&gt;&lt;/p&gt;
+
+&lt;p&gt;Então acabei estudado o material fornecido no Site do 
+&lt;a href=&#39;http://aurelio.net/regex/guia/&#39; target=&#39;_blank&#39;&gt;Aurelio Marinho Vargas&lt;/a&gt; 
+e cheguei as seguintes expressões:&lt;/p&gt;
+
+&lt;p&gt;Para &lt;strong&gt;CPF&lt;/strong&gt; a expressão seria essa:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;/^d{3}.d{3}.d{3}-d{2}$/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para &lt;strong&gt;CNPJ&lt;/strong&gt; a expressão seria essa:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;/^d{2}.d{3}.d{3}/d{4}-d{2}$/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para &lt;strong&gt;CPF e CNPJ&lt;/strong&gt; a expressão seria essa:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;/(^d{3}.d{3}.d{3}-d{2}$)|(^d{2}.d{3}.d{3}/d{4}-d{2}$)/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Atenção, vale informar que os trechos de código acima são apenas para validar o formato de um determinado campo contendo
+determinada sequência de caracteres, não servindo para validar se um CPF ou CNPJ são válidos.&lt;/p&gt;
+
+&lt;section class=&quot;codepen-demo&quot;&gt;
+  &lt;ul class=&quot;tabs&quot; data-tab&gt;
+    &lt;li class=&quot;tab-title active&quot;&gt;&lt;a href=&quot;#panel1&quot;&gt;Teste um CPF ou CNPJ&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;div class=&quot;tabs-content&quot;&gt;
+    &lt;div class=&quot;content active&quot; id=&quot;panel1&quot;&gt;
+      &lt;form name=&quot;formCpfCnpj&quot;&gt;
+        &lt;div class=&quot;row&quot;&gt;
+          &lt;div class=&quot;large-6 columns&quot;&gt;
+            &lt;label class=&quot;error&quot;&gt;CPF
+              &lt;input ng-model=&quot;form.cpf&quot; ng-pattern=&quot;/^\d{3}.\d{3}.\d{3}-\d{2}$/&quot; name=&quot;cpf&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX&quot; required /&gt;
+            &lt;/label&gt;
+            &lt;small class=&quot;error&quot;&gt;
+              XXX.XXX.XXX-XX
+              &lt;span class=&quot;label success&quot; ng-show=&quot;formCpfCnpj.cpf.$valid&quot; &gt;==&lt;/span&gt;
+              &lt;span class=&quot;label&quot; ng-show=&quot;formCpfCnpj.cpf.$viewValue &amp;&amp; formCpfCnpj.cpf.$invalid&quot; &gt;!=&lt;/span&gt;
+              {[formCpfCnpj.cpf.$viewValue]}
+            &lt;/small&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;large-6 columns error&quot;&gt;
+            &lt;label class=&quot;error&quot;&gt;CPF
+              &lt;input ng-model=&quot;form.cnpj&quot; ng-pattern=&quot;/^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$/&quot; name=&quot;cnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XX.XXX.XXX/XXXX-XX&quot; required /&gt;
+            &lt;/label&gt;
+            &lt;small class=&quot;error&quot;&gt;
+              XX.XXX.XXX/XXXX-XX
+              &lt;span class=&quot;label success&quot; ng-show=&quot;formCpfCnpj.cnpj.$valid&quot; &gt;==&lt;/span&gt;
+              &lt;span class=&quot;label&quot; ng-show=&quot;formCpfCnpj.cnpj.$viewValue &amp;&amp; formCpfCnpj.cnpj.$invalid&quot; &gt;!=&lt;/span&gt;
+              {[formCpfCnpj.cnpj.$viewValue]}
+            &lt;/small&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;large-12 columns error&quot;&gt;
+            &lt;label class=&quot;error&quot;&gt;CPF ou CNPJ
+              &lt;input ng-model=&quot;form.cpfCnpj&quot; ng-pattern=&quot;/(^\d{3}.\d{3}.\d{3}-\d{2}$)|(^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$)/&quot; name=&quot;cpfCnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX&quot; required /&gt;
+            &lt;/label&gt;
+            &lt;small class=&quot;error&quot; ng-show=&quot;formCpfCnpj.cpfCnpj.$viewValue&quot;&gt;
+              Formato
+              &lt;span class=&quot;label success&quot; ng-show=&quot;formCpfCnpj.cpfCnpj.$valid&quot; &gt;CORRETO&lt;/span&gt;
+              &lt;span class=&quot;label&quot; ng-show=&quot;formCpfCnpj.cpfCnpj.$viewValue &amp;&amp; formCpfCnpj.cpfCnpj.$invalid&quot; &gt;ERRADO&lt;/span&gt;
+            &lt;/small&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/form&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Usando o MySQL Workbench</title>
