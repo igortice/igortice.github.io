@@ -10,7 +10,7 @@ desc: "Expressão Regular CPF CNPJ"
 keywords: 'expressão regular cpf,expressão regular cnpj,expressão regular cpf cnpj,epressão regular cpf/cnpj,regex cpf,regex cnpj,regex cpf cnpj,regex cpf/cnpj,expressão regular,javascript'
 ---
 
-Neste Post vamos ver como criar uma **Expressão Regular** que possa ser usada para validar tanto um 
+Neste Post vamos ver como criar uma **Expressão Regular** que possa ser usada para validar tanto um
 **CPF** como um **CNPJ** ou os dois a mesmo tempo.
 
 <!--more-->
@@ -21,8 +21,8 @@ Se fosse **CPF** deveria seguir o seguinte estilo: <kbd>XXX.XXX.XXX-XX</kbd>
 
 Se fosse **CNPJ** devereia seguir esse estilo: <kbd>XX.XXX.XXX/XXXX-XX</kbd>
 
-Então acabei estudado o material fornecido no Site do 
-<a href='http://aurelio.net/regex/guia/' target='_blank'>Aurelio Marinho Vargas</a> 
+Então acabei estudado o material fornecido no Site do
+<a href='http://aurelio.net/regex/guia/' target='_blank'>Aurelio Marinho Vargas</a>
 e cheguei as seguintes expressões:
 
 Para **CPF** a expressão seria essa:
@@ -58,7 +58,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
         <div class="row">
           <div class="large-6 columns">
             <label class="error">CPF
-              <input ng-model="form.cpf" ng-pattern="/^\d{3}.\d{3}.\d{3}-\d{2}$/" name="cpf" type="text" class="error" placeholder="XXX.XXX.XXX-XX" required />
+              <input autocomplete="off" ng-model="form.cpf" ng-pattern="/^\d{3}.\d{3}.\d{3}-\d{2}$/" name="cpf" type="text" class="error" placeholder="XXX.XXX.XXX-XX" required />
             </label>
             <small class="error">
               XXX.XXX.XXX-XX
@@ -69,7 +69,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
           </div>
           <div class="large-6 columns error">
             <label class="error">CPF
-              <input ng-model="form.cnpj" ng-pattern="/^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$/" name="cnpj" type="text" class="error" placeholder="XX.XXX.XXX/XXXX-XX" required />
+              <input autocomplete="off" ng-model="form.cnpj" ng-pattern="/^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$/" name="cnpj" type="text" class="error" placeholder="XX.XXX.XXX/XXXX-XX" required />
             </label>
             <small class="error">
               XX.XXX.XXX/XXXX-XX
@@ -80,7 +80,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
           </div>
           <div class="large-12 columns error">
             <label class="error">CPF ou CNPJ
-              <input ng-model="form.cpfCnpj" ng-pattern="/(^\d{3}.\d{3}.\d{3}-\d{2}$)|(^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$)/" name="cpfCnpj" type="text" class="error" placeholder="XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX" required />
+              <input autocomplete="off" ng-model="form.cpfCnpj" ng-pattern="/(^\d{3}.\d{3}.\d{3}-\d{2}$)|(^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$)/" name="cpfCnpj" type="text" class="error" placeholder="XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX" required />
             </label>
             <small class="error" ng-show="formCpfCnpj.cpfCnpj.$viewValue">
               Formato

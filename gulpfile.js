@@ -112,7 +112,7 @@ gulp.task("html", ["styles"], function (){
       collapseWhitespace:           true,
       collapseBooleanAttributes:    true,
       removeAttributeQuotes:        true,
-      removeRedundantAttributes:    true
+      removeRedundantAttributes:    false
     })))
     // Send the output to the correct folder
     .pipe(gulp.dest("site"))
