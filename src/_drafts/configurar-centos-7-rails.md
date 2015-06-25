@@ -253,7 +253,7 @@ chgrp [opções] grupo arquivo
           <kbd>> cat /etc/group</kbd>
         </li>
         <li>
-          <kbd>usermod -G sshlogin deployer</kbd>
+          <kbd>usermod -a -G sshlogin deployer</kbd>
         </li>
       </ul>
     </div>
@@ -336,7 +336,7 @@ enabled=1
         </li>
         <li>
           <kbd>sudo yum install -y nginx</kbd><br/>
-          <kbd>> sudo usermod -G nginx user</kbd>
+          <kbd>> sudo usermod -a -G nginx user</kbd>
         </li>
         <li><kbd>sudo systemctl enable nginx</kbd></li>
         <li><kbd>sudo systemctl start nginx</kbd></li>
@@ -417,7 +417,6 @@ SELINUX=disabled
           <kbd>> psql</kbd><br/>
           <kbd>> \password postgres</kbd>
         </li>
-        <li><kbd>systemctl restart postgresql-9.4</kbd></li>
         <li>
           <kbd>vim /var/lib/pgsql/9.4/data/postgresql.conf</kbd>
 {% highlight vim %}
@@ -437,7 +436,66 @@ host    all             all             ::1/128                 md5
 host    all             all             0.0.0.0/0               md5
 {% endhighlight %}
         </li>
-        <li><kbd></kbd></li>
+        <li><kbd>systemctl restart postgresql-9.4</kbd></li>
+        <li><kbd>echo 'export PATH=$PATH:/usr/pgsql-9.4/bin/' >> /etc/bashrc && source /etc/bashrc</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel19'>RVM, Ruby 2.X</a>
+    <div id='panel19' class='content'>
+      <ul class='square'>
+        <li>
+          <kbd>\curl -L https://get.rvm.io | sudo bash -s stable #global</kbd><br>
+          <kbd>> sudo usermod -a -G rvm deployer</kbd>
+        </li>
+        <li><kbd>logout/login</kbd></li>
+        <li><kbd>type rvm | head -n 1</kbd></li>
+        <li><kbd>rvm requirements</kbd></li>
+        <li><kbd>rvm list known</kbd></li>
+        <li>
+          <kbd>rvm install ruby</kbd><br/>
+          <kbd>> gem install bundle</kbd><br/>
+          <kbd>> gem install pry</kbd><br/>
+          <kbd>> gem install awesome_print</kbd><br/>
+          <kbd>vim ~/.pryrc</kbd>
+{% highlight vim %}
+Pry.config.prompt = proc do |obj, level, _|
+  prompt = ""
+  prompt << "rails[#{Rails.version}]@" if defined?(Rails)
+  prompt << "ruby[#{RUBY_VERSION}]"
+  "#{prompt} (#{obj})> "
+end
+
+Pry.config.exception_handler = proc do |output, exception, _|
+  output.puts "\e[31m#{exception.class}: #{exception.message}"
+  output.puts "from #{exception.backtrace.first}\e[0m"
+end
+
+if defined?(Rails)
+  require "rails/console/app"
+  require "rails/console/helpers"
+  TOPLEVEL_BINDING.eval("self").extend ::Rails::ConsoleMethods
+end
+
+begin
+  require "awesome_print"
+  Pry.config.print = proc {|output, value| Pry::Helpers::BaseHelpers.stagger_output("=> #{value.ai}", output)}
+rescue LoadError => err
+   warn "=> Unable to load awesome_print"
+end
+{% endhighlight %}
+          <kbd>vim ~/.irbrc</kbd>
+{% highlight vim %}
+begin
+  require "pry"
+  Pry.start
+  exit
+rescue LoadError => e
+  warn "=> Unable to load pry"
+end
+{% endhighlight %}
+        </li>
       </ul>
     </div>
   </dd>
