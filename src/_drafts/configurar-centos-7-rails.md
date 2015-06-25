@@ -19,7 +19,7 @@ Este Post é uma documentação base para configurar uma máquina CentOS 7 com o
     <li><strong>Segurança</strong> do servidor.</li>
     <li><strong>RVM</strong> para Rails.</li>
     <li><strong>PostgreSQL</strong> database.</li>
-    <li><strong>NGINX</strong> Servidor de Aplicação.</li>
+    <li><strong>Nginx</strong> Servidor de Aplicação.</li>
   </ul>
 </div>
 
@@ -32,13 +32,13 @@ Este Post é uma documentação base para configurar uma máquina CentOS 7 com o
     <a href='#panel1'>Vagrant</a>
     <div id='panel1' class='content'>
       <ul class='square'>
-        <li><h6>download <a href='http://www.vagrantbox.es/' target='_blank'>CentOS 7</a></h6></li>
-        <li><h6>vagrant box add {title} {url}</h6></li>
-        <li><h6>mkdir projectname</h6></li>
-        <li><h6>cd projectname</h6></li>
-        <li><h6>vagrant init {title}</h6></li>
+        <li><kbd>download <a href='http://www.vagrantbox.es/' target='_blank'>CentOS 7</a></kbd></li>
+        <li><kbd>vagrant box add {title} {url}</h6></li>
+        <li><kbd>mkdir projectname</kbd></li>
+        <li><kbd>cd projectname</kbd></li>
+        <li><kbd>vagrant init {title}</kbd></li>
         <li>
-          <h6>vim Vagrantfile</h6>
+          <kbd>vim Vagrantfile</kbd>
 {% highlight shell %}
 config.vm.network "private_network", ip: "192.168.33.10"
 
@@ -48,8 +48,8 @@ config.vm.provider "virtualbox" do |vb|
 end
 {% endhighlight %}
         </li>
-        <li><h6>vagrant up</h6></li>
-        <li><h6>vagrant ssh</h6></li>
+        <li><kbd>vagrant up</kbd></li>
+        <li><kbd>vagrant ssh</kbd></li>
       </ul>
     </div>
   </dd>
@@ -57,27 +57,29 @@ end
     <a href='#panel2'>CentOS 7 - Extras</a>
     <div id='panel2' class='content'>
       <ul class='square'>
-        <li><h6><a href='http://www.server-world.info/en/note?os=CentOS_7&p=openstack_kilo&f=1' target='_blank'>wiki</a></h6></li>
-        <li><h6>sudo yum update -y</h6></li>
-        <li><h6>sudo yum install -y bash-completion</h6></li>
-        <li><h6>sudo yum install -y screen</h6></li>
-        <li><h6>sudo yum install -y nano</h6></li>
+        <li><kbd><a href='http://www.server-world.info/en/note?os=CentOS_7&p=openstack_kilo&f=1' target='_blank'>wiki</a></kbd></li>
+        <li><kbd>sudo yum update -y</h6></li>
+        <li><kbd>sudo yum install -y bash-completion</kbd></li>
+        <li><kbd>sudo yum install -y net-tools</kbd></li>
+        <li><kbd>sudo yum install -y screen</kbd></li>
+        <li><kbd>sudo yum install -y nano</kbd></li>
         <li>
-          <h6>sudo yum install -y lsof</h6>
+          <kbd>sudo yum install -y lsof</kbd>
 {% highlight vim %}
 lsof -i -P | grep -i listen
 {% endhighlight %}          
         </li>
+        <li><kbd>sudo yum install -y screen</kbd></li>
         <li>
-          <h6>sudo yum install -y vim-enhanced</h6>
-          <h6>sudo yum install -y screen</h6>
-          <h6>> sudo vi /etc/profile</h6>
+          <kbd>sudo yum install -y vim-enhanced</kbd><br/>
+          <kbd>> sudo vi /etc/profile</kbd>
 {% highlight vim %}
 # add at the last line
 alias vi='vim'
 {% endhighlight %}
-          <h6>> source /etc/profile</h6>
-          <h6>> sudo vim /etc/vimrc</h6>
+          <kbd>> source /etc/profile</kbd><br/>
+        <li>
+          <kbd>sudo vim /etc/vimrc</kbd>
 {% highlight vim %}
 " Show partial command in status line.
 set showcmd
@@ -159,9 +161,9 @@ syntax on
     <a href='#panel3'>CentOS 7 - Time Zone</a>
     <div id='panel3' class='content'>
       <ul class='square'>
-        <li><h6>timedatectl list-timezones | grep For</h6></li>
-        <li><h6>sudo timedatectl set-timezone America/Fortaleza</h6></li>
-        <li><h6>timedatectl</h6></li>
+        <li><kbd>timedatectl list-timezones | grep For</kbd></li>
+        <li><kbd>sudo timedatectl set-timezone America/Fortaleza</kbd></li>
+        <li><kbd>timedatectl</kbd></li>
       </ul>
     </div>
   </dd>
@@ -169,9 +171,9 @@ syntax on
     <a href='#panel4'>CentOS 7 - Language</a>
     <div id='panel4' class='content'>
       <ul class='square'>
-        <li><h6>localectl</h6></li>
-        <li><h6>localectl list-locales | grep pt</h6></li>
-        <li><h6>localectl set-locale LANG=pt_BR.utf8</h6></li>
+        <li><kbd>localectl</kbd></li>
+        <li><kbd>localectl list-locales | grep pt</kbd></li>
+        <li><kbd>localectl set-locale LANG=pt_BR.utf8</kbd></li>
       </ul>
     </div>
   </dd>
@@ -179,9 +181,9 @@ syntax on
     <a href='#panel5'>CentOS 7 - Keymap</a>
     <div id='panel5' class='content'>
       <ul class='square'>
-        <li><h6>localectl</h6></li>
-        <li><h6>localectl list-keymaps | grep br</h6></li>
-        <li><h6>localectl set-keymap br-abnt2</h6></li>
+        <li><kbd>localectl</kbd></li>
+        <li><kbd>localectl list-keymaps | grep br</kbd></li>
+        <li><kbd>localectl set-keymap br-abnt2</kbd></li>
       </ul>
     </div>
   </dd>
@@ -190,7 +192,7 @@ syntax on
     <div id='panel6' class='content'>
       <ul class='square'>
         <li>
-          <h6>Permisões e Grupos</h6>
+          <kbd>Permissões e Grupos</kbd>
 {% highlight vim %}
 # mudar permissões r-leitura w-escritra x-execução
 chmod [opções] modo arquivo
@@ -218,18 +220,18 @@ chgrp [opções] grupo arquivo
     <a href='#panel7'>New User</a>
     <div id='panel7' class='content'>
       <ul class='square'>
-        <li><h6>sudo su -</h6></li>
-        <li><h6>adduser deployer</h6></li>
-        <li><h6>passwd deployer</h6></li>
+        <li><kbd>sudo su -</kbd></li>
+        <li><kbd>adduser deployer</kbd></li>
+        <li><kbd>passwd deployer</kbd></li>
         <li>
-          <h6>visudo</h6>
+          <kbd>visudo</kbd>
 {% highlight vim %}
 ## Same thing without a password
 # %wheel        ALL=(ALL)       NOPASSWD: ALL
 %deployer       ALL=(ALL)       NOPASSWD: ALL
 {% endhighlight %}
-          <h6>> awk -F':' '{ print $1}' /etc/passwd</h6>
-          <h6>> cat /etc/passwd</h6>
+          <kbd>> awk -F':' '{ print $1}' /etc/passwd</kbd><br/>
+          <kbd>> cat /etc/passwd</kbd>
         </li>
       </ul>
     </div>
@@ -238,20 +240,20 @@ chgrp [opções] grupo arquivo
     <a href='#panel8'>Group User</a>
     <div id='panel8' class='content'>
       <ul class='square'>
-        <li><h6>sudo su -</h6></li>
-        <li><h6>groupadd sshlogin</h6></li>
+        <li><kbd>sudo su -</kbd></li>
+        <li><kbd>groupadd sshlogin</kbd></li>
         <li>
-          <h6>visudo</h6>
+          <kbd>visudo</kbd>
 {% highlight vim %}
 ## Allows people in group wheel to run all commands
 %wheel          ALL=(ALL)       ALL
 %sshlogin       ALL=(ALL)       ALL
 {% endhighlight %}
-          <h6>> awk -F':' '{ print $1}' /etc/group</h6>
-          <h6>> cat /etc/group</h6>
+          <kbd>> awk -F':' '{ print $1}' /etc/group</kbd><br/>
+          <kbd>> cat /etc/group</kbd>
         </li>
         <li>
-          <h6>usermod -G sshlogin deployer</h6>
+          <kbd>usermod -G sshlogin deployer</kbd>
         </li>
       </ul>
     </div>
@@ -260,16 +262,16 @@ chgrp [opções] grupo arquivo
     <a href='#panel9'>Configure SSH</a>
     <div id='panel9' class='content'>
       <ul class='square'>
-        <li><h6>sudo su -</h6></li>
+        <li><kbd>sudo su -</kbd></li>
         <li>
-          <h6>vim /etc/ssh/sshd_config</h6>
+          <kbd>vim /etc/ssh/sshd_config</kbd>
 {% highlight vim %}
 PermitRootLogin no
 
 PermitEmptyPasswords no
 PasswordAuthentication yes
 {% endhighlight %}
-          <h6>> systemctl restart sshd </h6>
+          <kbd>> systemctl restart sshd </kbd>
         </li>
       </ul>
     </div>
@@ -278,13 +280,13 @@ PasswordAuthentication yes
     <a href='#panel10'>Keys Authentication</a>
     <div id='panel10' class='content'>
       <ul class='square'>
-        <li><h6>sudo su - user #servidor</h6></li>
-        <li><h6>ssh-keygen -t rsa -C "$USER@$GROUPS" #servidor</h6></li>
-        <li><h6>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</h6></li>
-        <li><h6>cat id_rsa.pub >> ~/.ssh/authorized_keys #servidor</h6></li>
-        <li><h6>chmod 600 ~/.ssh/authorized_keys #servidor</h6></li>
+        <li><kbd>sudo su - user #servidor</h6></li>
+        <li><kbd>ssh-keygen -t rsa -C "$USER@$GROUPS" #servidor</kbd></li>
+        <li><kbd>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</kbd></li>
+        <li><kbd>cat id_rsa.pub >> ~/.ssh/authorized_keys #servidor</kbd></li>
+        <li><kbd>chmod 600 ~/.ssh/authorized_keys #servidor</kbd></li>
         <li>
-          <h6>sudo vim /etc/ssh/sshd_config</h6>
+          <kbd>sudo vim /etc/ssh/sshd_config</kbd>
 {% highlight vim %}
 PasswordAuthentication no
 
@@ -294,13 +296,87 @@ UseDNS no
 
 AllowGroups sshlogin
 {% endhighlight %}
-          <h6>> sudo systemctl restart sshd </h6>
+          <kbd>> sudo systemctl restart sshd </kbd>
         </li>
       </ul>
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel'>Nginx</a>
+    <a href='#panel11'>Git</a>
+    <div id='panel11' class='content'>
+      <ul class='square'>
+        <li><kbd>sudo yum install - y git</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel12'>Services</a>
+    <div id='panel12' class='content'>
+      <ul class='square'>
+        <li><kbd>systemctl -t service</kbd></li>
+        <li><kbd>systemctl list-unit-files -t service</kbd></li>
+        <li><kbd>systemctl (enable|disable|status|stop|start) service</kbd></li>
+        <li><kbd>chkconfig --list</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel13'>Nginx</a>
+    <div id='panel13' class='content'>
+      <ul class='square'>
+        <li>
+          <kbd>sudo vim /etc/yum.repos.d/nginx.repo</kbd>
+{% highlight vim %}
+[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/$releasever/$basearch/
+gpgcheck=0
+enabled=1
+{% endhighlight %}
+        </li>
+        <li>
+          <kbd>sudo yum install -y nginx</kbd><br/>
+          <kbd>> sudo usermod -G nginx user</kbd>
+        </li>
+        <li><kbd>sudo systemctl enable nginx</kbd></li>
+        <li><kbd>sudo systemctl start nginx</kbd></li>
+        <li><kbd>sudo systemctl (enable|disable|status|stop|start) nginx</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel14'>Firewall</a>
+    <div id='panel14' class='content'>
+      <ul class='square'>
+        <li><kbd>sudo systemctl (enable|disable|status|stop|start) firewalld</kbd></li>
+        <li><kbd>sudo firewall-cmd --permanent --zone=public --add-service=http</kbd></li>
+        <li><kbd>sudo firewall-cmd --permanent --zone=public --[add|remove]-port=3000/tcp </kbd></li>
+        <li><kbd>sudo firewall-cmd --reload</kbd></li>
+        <li><kbd>sudo firewall-cmd --zone=public --list-all</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel15'>SELinux</a>
+    <div id='panel15' class='content'>
+      <ul class='square'>
+        <li>
+          <kbd>sudo vim /etc/selinux/config</kbd>
+{% highlight vim %}
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=disabled
+{% endhighlight %}
+          <kbd>sudo reboot</kbd>
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel'></a>
     <div id='panel' class='content'>
       <ul class='square'>
         <li><h6></h6></li>
