@@ -54,7 +54,7 @@ end
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel2'>CentOS 7</a>
+    <a href='#panel2'>CentOS 7 - Extras</a>
     <div id='panel2' class='content'>
       <ul class='square'>
         <li><h6><a href='http://www.server-world.info/en/note?os=CentOS_7&p=openstack_kilo&f=1' target='_blank'>wiki</a></h6></li>
@@ -156,16 +156,152 @@ syntax on
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel3'>Extras</a>
+    <a href='#panel3'>CentOS 7 - Time Zone</a>
     <div id='panel3' class='content'>
       <ul class='square'>
-        <li><h6>sudo yum -y update</h6></li>
+        <li><h6>timedatectl list-timezones | grep For</h6></li>
+        <li><h6>sudo timedatectl set-timezone America/Fortaleza</h6></li>
+        <li><h6>timedatectl</h6></li>
       </ul>
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel4'>Nginx</a>
+    <a href='#panel4'>CentOS 7 - Language</a>
     <div id='panel4' class='content'>
+      <ul class='square'>
+        <li><h6>localectl</h6></li>
+        <li><h6>localectl list-locales | grep pt</h6></li>
+        <li><h6>localectl set-locale LANG=pt_BR.utf8</h6></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel5'>CentOS 7 - Keymap</a>
+    <div id='panel5' class='content'>
+      <ul class='square'>
+        <li><h6>localectl</h6></li>
+        <li><h6>localectl list-keymaps | grep br</h6></li>
+        <li><h6>localectl set-keymap br-abnt2</h6></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel6'>Roles Groups</a>
+    <div id='panel6' class='content'>
+      <ul class='square'>
+        <li>
+          <h6>Permisões e Grupos</h6>
+{% highlight vim %}
+# mudar permissões r-leitura w-escritra x-execução
+chmod [opções] modo arquivo
+
+chmod ugo(+ou-)rwx (arquivo ou pasta)
+
+chmod u=rwx, g=rwx, x=rwx (arquivo ou pasta)
+
+chmod (0-7)(0-7)(0-7) (arquivo ou pasta)
+
+# mudar usuario e grupo:
+chown [opções] usuário[:grupo] arquivo
+
+# mudar usuario
+chown [opções] usuario arquivo
+
+# mudar grupo
+chgrp [opções] grupo arquivo
+{% endhighlight %}
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel7'>New User</a>
+    <div id='panel7' class='content'>
+      <ul class='square'>
+        <li><h6>sudo su -</h6></li>
+        <li><h6>adduser deployer</h6></li>
+        <li><h6>passwd deployer</h6></li>
+        <li>
+          <h6>visudo</h6>
+{% highlight vim %}
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+%deployer       ALL=(ALL)       NOPASSWD: ALL
+{% endhighlight %}
+          <h6>> awk -F':' '{ print $1}' /etc/passwd</h6>
+          <h6>> cat /etc/passwd</h6>
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel8'>Group User</a>
+    <div id='panel8' class='content'>
+      <ul class='square'>
+        <li><h6>sudo su -</h6></li>
+        <li><h6>groupadd sshlogin</h6></li>
+        <li>
+          <h6>visudo</h6>
+{% highlight vim %}
+## Allows people in group wheel to run all commands
+%wheel          ALL=(ALL)       ALL
+%sshlogin       ALL=(ALL)       ALL
+{% endhighlight %}
+          <h6>> awk -F':' '{ print $1}' /etc/group</h6>
+          <h6>> cat /etc/group</h6>
+        </li>
+        <li>
+          <h6>usermod -G sshlogin deployer</h6>
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel9'>Configure SSH</a>
+    <div id='panel9' class='content'>
+      <ul class='square'>
+        <li><h6>sudo su -</h6></li>
+        <li>
+          <h6>vim /etc/ssh/sshd_config</h6>
+{% highlight vim %}
+PermitRootLogin no
+
+PermitEmptyPasswords no
+PasswordAuthentication yes
+{% endhighlight %}
+          <h6>> systemctl restart sshd </h6>
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel10'>Keys Authentication</a>
+    <div id='panel10' class='content'>
+      <ul class='square'>
+        <li><h6>sudo su - user #servidor</h6></li>
+        <li><h6>ssh-keygen -t rsa -C "$USER@$GROUPS" #servidor</h6></li>
+        <li><h6>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</h6></li>
+        <li><h6>cat id_rsa.pub >> ~/.ssh/authorized_keys #servidor</h6></li>
+        <li><h6>chmod 600 ~/.ssh/authorized_keys #servidor</h6></li>
+        <li>
+          <h6>sudo vim /etc/ssh/sshd_config</h6>
+{% highlight vim %}
+PasswordAuthentication no
+
+X11Forwarding no
+
+UseDNS no
+
+AllowGroups sshlogin
+{% endhighlight %}
+          <h6>> sudo systemctl restart sshd </h6>
+        </li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel'>Nginx</a>
+    <div id='panel' class='content'>
       <ul class='square'>
         <li><h6></h6></li>
       </ul>
