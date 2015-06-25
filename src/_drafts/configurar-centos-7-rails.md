@@ -376,10 +376,76 @@ SELINUX=disabled
     </div>
   </dd>
   <dd class='accordion-navigation'>
+    <a href='#panel16'>Memcached</a>
+    <div id='panel16' class='content'>
+      <ul class='square'>
+        <li><kbd>sudo yum install -y memcached</kbd></li>
+        <li><kbd>sudo systemctl enable memcached</kbd></li>
+        <li><kbd>sudo systemctl start memcached</kbd></li>
+        <li><kbd>sudo systemctl (enable|disable|status|stop|start) memcached</kbd></li>
+        <li><kbd>sudo vim /etc/sysconfig/memcached</kbd></li>
+        <li><kbd>memcached-tool</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel17'>Node JS</a>
+    <div id='panel17' class='content'>
+      <ul class='square'>
+        <li><kbd>sudo su -</kbd></li>
+        <li><kbd>curl -sL https://rpm.nodesource.com/setup | bash -</kbd></li>
+        <li><kbd>yum install -y nodejs</kbd></li>
+        <li><kbd>yum install -y gcc-c++ make</kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
+    <a href='#panel18'>PostgreSQL</a>
+    <div id='panel18' class='content'>
+      <ul class='square'>
+        <li><kbd>sudo su -</kbd></li>
+        <li><kbd><a href='http://yum.postgresql.org/repopackages.php' target='_blank' >repositório</a></kbd></li>
+        <li><kbd>rmp -iUvh [versão repositório]</kbd></li>
+        <li><kbd>yum -y update</kbd></li>
+        <li><kbd>yum install -y postgresql94-server.x86_64 postgresql94-libs.x86_64 postgresql94-contrib.x86_64 postgresql94-devel.x86_64</kbd></li>
+        <li><kbd>systemctl enable postgresql-9.4</kbd></li>
+        <li><kbd>/usr/pgsql-9.4/bin/postgresql94-setup initdb</kbd></li>
+        <li><kbd>systemctl start postgresql-9.4</kbd></li>
+        <li><kbd>sudo systemctl (enable|disable|status|stop|start) postgresql-9.4</kbd></li>
+        <li>
+          <kbd>su - postgres</kbd><br/>
+          <kbd>> psql</kbd><br/>
+          <kbd>> \password postgres</kbd>
+        </li>
+        <li><kbd>systemctl restart postgresql-9.4</kbd></li>
+        <li>
+          <kbd>vim /var/lib/pgsql/9.4/data/postgresql.conf</kbd>
+{% highlight vim %}
+listen_addresses = '*' # what IP address(es) to listen on;
+{% endhighlight %}
+        </li>
+        <li>
+          <kbd>vim /var/lib/pgsql/9.4/data/pg_hba.conf</kbd>
+{% highlight vim %}
+# "local" is for Unix domain socket connections only
+local   all             all                                     md5
+# IPv4 local connections:
+host    all             all             127.0.0.1/32            md5
+# IPv6 local connections:
+host    all             all             ::1/128                 md5
+
+host    all             all             0.0.0.0/0               md5
+{% endhighlight %}
+        </li>
+        <li><kbd></kbd></li>
+      </ul>
+    </div>
+  </dd>
+  <dd class='accordion-navigation'>
     <a href='#panel'></a>
     <div id='panel' class='content'>
       <ul class='square'>
-        <li><h6></h6></li>
+        <li><kbd></kbd></li>
       </ul>
     </div>
   </dd>
