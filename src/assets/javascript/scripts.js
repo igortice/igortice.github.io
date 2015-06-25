@@ -1,6 +1,6 @@
 // Load foundation
 (function () {
-  $(document).foundation();
+  $(document).foundation({accordion:{multi_expand: true}});
 }());
 
 // Animation body
