@@ -10,7 +10,7 @@ desc: 'Configurar CentOS 7 com Rails'
 keywords: ''
 ---
 
-Este Post é uma documentação base para configurar uma máquina CentOS 7 com os seguintes recursos:
+Este Post é uma documentação base para configurar uma máquina **CentOS 7** com os seguintes recursos:
 
 <div class='message'>
   <ul class='disc'>
@@ -29,7 +29,7 @@ Este Post é uma documentação base para configurar uma máquina CentOS 7 com o
 
 <dl class='accordion' data-accordion>
   <dd class='accordion-navigation'>
-    <a href='#panel1'>Vagrant</a>
+    <a href='#panel1'><span class='label'>Vagrant</span></a>
     <div id='panel1' class='content'>
       <ul class='square'>
         <li><kbd>download <a href='http://www.vagrantbox.es/' target='_blank'>CentOS 7</a></kbd></li>
@@ -54,7 +54,7 @@ end
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel2'>CentOS 7 - Extras</a>
+    <a href='#panel2'><span class='label'>CentOS 7 - Extras</span></a>
     <div id='panel2' class='content'>
       <ul class='square'>
         <li><kbd><a href='http://www.server-world.info/en/note?os=CentOS_7&p=openstack_kilo&f=1' target='_blank'>wiki</a></kbd></li>
@@ -67,9 +67,8 @@ end
           <kbd>sudo yum install -y lsof</kbd>
 {% highlight vim %}
 lsof -i -P | grep -i listen
-{% endhighlight %}          
+{% endhighlight %}
         </li>
-        <li><kbd>sudo yum install -y screen</kbd></li>
         <li>
           <kbd>sudo yum install -y vim-enhanced</kbd><br/>
           <kbd>> sudo vi /etc/profile</kbd>
@@ -158,7 +157,7 @@ syntax on
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel3'>CentOS 7 - Time Zone</a>
+    <a href='#panel3'><span class='label'>CentOS 7 - Time Zone</span></a>
     <div id='panel3' class='content'>
       <ul class='square'>
         <li><kbd>timedatectl list-timezones | grep For</kbd></li>
@@ -168,7 +167,7 @@ syntax on
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel4'>CentOS 7 - Language</a>
+    <a href='#panel4'><span class='label'>CentOS 7 - Language</span></a>
     <div id='panel4' class='content'>
       <ul class='square'>
         <li><kbd>localectl</kbd></li>
@@ -178,7 +177,7 @@ syntax on
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel5'>CentOS 7 - Keymap</a>
+    <a href='#panel5'><span class='label'>CentOS 7 - Keymap</span></a>
     <div id='panel5' class='content'>
       <ul class='square'>
         <li><kbd>localectl</kbd></li>
@@ -188,7 +187,7 @@ syntax on
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel6'>Roles Groups</a>
+    <a href='#panel6'><span class='label'>Roles Groups</span></a>
     <div id='panel6' class='content'>
       <ul class='square'>
         <li>
@@ -217,7 +216,7 @@ chgrp [opções] grupo arquivo
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel7'>New User</a>
+    <a href='#panel7'><span class='label'>New User</span></a>
     <div id='panel7' class='content'>
       <ul class='square'>
         <li><kbd>sudo su -</kbd></li>
@@ -237,7 +236,7 @@ chgrp [opções] grupo arquivo
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel8'>Group User</a>
+    <a href='#panel8'><span class='label'>Group User</span></a>
     <div id='panel8' class='content'>
       <ul class='square'>
         <li><kbd>sudo su -</kbd></li>
@@ -259,7 +258,7 @@ chgrp [opções] grupo arquivo
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel9'>Configure SSH</a>
+    <a href='#panel9'><span class='label'>Configure SSH</span></a>
     <div id='panel9' class='content'>
       <ul class='square'>
         <li><kbd>sudo su -</kbd></li>
@@ -277,12 +276,15 @@ PasswordAuthentication yes
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel10'>Keys Authentication</a>
+    <a href='#panel10'><span class='label'>Keys Authentication</span></a>
     <div id='panel10' class='content'>
       <ul class='square'>
         <li><kbd>sudo su - user #servidor</h6></li>
         <li><kbd>ssh-keygen -t rsa -C "$USER@$GROUPS" #servidor</kbd></li>
-        <li><kbd>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</kbd></li>
+        <li>
+          <kbd>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</kbd><br/>
+          <kbd>> ssh-keygen -R hostname #if client problem host</kbd>
+        </li>
         <li><kbd>cat id_rsa.pub >> ~/.ssh/authorized_keys #servidor</kbd></li>
         <li><kbd>chmod 600 ~/.ssh/authorized_keys #servidor</kbd></li>
         <li>
@@ -302,7 +304,7 @@ AllowGroups sshlogin
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel11'>Git</a>
+    <a href='#panel11'><span class='label'>Git</span></a>
     <div id='panel11' class='content'>
       <ul class='square'>
         <li><kbd>sudo yum install - y git</kbd></li>
@@ -310,7 +312,7 @@ AllowGroups sshlogin
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel12'>Services</a>
+    <a href='#panel12'><span class='label'>Services</span></a>
     <div id='panel12' class='content'>
       <ul class='square'>
         <li><kbd>systemctl -t service</kbd></li>
@@ -321,7 +323,7 @@ AllowGroups sshlogin
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel13'>Nginx</a>
+    <a href='#panel13'><span class='label'>Nginx<span></a>
     <div id='panel13' class='content'>
       <ul class='square'>
         <li>
@@ -345,7 +347,7 @@ enabled=1
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel14'>Firewall</a>
+    <a href='#panel14'><span class='label'>Firewall<span></a>
     <div id='panel14' class='content'>
       <ul class='square'>
         <li><kbd>sudo systemctl (enable|disable|status|stop|start) firewalld</kbd></li>
@@ -357,7 +359,7 @@ enabled=1
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel15'>SELinux</a>
+    <a href='#panel15'><span class='label'>SELinux</span></a>
     <div id='panel15' class='content'>
       <ul class='square'>
         <li>
@@ -376,7 +378,7 @@ SELINUX=disabled
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel16'>Memcached</a>
+    <a href='#panel16'><span class='label'>Memcached</span></a>
     <div id='panel16' class='content'>
       <ul class='square'>
         <li><kbd>sudo yum install -y memcached</kbd></li>
@@ -389,7 +391,7 @@ SELINUX=disabled
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel17'>Node JS</a>
+    <a href='#panel17'><span class='label'>Node JS</span></a>
     <div id='panel17' class='content'>
       <ul class='square'>
         <li><kbd>sudo su -</kbd></li>
@@ -400,12 +402,12 @@ SELINUX=disabled
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel18'>PostgreSQL</a>
+    <a href='#panel18'><span class='label'>PostgreSQL</span></a>
     <div id='panel18' class='content'>
       <ul class='square'>
         <li><kbd>sudo su -</kbd></li>
         <li><kbd><a href='http://yum.postgresql.org/repopackages.php' target='_blank' >repositório</a></kbd></li>
-        <li><kbd>rmp -iUvh [versão repositório]</kbd></li>
+        <li><kbd>rpm -iUvh [versão repositório]</kbd></li>
         <li><kbd>yum -y update</kbd></li>
         <li><kbd>yum install -y postgresql94-server.x86_64 postgresql94-libs.x86_64 postgresql94-contrib.x86_64 postgresql94-devel.x86_64</kbd></li>
         <li><kbd>systemctl enable postgresql-9.4</kbd></li>
@@ -442,7 +444,7 @@ host    all             all             0.0.0.0/0               md5
     </div>
   </dd>
   <dd class='accordion-navigation'>
-    <a href='#panel19'>RVM, Ruby 2.X</a>
+    <a href='#panel19'><span class='label'>RVM, Ruby 2.X</span></a>
     <div id='panel19' class='content'>
       <ul class='square'>
         <li>
@@ -455,9 +457,7 @@ host    all             all             0.0.0.0/0               md5
         <li><kbd>rvm list known</kbd></li>
         <li>
           <kbd>rvm install ruby</kbd><br/>
-          <kbd>> gem install bundle</kbd><br/>
-          <kbd>> gem install pry</kbd><br/>
-          <kbd>> gem install awesome_print</kbd><br/>
+          <kbd>> gem install bundle pry awesome_print</kbd><br/>
           <kbd>vim ~/.pryrc</kbd>
 {% highlight vim %}
 Pry.config.prompt = proc do |obj, level, _|

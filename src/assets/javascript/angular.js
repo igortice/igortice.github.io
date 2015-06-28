@@ -1,1 +1,1 @@
-/home/igor/Desenvolvimento/Projetos/Web/igortice.github.io/src/_bower_components/angular/angular.js
+/Users/igortice/Desenvolvimento/Projetos/Web/igortice.github.io/src/_bower_components/angular/angular.js
