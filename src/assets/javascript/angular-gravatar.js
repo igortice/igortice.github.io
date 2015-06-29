@@ -1,1 +1,0 @@
-/Users/igortice/Desenvolvimento/Projetos/Web/igortice.github.io/src/_bower_components/angular-gravatar/build/angular-gravatar.js
