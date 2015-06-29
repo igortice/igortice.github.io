@@ -4,7 +4,7 @@
  <title>Blog Igor Rocha</title>
  <link href="igortice.com.br/atom.xml" rel="self"/>
  <link href="igortice.com.br/"/>
- <updated>2015-06-23T15:18:05-03:00</updated>
+ <updated>2015-06-29T15:30:30-03:00</updated>
  <id>igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
@@ -13,11 +13,517 @@
 
  
  <entry>
+   <title>Configurar CentOS 7 com Rails</title>
+   <link href="igortice.com.br/documentação/configurar-centos-7-rails"/>
+   <updated>2015-06-29T00:00:00-03:00</updated>
+   <id>igortice.com.br/documentação/configurar-centos-7-rails</id>
+   <content type="html">&lt;p&gt;Este Post é uma documentação base para configurar uma máquina &lt;strong&gt;CentOS 7&lt;/strong&gt; com os seguintes recursos:&lt;/p&gt;
+
+&lt;div class=&#39;message&#39;&gt;
+  &lt;ul class=&#39;disc&#39;&gt;
+    &lt;li&gt;&lt;strong&gt;Vagrant&lt;/strong&gt; com CentOS 7.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Dependências&lt;/strong&gt; básicas.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Segurança&lt;/strong&gt; do servidor.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;RVM&lt;/strong&gt; para Rails.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;PostgreSQL&lt;/strong&gt; database.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;Nginx&lt;/strong&gt; Servidor de Aplicação.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;!--more--&gt;
+
+&lt;hr/&gt;
+
+&lt;dl class=&#39;accordion&#39; data-accordion&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel1&#39;&gt;&lt;span class=&#39;label&#39;&gt;Vagrant&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel1&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;download &lt;a href=&#39;http://www.vagrantbox.es/&#39; target=&#39;_blank&#39;&gt;CentOS 7&lt;/a&gt;&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;vagrant box add {title} {url}&lt;/h6&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;mkdir projectname&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;cd projectname&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;vagrant init {title}&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;vim Vagrantfile&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;config.vm.network &lt;span class=&quot;s2&quot;&gt;&quot;private_network&quot;&lt;/span&gt;, ip: &lt;span class=&quot;s2&quot;&gt;&quot;192.168.33.10&quot;&lt;/span&gt;
+
+config.vm.provider &lt;span class=&quot;s2&quot;&gt;&quot;virtualbox&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; |vb|
+  vb.name &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;vm_ssp&quot;&lt;/span&gt;
+  vb.customize &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;modifyvm&quot;&lt;/span&gt;, :id, &lt;span class=&quot;s2&quot;&gt;&quot;--memory&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;4096&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+end&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;vagrant up&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;vagrant ssh&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel2&#39;&gt;&lt;span class=&#39;label&#39;&gt;CentOS 7 - Extras&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel2&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;&lt;a href=&#39;http://www.server-world.info/en/note?os=CentOS_7&amp;p=openstack_kilo&amp;f=1&#39; target=&#39;_blank&#39;&gt;wiki&lt;/a&gt;&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum update -y&lt;/h6&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install -y bash-completion&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install -y net-tools&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install -y screen&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install -y nano&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo yum install -y lsof&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;lsof &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;P &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;i&lt;/span&gt; listen&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo yum install -y vim-enhanced&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; sudo vi /etc/profile&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;# add at the last line
+alias &lt;span class=&quot;k&quot;&gt;vi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;vim&#39;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;&gt; source /etc/profile&lt;/kbd&gt;&lt;br/&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo vim /etc/vimrc&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span class=&quot;c&quot;&gt;&quot; Show partial command in status line.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; showcmd
+
+&lt;span class=&quot;c&quot;&gt;&quot; Enable the use of the mouse.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; mouse&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;a&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Specify encoding&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; encoding&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;utf&lt;span class=&quot;m&quot;&gt;-8&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Specify file encoding&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; fileencoding&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;utf&lt;span class=&quot;m&quot;&gt;-8&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Specify file formats&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; fileformats&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;unix&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;dos&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Show the line and column number of the cursor position,&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; ruler
+
+&lt;span class=&quot;c&quot;&gt;&quot; When set to &#39;dark&#39;, Vim will try to use colors that look&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; background&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dark&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Take backup&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; backup
+
+&lt;span class=&quot;c&quot;&gt;&quot; Specify backup directory&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; backupdir&lt;span class=&quot;p&quot;&gt;=~&lt;/span&gt;/backup
+
+&lt;span class=&quot;c&quot;&gt;&quot; Maximum width of text that is being inserted. A longer&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; textwidth&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;110&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Number of spaces that a &amp;lt;Tab&amp;gt; in the file counts for.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; tabstop&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Number of spaces to use for each step of autoindent.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; shiftwidth&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Use the appropriate number of spaces to insert a &amp;lt;Tab&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; expandtab
+
+&lt;span class=&quot;c&quot;&gt;&quot; When on, a &amp;lt;Tab&amp;gt; in front of a line inserts blanks&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; smarttab
+
+&lt;span class=&quot;c&quot;&gt;&quot; Show line numbers.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;number&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; highlights parentheses&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; showmatch
+
+&lt;span class=&quot;c&quot;&gt;&quot; When there is a previous search pattern, highlight all&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; hlsearch
+
+&lt;span class=&quot;c&quot;&gt;&quot; While typing a search command, show immediately where the&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; incsearch
+
+&lt;span class=&quot;c&quot;&gt;&quot; Ignore case in search patterns.&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; ignorecase
+
+&lt;span class=&quot;c&quot;&gt;&quot; Override the &#39;ignorecase&#39; option if the search pattern&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; smartcase
+
+&lt;span class=&quot;c&quot;&gt;&quot; Influences the working of &amp;lt;BS&amp;gt;, &amp;lt;Del&amp;gt;, CTRL-W&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; backspace&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; Copy indent from current line when starting a new line&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;&quot;set autoindent&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;&quot; wrap lines&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;set&lt;/span&gt; wrap
+
+&lt;span class=&quot;k&quot;&gt;filetype&lt;/span&gt; plugin indent &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt;
+syntax &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel3&#39;&gt;&lt;span class=&#39;label&#39;&gt;CentOS 7 - Time Zone&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel3&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;timedatectl list-timezones | grep For&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo timedatectl set-timezone America/Fortaleza&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;timedatectl&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel4&#39;&gt;&lt;span class=&#39;label&#39;&gt;CentOS 7 - Language&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel4&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl list-locales | grep pt&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl set-locale LANG=pt_BR.utf8&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel5&#39;&gt;&lt;span class=&#39;label&#39;&gt;CentOS 7 - Keymap&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel5&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl list-keymaps | grep br&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;localectl set-keymap br-abnt2&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel6&#39;&gt;&lt;span class=&#39;label&#39;&gt;Roles Groups&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel6&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;Permissões e Grupos&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;# mudar permissões &lt;span class=&quot;k&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;leitura &lt;span class=&quot;k&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;escritra &lt;span class=&quot;k&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;-&lt;/span&gt;execuçã&lt;span class=&quot;k&quot;&gt;o&lt;/span&gt;
+chmod &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;opções&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; modo arquivo
+
+chmod ugo&lt;span class=&quot;p&quot;&gt;(+&lt;/span&gt;ou&lt;span class=&quot;p&quot;&gt;-)&lt;/span&gt;rwx &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;arquivo ou pasta&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+chmod &lt;span class=&quot;k&quot;&gt;u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;rwx&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;rwx&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;rwx &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;arquivo ou pasta&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+chmod &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0-7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0-7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0-7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;arquivo ou pasta&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+# mudar usuario &lt;span class=&quot;k&quot;&gt;e&lt;/span&gt; grupo&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+chown &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;opções&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; usuário&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;grupo&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; arquivo
+
+# mudar usuario
+chown &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;opções&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; usuario arquivo
+
+# mudar grupo
+chgrp &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;opções&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; grupo arquivo&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel7&#39;&gt;&lt;span class=&#39;label&#39;&gt;New User&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel7&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;adduser deployer&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;passwd deployer&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;visudo&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;## Same thing without &lt;span class=&quot;k&quot;&gt;a&lt;/span&gt; password
+# %wheel        ALL&lt;span class=&quot;p&quot;&gt;=(&lt;/span&gt;ALL&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       NOPASSWD&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; ALL
+%deployer       ALL&lt;span class=&quot;p&quot;&gt;=(&lt;/span&gt;ALL&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       NOPASSWD&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; ALL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;&gt; awk -F&#39;:&#39; &#39;{ print $1}&#39; /etc/passwd&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; cat /etc/passwd&lt;/kbd&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel8&#39;&gt;&lt;span class=&#39;label&#39;&gt;Group User&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel8&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;groupadd sshlogin&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;visudo&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;## Allows people &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; group wheel &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; run &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt; commands
+%wheel          ALL&lt;span class=&quot;p&quot;&gt;=(&lt;/span&gt;ALL&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       ALL
+%sshlogin       ALL&lt;span class=&quot;p&quot;&gt;=(&lt;/span&gt;ALL&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;       ALL&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;&gt; awk -F&#39;:&#39; &#39;{ print $1}&#39; /etc/group&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; cat /etc/group&lt;/kbd&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;usermod -a -G sshlogin deployer&lt;/kbd&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel9&#39;&gt;&lt;span class=&#39;label&#39;&gt;Configure SSH&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel9&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;vim /etc/ssh/sshd_config&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;PermitRootLogin no
+
+PermitEmptyPasswords no
+PasswordAuthentication yes&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;&gt; systemctl restart sshd &lt;/kbd&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel10&#39;&gt;&lt;span class=&#39;label&#39;&gt;Keys Authentication&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel10&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su - user #servidor&lt;/h6&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;ssh-keygen -t rsa -C &quot;$USER@$GROUPS&quot; #servidor&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; ssh-keygen -R hostname #if client problem host&lt;/kbd&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys #servidor&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;chmod 600 ~/.ssh/authorized_keys #servidor&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo vim /etc/ssh/sshd_config&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;PasswordAuthentication no
+
+X11Forwarding no
+
+UseDNS no
+
+AllowGroups sshlogin&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;&gt; sudo systemctl restart sshd &lt;/kbd&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel11&#39;&gt;&lt;span class=&#39;label&#39;&gt;Git&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel11&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install - y git&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel12&#39;&gt;&lt;span class=&#39;label&#39;&gt;Services&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel12&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl -t service&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl list-unit-files -t service&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl (enable|disable|status|stop|start) service&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;chkconfig --list&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel13&#39;&gt;&lt;span class=&#39;label&#39;&gt;Nginx&lt;span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel13&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo vim /etc/yum.repos.d/nginx.repo&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;nginx&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+name&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;nginx repo
+baseurl&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;http&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;//&lt;/span&gt;nginx&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;org&lt;span class=&quot;sr&quot;&gt;/packages/&lt;/span&gt;centos&lt;span class=&quot;sr&quot;&gt;/$releasever/&lt;/span&gt;$basearch/
+gpgcheck&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;
+enabled&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo yum install -y nginx&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; sudo usermod -a -G nginx user&lt;/kbd&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl enable nginx&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl start nginx&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl (enable|disable|status|stop|start) nginx&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel14&#39;&gt;&lt;span class=&#39;label&#39;&gt;Firewall&lt;span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel14&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl (enable|disable|status|stop|start) firewalld&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo firewall-cmd --permanent --zone=public --add-service=http&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo firewall-cmd --permanent --zone=public --[add|remove]-port=3000/tcp &lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo firewall-cmd --reload&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo firewall-cmd --zone=public --list-all&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel15&#39;&gt;&lt;span class=&#39;label&#39;&gt;SELinux&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel15&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;sudo vim /etc/selinux/config&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;# This &lt;span class=&quot;k&quot;&gt;file&lt;/span&gt; controls the state of SELinux &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt; the system&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+# SELINUX&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; can take one of these three values&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+#     enforcing &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; SELinux security policy &lt;span class=&quot;k&quot;&gt;is&lt;/span&gt; enforced&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+#     permissive &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; SELinux prints warnings instead of enforcing&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+#     disabled &lt;span class=&quot;p&quot;&gt;-&lt;/span&gt; No SELinux policy &lt;span class=&quot;k&quot;&gt;is&lt;/span&gt; loaded&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;
+SELINUX&lt;span class=&quot;p&quot;&gt;=&lt;/span&gt;disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;sudo reboot&lt;/kbd&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel16&#39;&gt;&lt;span class=&#39;label&#39;&gt;Memcached&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel16&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo yum install -y memcached&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl enable memcached&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl start memcached&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl (enable|disable|status|stop|start) memcached&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo vim /etc/sysconfig/memcached&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;memcached-tool&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel17&#39;&gt;&lt;span class=&#39;label&#39;&gt;Node JS&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel17&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;curl -sL https://rpm.nodesource.com/setup | bash -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;yum install -y nodejs&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;yum install -y gcc-c++ make&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel18&#39;&gt;&lt;span class=&#39;label&#39;&gt;PostgreSQL&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel18&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo su -&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;&lt;a href=&#39;http://yum.postgresql.org/repopackages.php&#39; target=&#39;_blank&#39; &gt;repositório&lt;/a&gt;&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;rpm -iUvh [versão repositório]&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;yum -y update&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;yum install -y postgresql94-server.x86_64 postgresql94-libs.x86_64 postgresql94-contrib.x86_64 postgresql94-devel.x86_64&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl enable postgresql-9.4&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;/usr/pgsql-9.4/bin/postgresql94-setup initdb&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl start postgresql-9.4&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;sudo systemctl (enable|disable|status|stop|start) postgresql-9.4&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;su - postgres&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; psql&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; \password postgres&lt;/kbd&gt;
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;vim /var/lib/pgsql/9.4/data/postgresql.conf&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;listen_addresses &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;*&#39;&lt;/span&gt; # what IP address&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;es&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;to&lt;/span&gt; listen &lt;span class=&quot;k&quot;&gt;on&lt;/span&gt;;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;vim /var/lib/pgsql/9.4/data/pg_hba.conf&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;# &lt;span class=&quot;s2&quot;&gt;&quot;local&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; Unix domain socket connections &lt;span class=&quot;k&quot;&gt;only&lt;/span&gt;
+local   &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;                                     md5
+# IPv4 local connections&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+host    &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;m&quot;&gt;127&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;32&lt;/span&gt;            md5
+# IPv6 local connections&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+host    &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;128&lt;/span&gt;                 md5
+
+host    &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;k&quot;&gt;all&lt;/span&gt;             &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;/&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;               md5&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;systemctl restart postgresql-9.4&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;echo &#39;export PATH=$PATH:/usr/pgsql-9.4/bin/&#39; &gt;&gt; /etc/bashrc &amp;&amp; source /etc/bashrc&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel19&#39;&gt;&lt;span class=&#39;label&#39;&gt;RVM, Ruby 2.X&lt;/span&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel19&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;\curl -L https://get.rvm.io | sudo bash -s stable #global&lt;/kbd&gt;&lt;br&gt;
+          &lt;kbd&gt;&gt; sudo usermod -a -G rvm deployer&lt;/kbd&gt;
+        &lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;logout/login&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;type rvm | head -n 1&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;rvm requirements&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;kbd&gt;rvm list known&lt;/kbd&gt;&lt;/li&gt;
+        &lt;li&gt;
+          &lt;kbd&gt;rvm install ruby&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;&gt; gem install bundle pry awesome_print&lt;/kbd&gt;&lt;br/&gt;
+          &lt;kbd&gt;vim ~/.pryrc&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;Pry&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;config&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;prompt &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; proc &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;obj&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; level&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+  prompt &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt;
+  prompt &lt;span class=&quot;p&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;rails[#{Rails.version}]@&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; defined?&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;Rails&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  prompt &lt;span class=&quot;p&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;ruby[#{RUBY_VERSION}]&quot;&lt;/span&gt;
+  &lt;span class=&quot;c&quot;&gt;&quot;#{prompt} (#{obj})&amp;gt; &quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+Pry&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;config&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;exception_handler &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; proc &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;output&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; exception&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; _&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt;
+  output&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;puts &lt;span class=&quot;s2&quot;&gt;&quot;\e[31m#{exception.class}: #{exception.message}&quot;&lt;/span&gt;
+  output&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;puts &lt;span class=&quot;s2&quot;&gt;&quot;from #{exception.backtrace.first}\e[0m&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; defined?&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;Rails&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  require &lt;span class=&quot;s2&quot;&gt;&quot;rails/console/app&quot;&lt;/span&gt;
+  require &lt;span class=&quot;s2&quot;&gt;&quot;rails/console/helpers&quot;&lt;/span&gt;
+  TOPLEVEL_BINDING&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;eval&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;self&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;extend &lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;Rails&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;ConsoleMethods
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+begin
+  require &lt;span class=&quot;s2&quot;&gt;&quot;awesome_print&quot;&lt;/span&gt;
+  Pry&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;config&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;print &lt;span class=&quot;p&quot;&gt;=&lt;/span&gt; proc &lt;span class=&quot;p&quot;&gt;{|&lt;/span&gt;output&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; value&lt;span class=&quot;p&quot;&gt;|&lt;/span&gt; Pry&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;Helpers&lt;span class=&quot;p&quot;&gt;::&lt;/span&gt;BaseHelpers&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;stagger_output&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;=&amp;gt; #{value.ai}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; output&lt;span class=&quot;p&quot;&gt;)}&lt;/span&gt;
+rescue LoadError &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; err
+   warn &lt;span class=&quot;s2&quot;&gt;&quot;=&amp;gt; Unable to load awesome_print&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+          &lt;kbd&gt;vim ~/.irbrc&lt;/kbd&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-vim&quot; data-lang=&quot;vim&quot;&gt;begin
+  require &lt;span class=&quot;s2&quot;&gt;&quot;pry&quot;&lt;/span&gt;
+  Pry&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;start&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;exit&lt;/span&gt;
+rescue LoadError &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;e&lt;/span&gt;
+  warn &lt;span class=&quot;s2&quot;&gt;&quot;=&amp;gt; Unable to load pry&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;
+  &lt;!--&lt;dd class=&#39;accordion-navigation&#39;&gt;
+    &lt;a href=&#39;#panel&#39;&gt;&lt;/a&gt;
+    &lt;div id=&#39;panel&#39; class=&#39;content&#39;&gt;
+      &lt;ul class=&#39;square&#39;&gt;
+        &lt;li&gt;&lt;kbd&gt;&lt;/kbd&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/dd&gt;&amp;ndash;&gt;
+&lt;/dl&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>Expressão Regular CPF CNPJ</title>
    <link href="igortice.com.br/expressao-regular-cpf-cnpj"/>
    <updated>2015-06-23T00:00:00-03:00</updated>
    <id>igortice.com.br/expressao-regular-cpf-cnpj</id>
-   <content type="html">&lt;p&gt;Neste Post vamos ver como criar uma &lt;strong&gt;Expressão Regular&lt;/strong&gt; que possa ser usada para validar tanto um 
+   <content type="html">&lt;p&gt;Neste Post vamos ver como criar uma &lt;strong&gt;Expressão Regular&lt;/strong&gt; que possa ser usada para validar tanto um
 &lt;strong&gt;CPF&lt;/strong&gt; como um &lt;strong&gt;CNPJ&lt;/strong&gt; ou os dois a mesmo tempo.&lt;/p&gt;
 
 &lt;!--more--&gt;
@@ -28,8 +534,8 @@
 
 &lt;p&gt;Se fosse &lt;strong&gt;CNPJ&lt;/strong&gt; devereia seguir esse estilo: &lt;kbd&gt;XX.XXX.XXX/XXXX-XX&lt;/kbd&gt;&lt;/p&gt;
 
-&lt;p&gt;Então acabei estudado o material fornecido no Site do 
-&lt;a href=&#39;http://aurelio.net/regex/guia/&#39; target=&#39;_blank&#39;&gt;Aurelio Marinho Vargas&lt;/a&gt; 
+&lt;p&gt;Então acabei estudado o material fornecido no Site do
+&lt;a href=&#39;http://aurelio.net/regex/guia/&#39; target=&#39;_blank&#39;&gt;Aurelio Marinho Vargas&lt;/a&gt;
 e cheguei as seguintes expressões:&lt;/p&gt;
 
 &lt;p&gt;Para &lt;strong&gt;CPF&lt;/strong&gt; a expressão seria essa:&lt;/p&gt;
@@ -54,7 +560,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
         &lt;div class=&quot;row&quot;&gt;
           &lt;div class=&quot;large-6 columns&quot;&gt;
             &lt;label class=&quot;error&quot;&gt;CPF
-              &lt;input ng-model=&quot;form.cpf&quot; ng-pattern=&quot;/^\d{3}.\d{3}.\d{3}-\d{2}$/&quot; name=&quot;cpf&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX&quot; required /&gt;
+              &lt;input autocomplete=&quot;off&quot; ng-model=&quot;form.cpf&quot; ng-pattern=&quot;/^\d{3}.\d{3}.\d{3}-\d{2}$/&quot; name=&quot;cpf&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX&quot; required /&gt;
             &lt;/label&gt;
             &lt;small class=&quot;error&quot;&gt;
               XXX.XXX.XXX-XX
@@ -65,7 +571,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
           &lt;/div&gt;
           &lt;div class=&quot;large-6 columns error&quot;&gt;
             &lt;label class=&quot;error&quot;&gt;CPF
-              &lt;input ng-model=&quot;form.cnpj&quot; ng-pattern=&quot;/^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$/&quot; name=&quot;cnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XX.XXX.XXX/XXXX-XX&quot; required /&gt;
+              &lt;input autocomplete=&quot;off&quot; ng-model=&quot;form.cnpj&quot; ng-pattern=&quot;/^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$/&quot; name=&quot;cnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XX.XXX.XXX/XXXX-XX&quot; required /&gt;
             &lt;/label&gt;
             &lt;small class=&quot;error&quot;&gt;
               XX.XXX.XXX/XXXX-XX
@@ -76,7 +582,7 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
           &lt;/div&gt;
           &lt;div class=&quot;large-12 columns error&quot;&gt;
             &lt;label class=&quot;error&quot;&gt;CPF ou CNPJ
-              &lt;input ng-model=&quot;form.cpfCnpj&quot; ng-pattern=&quot;/(^\d{3}.\d{3}.\d{3}-\d{2}$)|(^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$)/&quot; name=&quot;cpfCnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX&quot; required /&gt;
+              &lt;input autocomplete=&quot;off&quot; ng-model=&quot;form.cpfCnpj&quot; ng-pattern=&quot;/(^\d{3}.\d{3}.\d{3}-\d{2}$)|(^\d{2}.\d{3}.\d{3}/\d{4}-\d{2}$)/&quot; name=&quot;cpfCnpj&quot; type=&quot;text&quot; class=&quot;error&quot; placeholder=&quot;XXX.XXX.XXX-XX ou XX.XXX.XXX/XXXX-XX&quot; required /&gt;
             &lt;/label&gt;
             &lt;small class=&quot;error&quot; ng-show=&quot;formCpfCnpj.cpfCnpj.$viewValue&quot;&gt;
               Formato

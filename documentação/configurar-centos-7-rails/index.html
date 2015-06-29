@@ -1,0 +1,151 @@
+<!DOCTYPE html><html ng-app=mainApp xmlns=http://www.w3.org/1999/xhtml xml:lang=pt lang=pt-br><head><link href=http://gmpg.org/xfn/11 rel=profile><meta http-equiv=content-type content="text/html; charset=utf-8"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=description itemprop=description content="Configurar CentOS 7 com Rails"><meta name=keywords itemprop=keywords content="centos 7, rails centos 7, postgres centos 7, rvm centos 7, nginx centos 7"><title>Configurar CentOS 7 com Rails | Igor Rocha</title><link rel=stylesheet href=/assets/stylesheets/style.min.c5318a4b.css><link rel=stylesheet href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"><link rel="shortcut icon" href=/assets/images/favicon.ico><link rel=alternate type=application/rss+xml title=RSS href=/atom.xml></head><body class="theme-base-0d layout-reverse" ng-controller="BaseController as baseCtrl"><input type=checkbox class=sidebar-checkbox id=sidebar-checkbox><div class=sidebar id=sidebar><div class=sidebar-item><div class=row><a class=gravatar><img gravatar-src="'igortice@gmail.com'" gravatar-size=100></a></div></div><nav class=sidebar-nav><a class=sidebar-nav-item href="/"><i class="fa fa-home"></i> Início</a> <a class=sidebar-nav-item href=/sobre><i class="fa fa-flag"></i> Sobre</a> <span class=sidebar-nav-item><a href=https://twitter.com/igortice><i class="fa fa-twitter"></i></a> | <a href=mailto:igortice@gmail.com><i class="fa fa-envelope"></i></a></span></nav><div class=sidebar-item><span class=subheader>&copy; 2015, por Igor Rocha.</span></div></div><div class=wrap><div class="row container"><div class="medium-10 medium-centered large-8 large-centered columns"><h2><a href="/" title=Home>Igor Rocha</a> [ <small>Web Developer</small> ]</h2></div></div><hr class="topo-corpo"><div class=row><div class="medium-10 medium-centered large-8 large-centered columns animsition" role=content><div class=post><h1 class=post-title>Configurar CentOS 7 com Rails</h1><span class=post-date>- 29/06/2015, por <em>Igor Rocha</em></span><p>Este Post é uma documentação base para configurar uma máquina <strong>CentOS 7</strong> com os seguintes recursos:</p><div class=message><ul class=disc><li><strong>Vagrant</strong> com CentOS 7.</li><li><strong>Dependências</strong> básicas.</li><li><strong>Segurança</strong> do servidor.</li><li><strong>RVM</strong> para Rails.</li><li><strong>PostgreSQL</strong> database.</li><li><strong>Nginx</strong> Servidor de Aplicação.</li></ul></div><hr><dl class=accordion data-accordion><dd class=accordion-navigation><a href=#panel1><span class=label>Vagrant</span></a><div id=panel1 class=content><ul class=square><li><kbd>download <a href="http://www.vagrantbox.es/" target=_blank>CentOS 7</a></kbd></li><li><kbd>vagrant box add {title} {url}</kbd></li><li><kbd>mkdir projectname</kbd></li><li><kbd>cd projectname</kbd></li><li><kbd>vagrant init {title}</kbd></li><li><kbd>vim Vagrantfile</kbd><div class=highlight><pre><code class=language-shell data-lang=shell>config.vm.network <span class=s2>"private_network"</span>, ip: <span class=s2>"192.168.33.10"</span>
+
+config.vm.provider <span class=s2>"virtualbox"</span> <span class=k>do</span> |vb|
+  vb.name <span class=o>=</span> <span class=s2>"vm_ssp"</span>
+  vb.customize <span class=o>[</span><span class=s2>"modifyvm"</span>, :id, <span class=s2>"--memory"</span>, <span class=s2>"4096"</span><span class=o>]</span>
+end</code></pre></div></li><li><kbd>vagrant up</kbd></li><li><kbd>vagrant ssh</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel2><span class=label>CentOS 7 - Extras</span></a><div id=panel2 class=content><ul class=square><li><kbd><a href="http://www.server-world.info/en/note?os=CentOS_7&p=openstack_kilo&f=1" target=_blank>wiki</a></kbd></li><li><kbd>sudo yum update -y</kbd></li><li><kbd>sudo yum install -y bash-completion</kbd></li><li><kbd>sudo yum install -y net-tools</kbd></li><li><kbd>sudo yum install -y screen</kbd></li><li><kbd>sudo yum install -y nano</kbd></li><li><kbd>sudo yum install -y lsof</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>lsof <span class=p>-</span><span class=k>i</span> <span class=p>-</span>P <span class=p>|</span> <span class=k>grep</span> <span class=p>-</span><span class=k>i</span> listen</code></pre></div></li><li><kbd>sudo yum install -y vim-enhanced</kbd><br><kbd>> sudo vi /etc/profile</kbd><div class=highlight><pre><code class=language-vim data-lang=vim># add at the last line
+alias <span class=k>vi</span><span class=p>=</span><span class=s1>'vim'</span></code></pre></div><kbd>> source /etc/profile</kbd><br></li><li><kbd>sudo vim /etc/vimrc</kbd><div class=highlight><pre><code class=language-vim data-lang=vim><span class=c>" Show partial command in status line.</span>
+<span class=k>set</span> showcmd
+
+<span class=c>" Enable the use of the mouse.</span>
+<span class=k>set</span> mouse<span class=p>=</span><span class=k>a</span>
+
+<span class=c>" Specify encoding</span>
+<span class=k>set</span> encoding<span class=p>=</span>utf<span class=m>-8</span>
+
+<span class=c>" Specify file encoding</span>
+<span class=k>set</span> fileencoding<span class=p>=</span>utf<span class=m>-8</span>
+
+<span class=c>" Specify file formats</span>
+<span class=k>set</span> fileformats<span class=p>=</span>unix<span class=p>,</span>dos<span class=p>,</span>
+
+<span class=c>" Show the line and column number of the cursor position,</span>
+<span class=k>set</span> ruler
+
+<span class=c>" When set to 'dark', Vim will try to use colors that look</span>
+<span class=k>set</span> background<span class=p>=</span><span class=nb>dark</span>
+
+<span class=c>" Take backup</span>
+<span class=k>set</span> backup
+
+<span class=c>" Specify backup directory</span>
+<span class=k>set</span> backupdir<span class=p>=~</span>/backup
+
+<span class=c>" Maximum width of text that is being inserted. A longer</span>
+<span class=k>set</span> textwidth<span class=p>=</span><span class=m>110</span>
+
+<span class=c>" Number of spaces that a &lt;Tab&gt; in the file counts for.</span>
+<span class=k>set</span> tabstop<span class=p>=</span><span class=m>2</span>
+
+<span class=c>" Number of spaces to use for each step of autoindent.</span>
+<span class=k>set</span> shiftwidth<span class=p>=</span><span class=m>2</span>
+
+<span class=c>" Use the appropriate number of spaces to insert a &lt;Tab&gt;</span>
+<span class=k>set</span> expandtab
+
+<span class=c>" When on, a &lt;Tab&gt; in front of a line inserts blanks</span>
+<span class=k>set</span> smarttab
+
+<span class=c>" Show line numbers.</span>
+<span class=k>set</span> <span class=k>number</span>
+
+<span class=c>" highlights parentheses</span>
+<span class=k>set</span> showmatch
+
+<span class=c>" When there is a previous search pattern, highlight all</span>
+<span class=k>set</span> hlsearch
+
+<span class=c>" While typing a search command, show immediately where the</span>
+<span class=k>set</span> incsearch
+
+<span class=c>" Ignore case in search patterns.</span>
+<span class=k>set</span> ignorecase
+
+<span class=c>" Override the 'ignorecase' option if the search pattern</span>
+<span class=k>set</span> smartcase
+
+<span class=c>" Influences the working of &lt;BS&gt;, &lt;Del&gt;, CTRL-W</span>
+<span class=k>set</span> backspace<span class=p>=</span><span class=m>2</span>
+
+<span class=c>" Copy indent from current line when starting a new line</span>
+<span class=c>"set autoindent</span>
+
+<span class=c>" wrap lines</span>
+<span class=k>set</span> wrap
+
+<span class=k>filetype</span> plugin indent <span class=k>on</span>
+syntax <span class=k>on</span></code></pre></div></li></ul></div></dd><dd class=accordion-navigation><a href=#panel3><span class=label>CentOS 7 - Time Zone</span></a><div id=panel3 class=content><ul class=square><li><kbd>timedatectl list-timezones | grep For</kbd></li><li><kbd>sudo timedatectl set-timezone America/Fortaleza</kbd></li><li><kbd>timedatectl</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel4><span class=label>CentOS 7 - Language</span></a><div id=panel4 class=content><ul class=square><li><kbd>localectl</kbd></li><li><kbd>localectl list-locales | grep pt</kbd></li><li><kbd>localectl set-locale LANG=pt_BR.utf8</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel5><span class=label>CentOS 7 - Keymap</span></a><div id=panel5 class=content><ul class=square><li><kbd>localectl</kbd></li><li><kbd>localectl list-keymaps | grep br</kbd></li><li><kbd>localectl set-keymap br-abnt2</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel6><span class=label>Roles Groups</span></a><div id=panel6 class=content><ul class=square><li><kbd>Permissões e Grupos</kbd><div class=highlight><pre><code class=language-vim data-lang=vim># mudar permissões <span class=k>r</span><span class=p>-</span>leitura <span class=k>w</span><span class=p>-</span>escritra <span class=k>x</span><span class=p>-</span>execuçã<span class=k>o</span>
+chmod <span class=p>[</span>opções<span class=p>]</span> modo arquivo
+
+chmod ugo<span class=p>(+</span>ou<span class=p>-)</span>rwx <span class=p>(</span>arquivo ou pasta<span class=p>)</span>
+
+chmod <span class=k>u</span><span class=p>=</span>rwx<span class=p>,</span> <span class=k>g</span><span class=p>=</span>rwx<span class=p>,</span> <span class=k>x</span><span class=p>=</span>rwx <span class=p>(</span>arquivo ou pasta<span class=p>)</span>
+
+chmod <span class=p>(</span><span class=m>0-7</span><span class=p>)(</span><span class=m>0-7</span><span class=p>)(</span><span class=m>0-7</span><span class=p>)</span> <span class=p>(</span>arquivo ou pasta<span class=p>)</span>
+
+# mudar usuario <span class=k>e</span> grupo<span class=p>:</span>
+chown <span class=p>[</span>opções<span class=p>]</span> usuário<span class=p>[:</span>grupo<span class=p>]</span> arquivo
+
+# mudar usuario
+chown <span class=p>[</span>opções<span class=p>]</span> usuario arquivo
+
+# mudar grupo
+chgrp <span class=p>[</span>opções<span class=p>]</span> grupo arquivo</code></pre></div></li></ul></div></dd><dd class=accordion-navigation><a href=#panel7><span class=label>New User</span></a><div id=panel7 class=content><ul class=square><li><kbd>sudo su -</kbd></li><li><kbd>adduser deployer</kbd></li><li><kbd>passwd deployer</kbd></li><li><kbd>visudo</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>## Same thing without <span class=k>a</span> password
+# %wheel        ALL<span class=p>=(</span>ALL<span class=p>)</span>       NOPASSWD<span class=p>:</span> ALL
+%deployer       ALL<span class=p>=(</span>ALL<span class=p>)</span>       NOPASSWD<span class=p>:</span> ALL</code></pre></div><kbd>> awk -F':' '{ print $1}' /etc/passwd</kbd><br><kbd>> cat /etc/passwd</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel8><span class=label>Group User</span></a><div id=panel8 class=content><ul class=square><li><kbd>sudo su -</kbd></li><li><kbd>groupadd sshlogin</kbd></li><li><kbd>visudo</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>## Allows people <span class=k>in</span> group wheel <span class=k>to</span> run <span class=k>all</span> commands
+%wheel          ALL<span class=p>=(</span>ALL<span class=p>)</span>       ALL
+%sshlogin       ALL<span class=p>=(</span>ALL<span class=p>)</span>       ALL</code></pre></div><kbd>> awk -F':' '{ print $1}' /etc/group</kbd><br><kbd>> cat /etc/group</kbd></li><li><kbd>usermod -a -G sshlogin deployer</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel9><span class=label>Configure SSH</span></a><div id=panel9 class=content><ul class=square><li><kbd>sudo su -</kbd></li><li><kbd>vim /etc/ssh/sshd_config</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>PermitRootLogin no
+
+PermitEmptyPasswords no
+PasswordAuthentication yes</code></pre></div><kbd>> systemctl restart sshd</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel10><span class=label>Keys Authentication</span></a><div id=panel10 class=content><ul class=square><li><kbd>sudo su - user #servidor</kbd></li><li><kbd>ssh-keygen -t rsa -C "$USER@$GROUPS" #servidor</kbd></li><li><kbd>scp ~/.ssh/id_rsa.pub user@ip:/home/user/ #cliente</kbd><br><kbd>> ssh-keygen -R hostname #if client problem host</kbd></li><li><kbd>cat id_rsa.pub >> ~/.ssh/authorized_keys #servidor</kbd></li><li><kbd>chmod 600 ~/.ssh/authorized_keys #servidor</kbd></li><li><kbd>sudo vim /etc/ssh/sshd_config</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>PasswordAuthentication no
+
+X11Forwarding no
+
+UseDNS no
+
+AllowGroups sshlogin</code></pre></div><kbd>> sudo systemctl restart sshd</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel11><span class=label>Git</span></a><div id=panel11 class=content><ul class=square><li><kbd>sudo yum install - y git</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel12><span class=label>Services</span></a><div id=panel12 class=content><ul class=square><li><kbd>systemctl -t service</kbd></li><li><kbd>systemctl list-unit-files -t service</kbd></li><li><kbd>systemctl (enable|disable|status|stop|start) service</kbd></li><li><kbd>chkconfig --list</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel13><span class=label>Nginx<span></span></span></a><div id=panel13 class=content><ul class=square><li><kbd>sudo vim /etc/yum.repos.d/nginx.repo</kbd><div class=highlight><pre><code class=language-vim data-lang=vim><span class=p>[</span>nginx<span class=p>]</span>
+name<span class=p>=</span>nginx repo
+baseurl<span class=p>=</span>http<span class=p>:</span><span class=sr>//</span>nginx<span class=p>.</span>org<span class=sr>/packages/</span>centos<span class=sr>/$releasever/</span>$basearch/
+gpgcheck<span class=p>=</span><span class=m>0</span>
+enabled<span class=p>=</span><span class=m>1</span></code></pre></div></li><li><kbd>sudo yum install -y nginx</kbd><br><kbd>> sudo usermod -a -G nginx user</kbd></li><li><kbd>sudo systemctl enable nginx</kbd></li><li><kbd>sudo systemctl start nginx</kbd></li><li><kbd>sudo systemctl (enable|disable|status|stop|start) nginx</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel14><span class=label>Firewall<span></span></span></a><div id=panel14 class=content><ul class=square><li><kbd>sudo systemctl (enable|disable|status|stop|start) firewalld</kbd></li><li><kbd>sudo firewall-cmd --permanent --zone=public --add-service=http</kbd></li><li><kbd>sudo firewall-cmd --permanent --zone=public --[add|remove]-port=3000/tcp</kbd></li><li><kbd>sudo firewall-cmd --reload</kbd></li><li><kbd>sudo firewall-cmd --zone=public --list-all</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel15><span class=label>SELinux</span></a><div id=panel15 class=content><ul class=square><li><kbd>sudo vim /etc/selinux/config</kbd><div class=highlight><pre><code class=language-vim data-lang=vim># This <span class=k>file</span> controls the state of SELinux <span class=k>on</span> the system<span class=p>.</span>
+# SELINUX<span class=p>=</span> can take one of these three values<span class=p>:</span>
+#     enforcing <span class=p>-</span> SELinux security policy <span class=k>is</span> enforced<span class=p>.</span>
+#     permissive <span class=p>-</span> SELinux prints warnings instead of enforcing<span class=p>.</span>
+#     disabled <span class=p>-</span> No SELinux policy <span class=k>is</span> loaded<span class=p>.</span>
+SELINUX<span class=p>=</span>disabled</code></pre></div><kbd>sudo reboot</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel16><span class=label>Memcached</span></a><div id=panel16 class=content><ul class=square><li><kbd>sudo yum install -y memcached</kbd></li><li><kbd>sudo systemctl enable memcached</kbd></li><li><kbd>sudo systemctl start memcached</kbd></li><li><kbd>sudo systemctl (enable|disable|status|stop|start) memcached</kbd></li><li><kbd>sudo vim /etc/sysconfig/memcached</kbd></li><li><kbd>memcached-tool</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel17><span class=label>Node JS</span></a><div id=panel17 class=content><ul class=square><li><kbd>sudo su -</kbd></li><li><kbd>curl -sL https://rpm.nodesource.com/setup | bash -</kbd></li><li><kbd>yum install -y nodejs</kbd></li><li><kbd>yum install -y gcc-c++ make</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel18><span class=label>PostgreSQL</span></a><div id=panel18 class=content><ul class=square><li><kbd>sudo su -</kbd></li><li><kbd><a href=http://yum.postgresql.org/repopackages.php target=_blank>repositório</a></kbd></li><li><kbd>rpm -iUvh [versão repositório]</kbd></li><li><kbd>yum -y update</kbd></li><li><kbd>yum install -y postgresql94-server.x86_64 postgresql94-libs.x86_64 postgresql94-contrib.x86_64 postgresql94-devel.x86_64</kbd></li><li><kbd>systemctl enable postgresql-9.4</kbd></li><li><kbd>/usr/pgsql-9.4/bin/postgresql94-setup initdb</kbd></li><li><kbd>systemctl start postgresql-9.4</kbd></li><li><kbd>sudo systemctl (enable|disable|status|stop|start) postgresql-9.4</kbd></li><li><kbd>su - postgres</kbd><br><kbd>> psql</kbd><br><kbd>> \password postgres</kbd></li><li><kbd>vim /var/lib/pgsql/9.4/data/postgresql.conf</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>listen_addresses <span class=p>=</span> <span class=s1>'*'</span> # what IP address<span class=p>(</span>es<span class=p>)</span> <span class=k>to</span> listen <span class=k>on</span>;</code></pre></div></li><li><kbd>vim /var/lib/pgsql/9.4/data/pg_hba.conf</kbd><div class=highlight><pre><code class=language-vim data-lang=vim># <span class=s2>"local"</span> <span class=k>is</span> <span class=k>for</span> Unix domain socket connections <span class=k>only</span>
+local   <span class=k>all</span>             <span class=k>all</span>                                     md5
+# IPv4 local connections<span class=p>:</span>
+host    <span class=k>all</span>             <span class=k>all</span>             <span class=m>127</span><span class=p>.</span><span class=m>0</span><span class=p>.</span><span class=m>0</span><span class=p>.</span><span class=m>1</span>/<span class=m>32</span>            md5
+# IPv6 local connections<span class=p>:</span>
+host    <span class=k>all</span>             <span class=k>all</span>             <span class=p>::</span><span class=m>1</span>/<span class=m>128</span>                 md5
+
+host    <span class=k>all</span>             <span class=k>all</span>             <span class=m>0</span><span class=p>.</span><span class=m>0</span><span class=p>.</span><span class=m>0</span><span class=p>.</span><span class=m>0</span>/<span class=m>0</span>               md5</code></pre></div></li><li><kbd>systemctl restart postgresql-9.4</kbd></li><li><kbd>echo 'export PATH=$PATH:/usr/pgsql-9.4/bin/' >> /etc/bashrc && source /etc/bashrc</kbd></li></ul></div></dd><dd class=accordion-navigation><a href=#panel19><span class=label>RVM, Ruby 2.X</span></a><div id=panel19 class=content><ul class=square><li><kbd>\curl -L https://get.rvm.io | sudo bash -s stable #global</kbd><br><kbd>> sudo usermod -a -G rvm deployer</kbd></li><li><kbd>logout/login</kbd></li><li><kbd>type rvm | head -n 1</kbd></li><li><kbd>rvm requirements</kbd></li><li><kbd>rvm list known</kbd></li><li><kbd>rvm install ruby</kbd><br><kbd>> gem install bundle pry awesome_print</kbd><br><kbd>vim ~/.pryrc</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>Pry<span class=p>.</span>config<span class=p>.</span>prompt <span class=p>=</span> proc <span class=k>do</span> <span class=p>|</span>obj<span class=p>,</span> level<span class=p>,</span> _<span class=p>|</span>
+  prompt <span class=p>=</span> <span class=s2>""</span>
+  prompt <span class=p>&lt;&lt;</span> <span class=s2>"rails[#{Rails.version}]@"</span> <span class=k>if</span> defined?<span class=p>(</span>Rails<span class=p>)</span>
+  prompt <span class=p>&lt;&lt;</span> <span class=s2>"ruby[#{RUBY_VERSION}]"</span>
+  <span class=c>"#{prompt} (#{obj})&gt; "</span>
+<span class=k>end</span>
+
+Pry<span class=p>.</span>config<span class=p>.</span>exception_handler <span class=p>=</span> proc <span class=k>do</span> <span class=p>|</span>output<span class=p>,</span> exception<span class=p>,</span> _<span class=p>|</span>
+  output<span class=p>.</span>puts <span class=s2>"\e[31m#{exception.class}: #{exception.message}"</span>
+  output<span class=p>.</span>puts <span class=s2>"from #{exception.backtrace.first}\e[0m"</span>
+<span class=k>end</span>
+
+<span class=k>if</span> defined?<span class=p>(</span>Rails<span class=p>)</span>
+  require <span class=s2>"rails/console/app"</span>
+  require <span class=s2>"rails/console/helpers"</span>
+  TOPLEVEL_BINDING<span class=p>.</span>eval<span class=p>(</span><span class=s2>"self"</span><span class=p>).</span>extend <span class=p>::</span>Rails<span class=p>::</span>ConsoleMethods
+<span class=k>end</span>
+
+begin
+  require <span class=s2>"awesome_print"</span>
+  Pry<span class=p>.</span>config<span class=p>.</span>print <span class=p>=</span> proc <span class=p>{|</span>output<span class=p>,</span> value<span class=p>|</span> Pry<span class=p>::</span>Helpers<span class=p>::</span>BaseHelpers<span class=p>.</span>stagger_output<span class=p>(</span><span class=s2>"=&gt; #{value.ai}"</span><span class=p>,</span> output<span class=p>)}</span>
+rescue LoadError <span class=p>=&gt;</span> err
+   warn <span class=s2>"=&gt; Unable to load awesome_print"</span>
+<span class=k>end</span></code></pre></div><kbd>vim ~/.irbrc</kbd><div class=highlight><pre><code class=language-vim data-lang=vim>begin
+  require <span class=s2>"pry"</span>
+  Pry<span class=p>.</span><span class=k>start</span>
+  <span class=k>exit</span>
+rescue LoadError <span class=p>=&gt;</span> <span class=k>e</span>
+  warn <span class=s2>"=&gt; Unable to load pry"</span>
+<span class=k>end</span></code></pre></div></li></ul></div></dd><script src=/assets/javascript/script.min.0920a64f.js></script></dl></div></div></div></div></body></html>
