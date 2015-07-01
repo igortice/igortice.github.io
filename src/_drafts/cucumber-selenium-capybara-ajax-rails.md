@@ -4,7 +4,7 @@ date: 2015-07-01
 title: Cucumber, Selenium, Capybara e Ajax com Rails
 permalink: /rails/:title
 categories: documentos
-tags: documentos
+tags: rails
 author: igor_rocha
 desc: 'Cucumber, Selenium, Capybara e Ajax com Rails'
 keywords: ''
