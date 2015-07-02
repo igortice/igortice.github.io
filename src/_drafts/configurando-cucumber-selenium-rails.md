@@ -15,7 +15,7 @@ integração com Rails 4.
 
 <!--more-->
 
-Para isso utilizarei o **Getting Started** da documentação do Rails como base de aplicação para criar nossos
+Para isso, utilizarei o **Getting Started** da documentação do Rails como base de aplicação para criar nossos
 testes (<a target='_black' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a> 
 para ver o Getting Started). 
 
@@ -66,4 +66,85 @@ Capybara.register_driver :selenium do |app|
 end
 ```
 
-Baseado no tutorial **Getting Started** do Rails, vamos criar testes para a parte de Articles deste tutorial.
+Baseado no tutorial **Getting Started** do Rails, vamos criar testes para a parte de **Articles** 
+deste tutorial.
+
+Para começar vamos criar uma *feature* chamada articles com o seguinte conteúdo:
+
+<kbd>seu_projeto/features/articles.feature</kbd>
+
+
+```
+# language: pt
+
+Funcionalidade: Articles
+  Testar funcionalidades da parte de Articles da aplicação.
+```
+
+Rode um dos comandos abaixo para executar nossos testes:
+
+```
+cucumber ou rake cucumber
+```
+
+Veja minha saida:
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_01.png'><img src='/assets/images/post_02/img_01.png'></a></li>
+</ul>
+
+Agora vamos escrever um Cenário de Fundo que vai ser chamado sempre antes de todos os Cenários, que é visitar
+a página de Articles.
+
+Adicione o seguinte trecho de código a nossa feature:
+
+```
+Cenário de Fundo: Visitar página de Articles.
+    Dado que estou na página de "Articles"
+```
+
+Veja como ficou minha feature:
+
+```
+# language: pt
+
+Funcionalidade: Articles
+  Testar funcionalidades da parte de Articles da aplicação.
+
+  Cenário de Fundo: Visitar página de Articles.
+    Dado que estou na página de "Articles"
+```
+
+Rode o cucumber e veja se sua saída é similar a imagem abaixo:
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_02.png'><img src='/assets/images/post_02/img_02.png'></a></li>
+</ul>
+
+Agora vamos criar nossos **steps** para nossos cenários. Crie o aquivo **articles_steps** com o trecho de
+código abaixo:
+
+<kbd>seu_projeto/features/step_definitions/articles_steps.rb</kbd>
+
+```
+Dado(/^que estou na página de "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+```
+
+Rode o cucumber:
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_03.png'><img src='/assets/images/post_02/img_03.png'></a></li>
+</ul>
+
+Perceba que agora temos um cénario montado, mas os passos para executar os testes estão pendentes. Então
+vamos criar esses passos para nosso Cenário de Fundo.
+
+```
+Dado(/^que estou na página de "(.*?)"$/) do |arg1|
+  visit articles_path
+  
+  expect(current_path).to eq "/#{arg1.downcase}"
+end
+```
