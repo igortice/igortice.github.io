@@ -55,8 +55,8 @@ Crie o banco de testes do Cucumber:
 rake db:migrate
 ```
 
-Adicione o trecho de código abaixo, no arquivo de configuração do Cucumber, para utilizar o
-Google Chrome como nosso browser default de testes.
+Adicione o trecho de código abaixo, no arquivo de configuração do Cucumber, para utilizar-mos o
+*Google Chrome* como nosso browser default de testes.
 
 ```
 # seu_projeto/features/support/env.rb
@@ -93,7 +93,7 @@ Veja minha saida:
   <li><a class='not-animsition' href='/assets/images/post_02/img_01.png'><img src='/assets/images/post_02/img_01.png'></a></li>
 </ul>
 
-Agora vamos escrever um Cenário de Fundo que vai ser chamado sempre antes de todos os Cenários, que é visitar
+Agora vamos escrever um *Cenário de Fundo* que vai ser chamado sempre antes de todos os Cenários, que é visitar
 a página de Articles.
 
 Adicione o seguinte trecho de código a nossa feature:
@@ -121,7 +121,7 @@ Rode o cucumber e veja se sua saída é similar a imagem abaixo:
   <li><a class='not-animsition' href='/assets/images/post_02/img_02.png'><img src='/assets/images/post_02/img_02.png'></a></li>
 </ul>
 
-Agora vamos criar nossos **steps** para nossos cenários. Crie o aquivo **articles_steps** com o trecho de
+Agora vamos criar nossos **steps** para o nosso cenário. Crie o aquivo **articles_steps** com o trecho de
 código abaixo:
 
 <kbd>seu_projeto/features/step_definitions/articles_steps.rb</kbd>
@@ -148,3 +148,38 @@ Dado(/^que estou na página de "(.*?)"$/) do |arg1|
   expect(current_path).to eq "/#{arg1.downcase}"
 end
 ```
+
+Se sua saída é similar a imagem abaixo, então estamos no caminho correto.
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_04.png'><img src='/assets/images/post_02/img_04.png'></a></li>
+</ul>
+
+Agora vamos fazer o **Selenium** rodar e abrir nossos testes no browser, para isso, toda vez que quisermos
+isto basta adicionarmos a seguinte tag <kbd>@javascript</kbd> antes da nossa *Funcionalidade* da feature.
+
+
+```
+# language: pt
+
+@javascript
+Funcionalidade: Articles
+  Testar funcionalidades da parte de Articles da aplicação.
+
+  Cenário de Fundo: Visitar página de Articles.
+    Dado que estou na página de "Articles"
+```
+
+Rode o cucumber e veja seu browser entrar em ação.
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_05.png'><img src='/assets/images/post_02/img_05.png'></a></li>
+</ul>
+
+Não se assuste se o browser abrir e fechar, isso é reflexo da quantidade de testes que escrevemos, como só 
+escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
+os testes serão rápidos. O importante é que o selenium entrou em ação juntamente com o cucumber.
+
+Agora vamos escrever um cenário de fato, vamos simular a criação de um *article*.
+
+
