@@ -180,6 +180,41 @@ Não se assuste se o browser abrir e fechar, isso é reflexo da quantidade de te
 escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
 os testes serão rápidos. O importante é que o selenium entrou em ação juntamente com o cucumber.
 
-Agora vamos escrever um cenário de fato, vamos simular a criação de um *article*.
+Agora vamos escrever um cenário de fato para simular a criação de um *article*.
 
 
+```
+# language: pt
+
+@javascript
+Funcionalidade: Articles
+  Testar funcionalidades da parte de Articles da aplicação.
+
+  Cenário de Fundo: Visitar página de Articles.
+    Dado que estou na página de "Articles"
+
+  Cenário: Criar um Article
+    Quando clicar "New Article"
+    E for redirecionado para página de "Create Articles"
+```
+
+
+```
+Dado(/^que estou na página de "(.*?)"$/) do |arg1|
+  visit articles_path
+
+  expect(current_path).to eq "/#{arg1.downcase}"
+end
+
+Quando(/^clicar "(.*?)"$/) do |arg1|
+  visit current_url.gsub('://', '://dhh:secret@') + '/new'
+
+  visit articles_path
+
+  click_link('New Article')
+end
+
+E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
+  has_content?('New Article')
+end
+```
