@@ -10,18 +10,18 @@ desc: 'Configurando Cucumber com Selenium no Rails 4'
 keywords: ''
 ---
 
-Neste Post vou mostrar como configurar o **Cucumber** com o **Selenium** para fazer nossos teste de 
-integração com Rails 4.
+Neste Post vou mostrar como configurar o **Cucumber** com o **Selenium** para fazer nossos teste de
+integração com *Rails 4*.
 
 <!--more-->
 
-Para isso, utilizarei o **Getting Started** da documentação do Rails como base de aplicação para criar nossos
-testes (<a target='_black' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a> 
-para ver o Getting Started). 
+Para isso, utilizarei o **Getting Started** da documentação do *Rails* como base de aplicação para criar-mos nossos
+testes (<a target='_black' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a>
+para ver o *Getting Started*).
 
-Adicione o trecho de código abaixo no Gemfile: 
+Adicione o trecho de código abaixo no *Gemfile* do projeto:
 
-```
+```ruby
 group :test do
   # Rspec methods
   gem 'rspec-rails'
@@ -34,39 +34,31 @@ group :test do
 
   # Selenium
   gem 'selenium-webdriver'
+
+  # Faker dados
+  gem 'faker'
 end
 ```
 
-Instale as Gems:
+Instale as *Gems*:
 
 ```
 bundle install
 ```
 
-Instale o Cucumber:
+Instale o *Cucumber* na aplicação:
 
 ```
 rails generate cucumber:install
 ```
 
-Crie o banco de testes do Cucumber:
+Crie o banco de testes do *Cucumber*:
 
 ```
 rake db:migrate
 ```
 
-Adicione o trecho de código abaixo, no arquivo de configuração do Cucumber, para utilizar-mos o
-*Google Chrome* como nosso browser default de testes.
-
-```
-# seu_projeto/features/support/env.rb
-
-Capybara.register_driver :selenium do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome)
-end
-```
-
-Baseado no tutorial **Getting Started** do Rails, vamos criar testes para a parte de **Articles** 
+Baseado no tutorial **Getting Started** do *Rails*, vamos criar testes para a parte de **Articles**
 deste tutorial.
 
 Para começar vamos criar uma *feature* chamada articles com o seguinte conteúdo:
@@ -74,7 +66,7 @@ Para começar vamos criar uma *feature* chamada articles com o seguinte conteúd
 <kbd>seu_projeto/features/articles.feature</kbd>
 
 
-```
+```yaml
 # language: pt
 
 Funcionalidade: Articles
@@ -93,19 +85,19 @@ Veja minha saida:
   <li><a class='not-animsition' href='/assets/images/post_02/img_01.png'><img src='/assets/images/post_02/img_01.png'></a></li>
 </ul>
 
-Agora vamos escrever um *Cenário de Fundo* que vai ser chamado sempre antes de todos os Cenários, que é visitar
-a página de Articles.
+Agora vamos escrever um *Cenário de Fundo* que vai ser chamado sempre antes de todos os cenários, que é visitar
+a página de articles.
 
 Adicione o seguinte trecho de código a nossa feature:
 
-```
+```yaml
 Cenário de Fundo: Visitar página de Articles.
     Dado que estou na página de "Articles"
 ```
 
 Veja como ficou minha feature:
 
-```
+```yaml
 # language: pt
 
 Funcionalidade: Articles
@@ -115,7 +107,7 @@ Funcionalidade: Articles
     Dado que estou na página de "Articles"
 ```
 
-Rode o cucumber e veja se sua saída é similar a imagem abaixo:
+Rode o *Cucumber* e veja se sua saída é similar a imagem abaixo:
 
 <ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
   <li><a class='not-animsition' href='/assets/images/post_02/img_02.png'><img src='/assets/images/post_02/img_02.png'></a></li>
@@ -126,25 +118,25 @@ código abaixo:
 
 <kbd>seu_projeto/features/step_definitions/articles_steps.rb</kbd>
 
-```
+```ruby
 Dado(/^que estou na página de "(.*?)"$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 ```
 
-Rode o cucumber:
+Rode novamente o *Cucumber*:
 
 <ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
   <li><a class='not-animsition' href='/assets/images/post_02/img_03.png'><img src='/assets/images/post_02/img_03.png'></a></li>
 </ul>
 
-Perceba que agora temos um cénario montado, mas os passos para executar os testes estão pendentes. Então
-vamos criar esses passos para nosso Cenário de Fundo.
+Perceba que agora temos um cénario montado, mas os passos para executar os testes deste cenârio estão pendentes. Então
+vamos criar esses passos para nosso *Cenário de Fundo*.
 
-```
+```ruby
 Dado(/^que estou na página de "(.*?)"$/) do |arg1|
   visit articles_path
-  
+
   expect(current_path).to eq "/#{arg1.downcase}"
 end
 ```
@@ -155,11 +147,12 @@ Se sua saída é similar a imagem abaixo, então estamos no caminho correto.
   <li><a class='not-animsition' href='/assets/images/post_02/img_04.png'><img src='/assets/images/post_02/img_04.png'></a></li>
 </ul>
 
-Agora vamos fazer o **Selenium** rodar e abrir nossos testes no browser, para isso, toda vez que quisermos
-isto basta adicionarmos a seguinte tag <kbd>@javascript</kbd> antes da nossa *Funcionalidade* da feature.
+Agora vamos fazer o **Selenium** rodar e abrir nossos testes no browser, para isso, toda vez que quisermos que
+o browser execute os testes, devemos adicionarmos a seguinte tag <kbd>@javascript</kbd>
+antes da nossa *Funcionalidade* da feature.
 
 
-```
+```yaml
 # language: pt
 
 @javascript
@@ -176,14 +169,25 @@ Rode o cucumber e veja seu browser entrar em ação.
   <li><a class='not-animsition' href='/assets/images/post_02/img_05.png'><img src='/assets/images/post_02/img_05.png'></a></li>
 </ul>
 
-Não se assuste se o browser abrir e fechar, isso é reflexo da quantidade de testes que escrevemos, como só 
+Não se assuste se o browser abrir e fechar, isso é reflexo da quantidade de testes que escrevemos, como só
 escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
-os testes serão rápidos. O importante é que o selenium entrou em ação juntamente com o cucumber.
+os testes serão rápidos. O importante é que o *Selenium* entrou em ação juntamente com o *Cucumber*.
 
-Agora vamos escrever um cenário de fato para simular a criação de um *article*.
+Agora vamos escrever um cenário, de fato, para simular a criação de um *article*.
 
 
+```yaml
+Cenário: Criar um Article
+  Quando clicar no link "New Article"
+  E for redirecionado para página de "Create Articles"
+  E preencher o formulário
+  E clicar no botão "Create Article"
+  Então receberei a mensagem "Article was successfully created."
 ```
+
+Veja como ficou minha feature:
+
+```yml
 # language: pt
 
 @javascript
@@ -194,27 +198,19 @@ Funcionalidade: Articles
     Dado que estou na página de "Articles"
 
   Cenário: Criar um Article
-    Quando clicar "New Article"
+    Quando clicar no link "New Article"
     E for redirecionado para página de "Create Articles"
+    E preencher o formulário
+    E clicar no botão "Create Article"
+    Então receberei a mensagem "Article was successfully created."
+
 ```
 
+Perceba que o cenário nada mais é do que um conjunto de passos (*workflow*) que nós faríamos, manualmente, para testar
+nossa aplicação na hora do desenvolvimento. A vatagem de escrevemos nossos testes são que ao mesmo tempo que
+estamos testando nossa aplicação, estamos documentando seu fluxo, como também estamos garantindo que qualquer
+alteração feita no desenvolvimento fique coberta nos testes, evitado possíveis erros que passariam no desenvolvimento
+sem testes.
 
-```
-Dado(/^que estou na página de "(.*?)"$/) do |arg1|
-  visit articles_path
-
-  expect(current_path).to eq "/#{arg1.downcase}"
-end
-
-Quando(/^clicar "(.*?)"$/) do |arg1|
-  visit current_url.gsub('://', '://dhh:secret@') + '/new'
-
-  visit articles_path
-
-  click_link('New Article')
-end
-
-E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
-  has_content?('New Article')
-end
-```
+Proseguindo falta escrevermos nosso passos (*steps*) a serem executados pelo cenário. Abaixo vou tentar dar
+um breve resumo de cada passo criado para nosso cenário.
