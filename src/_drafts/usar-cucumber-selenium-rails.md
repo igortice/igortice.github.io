@@ -1,21 +1,21 @@
 ---
 layout: post
 date: 2015-07-01
-title: Configurando Cucumber e Selenium no Rails 4
+title: Usar Cucumber e Selenium no Rails 4
 permalink: /rails/:title
 categories: rails
 tags: documentos
 author: igor_rocha
-desc: 'Configurando Cucumber com Selenium no Rails 4'
+desc: 'Usar Cucumber com Selenium no Rails 4'
 keywords: ''
 ---
 
-Neste Post vou mostrar como configurar o **Cucumber** com o **Selenium** para fazer nossos teste de
+Neste Post vou mostrar como configurar e usar o **Cucumber** com o **Selenium** para fazer nossos teste de
 integração com *Rails 4*.
 
 <!--more-->
 
-Para isso, utilizarei o **Getting Started** da documentação do *Rails* como base de aplicação para criar-mos nossos
+Para isso, utilizarei o **Getting Started** da documentação do *Rails* como base de aplicação para criarmos nossos
 testes (<a target='_black' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a>
 para ver o *Getting Started*).
 
@@ -63,8 +63,9 @@ deste tutorial.
 
 Para começar vamos criar uma *feature* chamada articles com o seguinte conteúdo:
 
-<kbd>seu_projeto/features/articles.feature</kbd>
-
+```
+> touch seu_projeto/features/articles.feature
+```
 
 ```yaml
 # language: pt
@@ -113,10 +114,12 @@ Rode o *Cucumber* e veja se sua saída é similar a imagem abaixo:
   <li><a class='not-animsition' href='/assets/images/post_02/img_02.png'><img src='/assets/images/post_02/img_02.png'></a></li>
 </ul>
 
-Agora vamos criar nossos **steps** para o nosso cenário. Crie o aquivo **articles_steps** com o trecho de
+Agora vamos criar nossos **steps** para o nosso cenário. Crie o aquivo **articles_steps.rb** com o trecho de
 código abaixo:
 
-<kbd>seu_projeto/features/step_definitions/articles_steps.rb</kbd>
+```
+> touch seu_projeto/features/step_definitions/articles_steps.rb
+```
 
 ```ruby
 Dado(/^que estou na página de "(.*?)"$/) do |arg1|
@@ -130,14 +133,14 @@ Rode novamente o *Cucumber*:
   <li><a class='not-animsition' href='/assets/images/post_02/img_03.png'><img src='/assets/images/post_02/img_03.png'></a></li>
 </ul>
 
-Perceba que agora temos um cénario montado, mas os passos para executar os testes deste cenârio estão pendentes. Então
+Perceba que agora temos um cénario montado, mas os passos (*steps*) para executar os testes deste cenârio estão pendentes. Então
 vamos criar esses passos para nosso *Cenário de Fundo*.
 
 ```ruby
 Dado(/^que estou na página de "(.*?)"$/) do |arg1|
   visit articles_path
 
-  expect(current_path).to eq "/#{arg1.downcase}"
+  has_content?(arg1)
 end
 ```
 
@@ -169,9 +172,10 @@ Rode o cucumber e veja seu browser entrar em ação.
   <li><a class='not-animsition' href='/assets/images/post_02/img_05.png'><img src='/assets/images/post_02/img_05.png'></a></li>
 </ul>
 
-Não se assuste se o browser abrir e fechar, isso é reflexo da quantidade de testes que escrevemos, como só
-escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
-os testes serão rápidos. O importante é que o *Selenium* entrou em ação juntamente com o *Cucumber*.
+Não se assuste se o browser abrir e fechar rápido, isso é reflexo da quantidade de testes que escrevemos, como só
+escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, logo
+nossos testes escritos até aqui serão rápidos. O importante é que o *Selenium* entrou em ação juntamente
+com o *Cucumber*.
 
 Agora vamos escrever um cenário, de fato, para simular a criação de um *article*.
 
@@ -212,5 +216,133 @@ estamos testando nossa aplicação, estamos documentando seu fluxo, como também
 alteração feita no desenvolvimento fique coberta nos testes, evitado possíveis erros que passariam no desenvolvimento
 sem testes.
 
-Proseguindo falta escrevermos nosso passos (*steps*) a serem executados pelo cenário. Abaixo vou tentar dar
+Proseguindo, falta escrevermos nossos passos (*steps*) a serem executados pelo cenário. Abaixo vou tentar dar
 um breve resumo de cada passo criado para nosso cenário.
+
+### Passo 1
+
+```ruby
+Dado(/^que estou na página de "(.*?)"$/) do |arg1|
+  visit articles_path
+
+  has_content?(arg1)
+end
+```
+
+Essa parte é bem simples, olhando para o código acima, nós estamos visitando a página de articles e depois
+estamos verificando se a página visitada tem um conteúdo de texto no HTML **New Article**
+
+### Passo 2
+
+```ruby
+Quando(/^clicar no link "(.*?)"$/) do |arg1|
+  usuario = 'dhh'
+  senha   = 'secret'
+  visit current_url.gsub('://', "://#{usuario}:#{senha}@") + '/new'
+
+  visit articles_path
+
+  click_link(arg1)
+end
+```
+
+Essa parte envolve o teste mais complicado, pois como estamos usando o **Getting Started** do *Rails* e este
+tutorial usa **basic access authentication** para fazer alguns procedimentos, então temos que digitar
+um usuário e senha como forma de login, só que para fazer isso no browser, o *Selenium* não tem domínio. A solução
+que encontrei para isso foi visitar a página de **authentication** com usuário e senha corretos, voltar para página
+de articles e só depois clicar no link.
+
+### Passo 3
+
+```ruby
+E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
+  has_content?('New Article')
+end
+```
+
+Esta parte é bem simples, verificamos se a página tem determinado conteúdo HTML.
+
+### Passo 4
+
+```ruby
+E(/^preencher o formulário$/) do
+  fill_in('Title', with: Faker::Lorem.sentence(2))
+  fill_in('Text', with: Faker::Lorem.paragraph(2, true, 4))
+end
+```
+
+Aqui nós estamos preenchendo o formulário com dados *faker* (lembre que nós colocamos uma gem só para isso).
+
+### Passo 5
+
+```ruby
+E(/^clicar no botão "(.*?)"$/) do |arg1|
+  click_button(arg1)
+end
+```
+
+Outra part simples, simulamos o click no botão **Create Article**.
+
+### Passo 6
+
+```ruby
+Então(/^receberei a mensagem "(.*?)"$/) do |arg1|
+  has_content?(arg1)
+end
+```
+
+Para finalizar este cenário, verificamos se exite uma mensagem de **Article was successfully created.** após criamos
+um article.
+
+Veja como ficou meu step:
+
+```ruby
+Dado(/^que estou na página de "(.*?)"$/) do |arg1|
+  visit articles_path
+
+  has_content?(arg1)
+end
+
+Quando(/^clicar no link "(.*?)"$/) do |arg1|
+  usuario = 'dhh'
+  senha   = 'secret'
+  visit current_url.gsub('://', "://#{usuario}:#{senha}@") + '/new'
+
+  visit articles_path
+
+  click_link(arg1)
+end
+
+E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
+  has_content?('New Article')
+end
+
+E(/^preencher o formulário$/) do
+  fill_in('Title', with: Faker::Lorem.sentence(2))
+  fill_in('Text', with: Faker::Lorem.paragraph(2, true, 4))
+end
+
+E(/^clicar no botão "(.*?)"$/) do |arg1|
+  click_button(arg1)
+end
+
+Então(/^receberei a mensagem "(.*?)"$/) do |arg1|
+  has_content?(arg1)
+end
+```
+
+Com isso feito rode o *Cucumber*:
+
+<ul class='clearing-thumbs small-9 small-centered columns' data-clearing>
+  <li><a class='not-animsition' href='/assets/images/post_02/img_06.png'><img src='/assets/images/post_02/img_06.png'></a></li>
+</ul>
+
+Perceba que o cenário para criar um articlo esta escrito. Vale ressaltar que essa foi uma forma simples de escrever
+um teste (existem outras formas melhores para isso). Como esse *Post* era apenas para mostra o uso e uma configuração
+e não uma aula de teste, preferi fazer da forma mais simples.
+
+Abaixo vou passar o que é preciso para se trabalhar com o *Cucumber*, com isso todos serão capazes de escreverem testes.
+
+* Para configuração do projeto: <a target='_black' href='https://github.com/cucumber/cucumber-rails'>Cucumber Rails</a>
+* Para trabalhar com *features*: <a target='_black' href='https://github.com/cucumber/cucumber/wiki'>Cucumber</a>
+* Para trabalhar com *steps*: <a target='_black' href='https://github.com/jnicklas/capybara'>Capybara</a>
