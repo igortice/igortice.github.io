@@ -1,0 +1,133 @@
+<!DOCTYPE html><html ng-app=mainApp xmlns=http://www.w3.org/1999/xhtml xml:lang=pt lang=pt-br><head><link href=http://gmpg.org/xfn/11 rel=profile><meta http-equiv=content-type content="text/html; charset=utf-8"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=description itemprop=description content="Usar Cucumber com Selenium no Rails 4"><meta name=keywords itemprop=keywords content=""><title>Usar Cucumber e Selenium no Rails 4 | Igor Rocha</title><link rel=stylesheet href=/assets/stylesheets/style.min.c5318a4b.css><link rel=stylesheet href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400"><link rel="shortcut icon" href=/assets/images/favicon.ico><link rel=alternate type=application/rss+xml title=RSS href=/atom.xml></head><body class="theme-base-0d layout-reverse" ng-controller="BaseController as baseCtrl"><input type=checkbox class=sidebar-checkbox id=sidebar-checkbox><div class=sidebar id=sidebar><div class=sidebar-item><div class=row><a class=gravatar><img gravatar-src="'igortice@gmail.com'" gravatar-size=100></a></div></div><nav class=sidebar-nav><a class=sidebar-nav-item href="/"><i class="fa fa-home"></i> Início</a> <a class=sidebar-nav-item href=/sobre><i class="fa fa-flag"></i> Sobre</a> <span class=sidebar-nav-item><a href=https://twitter.com/igortice><i class="fa fa-twitter"></i></a> | <a href=mailto:igortice@gmail.com><i class="fa fa-envelope"></i></a></span></nav><div class=sidebar-item><span class=subheader>&copy; 2015, por Igor Rocha.</span></div></div><div class=wrap><div class="row container"><div class="medium-10 medium-centered large-8 large-centered columns"><h2><a href="/" title=Home>Igor Rocha</a> [ <small>Web Developer</small> ]</h2></div></div><hr class="topo-corpo"><div class=row><div class="medium-10 medium-centered large-8 large-centered columns animsition" role=content><div class=post><h1 class=post-title>Usar Cucumber e Selenium no Rails 4</h1><span class=post-date>- 11/07/2015, por <em>Igor Rocha</em></span><p>Neste Post vou mostrar como configurar e usar o <strong>Cucumber</strong> com o <strong>Selenium</strong> para fazer nossos teste de integração com <em>Rails 4</em>.</p><p>Para isso, utilizarei o <strong>Getting Started</strong> da documentação do <em>Rails</em> como base de aplicação para criarmos nossos testes (<a target=_blank href=http://guides.rubyonrails.org/getting_started.html>clique aqui</a> para ver o <em>Getting Started</em>).</p><p>Adicione o trecho de código abaixo no <em>Gemfile</em> do projeto:</p><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=n>group</span> <span class=ss>:test</span> <span class=k>do</span>
+  <span class=c1># Rspec methods</span>
+  <span class=n>gem</span> <span class=s1>'rspec-rails'</span>
+
+  <span class=c1># Cucumber</span>
+  <span class=n>gem</span> <span class=s1>'cucumber-rails'</span><span class=p>,</span> <span class=ss>:require</span> <span class=o>=&gt;</span> <span class=kp>false</span>
+
+  <span class=c1># Database clear</span>
+  <span class=n>gem</span> <span class=s1>'database_cleaner'</span>
+
+  <span class=c1># Selenium</span>
+  <span class=n>gem</span> <span class=s1>'selenium-webdriver'</span>
+
+  <span class=c1># Faker dados</span>
+  <span class=n>gem</span> <span class=s1>'faker'</span>
+<span class=k>end</span>
+</code></pre></div><p>Instale as <em>Gems</em>:</p><div class=highlight><pre><code class=language- data-lang="">bundle install
+</code></pre></div><p>Instale o <em>Cucumber</em> na aplicação:</p><div class=highlight><pre><code class=language- data-lang="">rails generate cucumber:install
+</code></pre></div><p>Crie o banco de testes do <em>Cucumber</em>:</p><div class=highlight><pre><code class=language- data-lang="">rake db:migrate
+</code></pre></div><p>Baseado no tutorial <strong>Getting Started</strong> do <em>Rails</em>, vamos criar testes para a parte de <strong>Articles</strong> deste tutorial.</p><p>Para começar vamos criar uma <em>feature</em> chamada articles com o seguinte conteúdo:</p><div class=highlight><pre><code class=language- data-lang="">&gt; touch seu_projeto/features/articles.feature
+</code></pre></div><div class=highlight><pre><code class=language-yaml data-lang=yaml><span class=c1># language: pt</span>
+
+<span class=s>Funcionalidade</span><span class=pi>:</span> <span class=s>Articles</span>
+  <span class=s>Testar funcionalidades da parte de Articles da aplicação.</span>
+</code></pre></div><p>Rode um dos comandos abaixo para executar nossos testes:</p><div class=highlight><pre><code class=language- data-lang="">cucumber ou rake cucumber
+</code></pre></div><p>Veja minha saida:</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_01.png><img src=/assets/images/post_02/img_01.png></a></li></ul><p>Agora vamos escrever um <em>Cenário de Fundo</em> que vai ser chamado sempre antes de todos os cenários, que é visitar a página de articles.</p><p>Adicione o seguinte trecho de código a nossa feature:</p><div class=highlight><pre><code class=language-yaml data-lang=yaml><span class=s>Cenário de Fundo</span><span class=pi>:</span> <span class=s>Visitar página de Articles.</span>
+    <span class=s>Dado que estou na página de "Articles"</span>
+</code></pre></div><p>Veja como ficou minha feature:</p><div class=highlight><pre><code class=language-yaml data-lang=yaml><span class=c1># language: pt</span>
+
+<span class=s>Funcionalidade</span><span class=pi>:</span> <span class=s>Articles</span>
+  <span class=s>Testar funcionalidades da parte de Articles da aplicação.</span>
+
+  <span class=s>Cenário de Fundo</span><span class=pi>:</span> <span class=s>Visitar página de Articles.</span>
+    <span class=s>Dado que estou na página de "Articles"</span>
+</code></pre></div><p>Rode o <em>Cucumber</em> e veja se sua saída é similar a imagem abaixo:</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_02.png><img src=/assets/images/post_02/img_02.png></a></li></ul><p>Agora vamos criar nossos <strong>steps</strong> para o nosso cenário. Crie o aquivo <strong>articles_steps.rb</strong> com o trecho de código abaixo:</p><div class=highlight><pre><code class=language- data-lang="">&gt; touch seu_projeto/features/step_definitions/articles_steps.rb
+</code></pre></div><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Dado</span><span class=p>(</span><span class=sr>/^que estou na página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>pending</span> <span class=c1># express the regexp above with the code you wish you had</span>
+<span class=k>end</span>
+</code></pre></div><p>Rode novamente o <em>Cucumber</em>:</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_03.png><img src=/assets/images/post_02/img_03.png></a></li></ul><p>Perceba que agora temos um cénario montado, mas os passos (<em>steps</em>) para executar os testes deste cenârio estão pendentes. Então vamos criar esses passos para nosso <em>Cenário de Fundo</em>.</p><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Dado</span><span class=p>(</span><span class=sr>/^que estou na página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>visit</span> <span class=n>articles_path</span>
+
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Se sua saída é similar a imagem abaixo, então estamos no caminho correto.</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_04.png><img src=/assets/images/post_02/img_04.png></a></li></ul><p>Agora vamos fazer o <strong>Selenium</strong> rodar e abrir nossos testes no browser, para isso, toda vez que quisermos que o browser execute os testes, devemos adicionarmos a seguinte tag <kbd>@javascript</kbd> antes da nossa <em>Funcionalidade</em> da feature.</p><div class=highlight><pre><code class=language-yaml data-lang=yaml><span class=c1># language: pt</span>
+
+<span class=err>@</span><span class=s>javascript</span>
+<span class=s>Funcionalidade</span><span class=pi>:</span> <span class=s>Articles</span>
+  <span class=s>Testar funcionalidades da parte de Articles da aplicação.</span>
+
+  <span class=s>Cenário de Fundo</span><span class=pi>:</span> <span class=s>Visitar página de Articles.</span>
+    <span class=s>Dado que estou na página de "Articles"</span>
+</code></pre></div><p>Rode o cucumber e veja seu browser entrar em ação.</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_05.png><img src=/assets/images/post_02/img_05.png></a></li></ul><p>Não se assuste se o browser abrir e fechar rápido, isso é reflexo da quantidade de testes que escrevemos, como só escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então nossos testes escritos até aqui serão rápidos. O importante é que o <em>Selenium</em> entrou em ação juntamente com o <em>Cucumber</em>.</p><p>Agora vamos escrever um cenário, de fato, para simular a criação de um <em>article</em>.</p><div class=highlight><pre><code class=language-yaml data-lang=yaml><span class=s>Cenário</span><span class=pi>:</span> <span class=s>Criar um Article</span>
+  <span class=s>Quando clicar no link "New Article"</span>
+  <span class=s>E for redirecionado para página de "Create Articles"</span>
+  <span class=s>E preencher o formulário</span>
+  <span class=s>E clicar no botão "Create Article"</span>
+  <span class=s>Então receberei a mensagem "Article was successfully created."</span>
+</code></pre></div><p>Veja como ficou minha feature:</p><div class=highlight><pre><code class=language-yml data-lang=yml><span class=c1># language: pt</span>
+
+<span class=err>@</span><span class=s>javascript</span>
+<span class=s>Funcionalidade</span><span class=pi>:</span> <span class=s>Articles</span>
+  <span class=s>Testar funcionalidades da parte de Articles da aplicação.</span>
+
+  <span class=s>Cenário de Fundo</span><span class=pi>:</span> <span class=s>Visitar página de Articles.</span>
+    <span class=s>Dado que estou na página de "Articles"</span>
+
+  <span class=s>Cenário</span><span class=pi>:</span> <span class=s>Criar um Article</span>
+    <span class=s>Quando clicar no link "New Article"</span>
+    <span class=s>E for redirecionado para página de "Create Articles"</span>
+    <span class=s>E preencher o formulário</span>
+    <span class=s>E clicar no botão "Create Article"</span>
+    <span class=s>Então receberei a mensagem "Article was successfully created."</span>
+
+</code></pre></div><p>Perceba que o cenário nada mais é do que um conjunto de passos (<em>workflow</em>) que nós faríamos, manualmente, para testar nossa aplicação na hora do desenvolvimento. A vatagem de escrevemos nossos testes são que ao mesmo tempo que estamos testando nossa aplicação, estamos documentando seu fluxo, como também estamos garantindo que qualquer alteração feita no desenvolvimento fique coberta nos testes, evitado possíveis erros que passariam no desenvolvimento sem testes.</p><p>Proseguindo, falta escrevermos nossos passos (<em>steps</em>) a serem executados pelo cenário. Abaixo vou tentar dar um breve resumo de cada passo criado para nosso cenário.</p><h3>Passo 1</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Dado</span><span class=p>(</span><span class=sr>/^que estou na página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>visit</span> <span class=n>articles_path</span>
+
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Essa parte é bem simples, olhando para o código acima, nós estamos visitando a página de articles e depois estamos verificando se a página visitada tem um conteúdo de texto no HTML <strong>New Article</strong></p><h3>Passo 2</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Quando</span><span class=p>(</span><span class=sr>/^clicar no link "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>usuario</span> <span class=o>=</span> <span class=s1>'dhh'</span>
+  <span class=n>senha</span>   <span class=o>=</span> <span class=s1>'secret'</span>
+  <span class=n>visit</span> <span class=n>current_url</span><span class=p>.</span><span class=nf>gsub</span><span class=p>(</span><span class=s1>'://'</span><span class=p>,</span> <span class=s2>"://</span><span class=si>#{</span><span class=n>usuario</span><span class=si>}</span><span class=s2>:</span><span class=si>#{</span><span class=n>senha</span><span class=si>}</span><span class=s2>@"</span><span class=p>)</span> <span class=o>+</span> <span class=s1>'/new'</span>
+
+  <span class=n>visit</span> <span class=n>articles_path</span>
+
+  <span class=n>click_link</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Essa parte envolve o teste mais complicado, pois como estamos usando o <strong>Getting Started</strong> do <em>Rails</em> e este tutorial usa <strong>basic access authentication</strong> para fazer alguns procedimentos, então temos que digitar um usuário e senha como forma de login, só que para fazer isso no browser, o <em>Selenium</em> não tem domínio. A solução que encontrei foi visitar a página de <strong>authentication</strong> com usuário e senha corretos, voltar para página de articles e só depois clicar no link.</p><h3>Passo 3</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>E</span><span class=p>(</span><span class=sr>/^for redirecionado para página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Esta parte é bem simples, verificamos se a página tem determinado conteúdo HTML.</p><h3>Passo 4</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>E</span><span class=p>(</span><span class=sr>/^preencher o formulário$/</span><span class=p>)</span> <span class=k>do</span>
+  <span class=n>fill_in</span><span class=p>(</span><span class=s1>'Title'</span><span class=p>,</span> <span class=ss>with: </span><span class=no>Faker</span><span class=o>::</span><span class=no>Lorem</span><span class=p>.</span><span class=nf>sentence</span><span class=p>(</span><span class=mi>2</span><span class=p>))</span>
+  <span class=n>fill_in</span><span class=p>(</span><span class=s1>'Text'</span><span class=p>,</span> <span class=ss>with: </span><span class=no>Faker</span><span class=o>::</span><span class=no>Lorem</span><span class=p>.</span><span class=nf>paragraph</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=kp>true</span><span class=p>,</span> <span class=mi>4</span><span class=p>))</span>
+<span class=k>end</span>
+</code></pre></div><p>Aqui nós estamos preenchendo o formulário com dados <em>faker</em> (lembre que nós colocamos uma gem só para isso).</p><h3>Passo 5</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>E</span><span class=p>(</span><span class=sr>/^clicar no botão "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>click_button</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Outra part simples, simulamos o click no botão <strong>Create Article</strong>.</p><h3>Passo 6</h3><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Ent</span><span class=err>ã</span><span class=n>o</span><span class=p>(</span><span class=sr>/^receberei a mensagem "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Para finalizar este cenário, verificamos se exite uma mensagem de <strong>Article was successfully created.</strong> após criamos um article.</p><p>Veja como ficou meu step:</p><div class=highlight><pre><code class=language-ruby data-lang=ruby><span class=no>Dado</span><span class=p>(</span><span class=sr>/^que estou na página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>visit</span> <span class=n>articles_path</span>
+
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+
+<span class=no>Quando</span><span class=p>(</span><span class=sr>/^clicar no link "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>usuario</span> <span class=o>=</span> <span class=s1>'dhh'</span>
+  <span class=n>senha</span>   <span class=o>=</span> <span class=s1>'secret'</span>
+  <span class=n>visit</span> <span class=n>current_url</span><span class=p>.</span><span class=nf>gsub</span><span class=p>(</span><span class=s1>'://'</span><span class=p>,</span> <span class=s2>"://</span><span class=si>#{</span><span class=n>usuario</span><span class=si>}</span><span class=s2>:</span><span class=si>#{</span><span class=n>senha</span><span class=si>}</span><span class=s2>@"</span><span class=p>)</span> <span class=o>+</span> <span class=s1>'/new'</span>
+
+  <span class=n>visit</span> <span class=n>articles_path</span>
+
+  <span class=n>click_link</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+
+<span class=no>E</span><span class=p>(</span><span class=sr>/^for redirecionado para página de "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+
+<span class=no>E</span><span class=p>(</span><span class=sr>/^preencher o formulário$/</span><span class=p>)</span> <span class=k>do</span>
+  <span class=n>fill_in</span><span class=p>(</span><span class=s1>'Title'</span><span class=p>,</span> <span class=ss>with: </span><span class=no>Faker</span><span class=o>::</span><span class=no>Lorem</span><span class=p>.</span><span class=nf>sentence</span><span class=p>(</span><span class=mi>2</span><span class=p>))</span>
+  <span class=n>fill_in</span><span class=p>(</span><span class=s1>'Text'</span><span class=p>,</span> <span class=ss>with: </span><span class=no>Faker</span><span class=o>::</span><span class=no>Lorem</span><span class=p>.</span><span class=nf>paragraph</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=kp>true</span><span class=p>,</span> <span class=mi>4</span><span class=p>))</span>
+<span class=k>end</span>
+
+<span class=no>E</span><span class=p>(</span><span class=sr>/^clicar no botão "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>click_button</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+
+<span class=no>Ent</span><span class=err>ã</span><span class=n>o</span><span class=p>(</span><span class=sr>/^receberei a mensagem "(.*?)"$/</span><span class=p>)</span> <span class=k>do</span> <span class=o>|</span><span class=n>arg1</span><span class=o>|</span>
+  <span class=n>has_content?</span><span class=p>(</span><span class=n>arg1</span><span class=p>)</span>
+<span class=k>end</span>
+</code></pre></div><p>Com isso feito rode o <em>Cucumber</em>:</p><ul class="clearing-thumbs small-9 small-centered columns" data-clearing><li><a class=not-animsition href=/assets/images/post_02/img_06.png><img src=/assets/images/post_02/img_06.png></a></li></ul><p>Perceba que o cenário para criar um articlo esta escrito. Vale ressaltar que essa foi uma forma simples de escrever um teste (existem outras formas melhores para isso). Como esse <em>Post</em> era apenas para mostra o uso e uma configuração e não uma aula de teste, preferi fazer da forma mais simples.</p><p>Abaixo vou listar o que é preciso para se trabalhar com o <em>Cucumber</em> no <em>Rails</em>, com isso todos serão capazes de escreverem testes.</p><div class=message><ul class=disc><li>Para <strong>configuração do projeto</strong>: <a target=_blank href=https://github.com/cucumber/cucumber-rails>Cucumber Rails</a></li><li>Para <strong>features</strong>: <a target=_blank href=https://github.com/cucumber/cucumber/wiki>Cucumber</a></li><li>Para <strong>steps</strong>: <a target=_blank href=https://github.com/jnicklas/capybara>Capybara</a></li><li>Para <strong>dados falsos</strong>: <a target=_blank href=https://github.com/stympy/faker>Faker</a></li></ul></div></div><div class=related><h3>Posts Relacionados</h3><ul class=related-posts><li><h3><a href=/mysql-workbench>Usando o MySQL Workbench <small>17/06/2015</small></a></h3></li><li><h3><a href=/angular/configurar-jekyll-angular>Configurar Jekyll e AngularJS <small>04/06/2015</small></a></h3></li><li><h3><a href=/expressao-regular-cpf-cnpj>Expressão Regular CPF CNPJ <small>23/06/2015</small></a></h3></li></ul></div></div></div></div><label for=sidebar-checkbox class=sidebar-toggle></label></body><script src=/assets/javascript/script.min.42f51619.js></script></html>

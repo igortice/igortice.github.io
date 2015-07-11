@@ -4,13 +4,295 @@
  <title>Blog Igor Rocha</title>
  <link href="igortice.com.br/atom.xml" rel="self"/>
  <link href="igortice.com.br/"/>
- <updated>2015-06-29T15:48:08-03:00</updated>
+ <updated>2015-07-11T08:08:23-03:00</updated>
  <id>igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
    <email>igortice@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Usar Cucumber e Selenium no Rails 4</title>
+   <link href="igortice.com.br/rails/usar-cucumber-selenium-rails"/>
+   <updated>2015-07-11T00:00:00-03:00</updated>
+   <id>igortice.com.br/rails/usar-cucumber-selenium-rails</id>
+   <content type="html">&lt;p&gt;Neste Post vou mostrar como configurar e usar o &lt;strong&gt;Cucumber&lt;/strong&gt; com o &lt;strong&gt;Selenium&lt;/strong&gt; para fazer nossos teste de
+integração com &lt;em&gt;Rails 4&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Para isso, utilizarei o &lt;strong&gt;Getting Started&lt;/strong&gt; da documentação do &lt;em&gt;Rails&lt;/em&gt; como base de aplicação para criarmos nossos
+testes (&lt;a target=&#39;_blank&#39; href=&#39;http://guides.rubyonrails.org/getting_started.html&#39;&gt;clique aqui&lt;/a&gt;
+para ver o &lt;em&gt;Getting Started&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Adicione o trecho de código abaixo no &lt;em&gt;Gemfile&lt;/em&gt; do projeto:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;n&quot;&gt;group&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:test&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;c1&quot;&gt;# Rspec methods&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;rspec-rails&#39;&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# Cucumber&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;cucumber-rails&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;:require&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;false&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# Database clear&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;database_cleaner&#39;&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# Selenium&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;selenium-webdriver&#39;&lt;/span&gt;
+
+  &lt;span class=&quot;c1&quot;&gt;# Faker dados&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;gem&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;faker&#39;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Instale as &lt;em&gt;Gems&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Instale o &lt;em&gt;Cucumber&lt;/em&gt; na aplicação:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rails generate cucumber:install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Crie o banco de testes do &lt;em&gt;Cucumber&lt;/em&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rake db:migrate
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Baseado no tutorial &lt;strong&gt;Getting Started&lt;/strong&gt; do &lt;em&gt;Rails&lt;/em&gt;, vamos criar testes para a parte de &lt;strong&gt;Articles&lt;/strong&gt;
+deste tutorial.&lt;/p&gt;
+
+&lt;p&gt;Para começar vamos criar uma &lt;em&gt;feature&lt;/em&gt; chamada articles com o seguinte conteúdo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt; touch seu_projeto/features/articles.feature
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# language: pt&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;Funcionalidade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Articles&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Testar funcionalidades da parte de Articles da aplicação.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Rode um dos comandos abaixo para executar nossos testes:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;cucumber ou rake cucumber
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Veja minha saida:&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_01.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_01.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Agora vamos escrever um &lt;em&gt;Cenário de Fundo&lt;/em&gt; que vai ser chamado sempre antes de todos os cenários, que é visitar
+a página de articles.&lt;/p&gt;
+
+&lt;p&gt;Adicione o seguinte trecho de código a nossa feature:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;s&quot;&gt;Cenário de Fundo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Visitar página de Articles.&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Dado que estou na página de &quot;Articles&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Veja como ficou minha feature:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# language: pt&lt;/span&gt;
+
+&lt;span class=&quot;s&quot;&gt;Funcionalidade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Articles&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Testar funcionalidades da parte de Articles da aplicação.&lt;/span&gt;
+
+  &lt;span class=&quot;s&quot;&gt;Cenário de Fundo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Visitar página de Articles.&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Dado que estou na página de &quot;Articles&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Rode o &lt;em&gt;Cucumber&lt;/em&gt; e veja se sua saída é similar a imagem abaixo:&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_02.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_02.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Agora vamos criar nossos &lt;strong&gt;steps&lt;/strong&gt; para o nosso cenário. Crie o aquivo &lt;strong&gt;articles_steps.rb&lt;/strong&gt; com o trecho de
+código abaixo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;&amp;gt; touch seu_projeto/features/step_definitions/articles_steps.rb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Dado&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^que estou na página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pending&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# express the regexp above with the code you wish you had&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Rode novamente o &lt;em&gt;Cucumber&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_03.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_03.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Perceba que agora temos um cénario montado, mas os passos (&lt;em&gt;steps&lt;/em&gt;) para executar os testes deste cenârio estão pendentes. Então
+vamos criar esses passos para nosso &lt;em&gt;Cenário de Fundo&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Dado&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^que estou na página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles_path&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se sua saída é similar a imagem abaixo, então estamos no caminho correto.&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_04.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_04.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Agora vamos fazer o &lt;strong&gt;Selenium&lt;/strong&gt; rodar e abrir nossos testes no browser, para isso, toda vez que quisermos que
+o browser execute os testes, devemos adicionarmos a seguinte tag &lt;kbd&gt;@javascript&lt;/kbd&gt;
+antes da nossa &lt;em&gt;Funcionalidade&lt;/em&gt; da feature.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# language: pt&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;javascript&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;Funcionalidade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Articles&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Testar funcionalidades da parte de Articles da aplicação.&lt;/span&gt;
+
+  &lt;span class=&quot;s&quot;&gt;Cenário de Fundo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Visitar página de Articles.&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Dado que estou na página de &quot;Articles&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Rode o cucumber e veja seu browser entrar em ação.&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_05.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_05.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Não se assuste se o browser abrir e fechar rápido, isso é reflexo da quantidade de testes que escrevemos, como só
+escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
+nossos testes escritos até aqui serão rápidos. O importante é que o &lt;em&gt;Selenium&lt;/em&gt; entrou em ação juntamente
+com o &lt;em&gt;Cucumber&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Agora vamos escrever um cenário, de fato, para simular a criação de um &lt;em&gt;article&lt;/em&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span class=&quot;s&quot;&gt;Cenário&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Criar um Article&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Quando clicar no link &quot;New Article&quot;&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;E for redirecionado para página de &quot;Create Articles&quot;&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;E preencher o formulário&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;E clicar no botão &quot;Create Article&quot;&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Então receberei a mensagem &quot;Article was successfully created.&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Veja como ficou minha feature:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-yml&quot; data-lang=&quot;yml&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# language: pt&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;javascript&lt;/span&gt;
+&lt;span class=&quot;s&quot;&gt;Funcionalidade&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Articles&lt;/span&gt;
+  &lt;span class=&quot;s&quot;&gt;Testar funcionalidades da parte de Articles da aplicação.&lt;/span&gt;
+
+  &lt;span class=&quot;s&quot;&gt;Cenário de Fundo&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Visitar página de Articles.&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Dado que estou na página de &quot;Articles&quot;&lt;/span&gt;
+
+  &lt;span class=&quot;s&quot;&gt;Cenário&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;Criar um Article&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Quando clicar no link &quot;New Article&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;E for redirecionado para página de &quot;Create Articles&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;E preencher o formulário&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;E clicar no botão &quot;Create Article&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;Então receberei a mensagem &quot;Article was successfully created.&quot;&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Perceba que o cenário nada mais é do que um conjunto de passos (&lt;em&gt;workflow&lt;/em&gt;) que nós faríamos, manualmente, para testar
+nossa aplicação na hora do desenvolvimento. A vatagem de escrevemos nossos testes são que ao mesmo tempo que
+estamos testando nossa aplicação, estamos documentando seu fluxo, como também estamos garantindo que qualquer
+alteração feita no desenvolvimento fique coberta nos testes, evitado possíveis erros que passariam no desenvolvimento
+sem testes.&lt;/p&gt;
+
+&lt;p&gt;Proseguindo, falta escrevermos nossos passos (&lt;em&gt;steps&lt;/em&gt;) a serem executados pelo cenário. Abaixo vou tentar dar
+um breve resumo de cada passo criado para nosso cenário.&lt;/p&gt;
+
+&lt;h3&gt;Passo 1&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Dado&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^que estou na página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles_path&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Essa parte é bem simples, olhando para o código acima, nós estamos visitando a página de articles e depois
+estamos verificando se a página visitada tem um conteúdo de texto no HTML &lt;strong&gt;New Article&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3&gt;Passo 2&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Quando&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^clicar no link &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;usuario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;dhh&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;senha&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;secret&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;://&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;://&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usuario&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;senha&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;/new&#39;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles_path&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;click_link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Essa parte envolve o teste mais complicado, pois como estamos usando o &lt;strong&gt;Getting Started&lt;/strong&gt; do &lt;em&gt;Rails&lt;/em&gt; e este
+tutorial usa &lt;strong&gt;basic access authentication&lt;/strong&gt; para fazer alguns procedimentos, então temos que digitar
+um usuário e senha como forma de login, só que para fazer isso no browser, o &lt;em&gt;Selenium&lt;/em&gt; não tem domínio. A solução
+que encontrei foi visitar a página de &lt;strong&gt;authentication&lt;/strong&gt; com usuário e senha corretos, voltar para página
+de articles e só depois clicar no link.&lt;/p&gt;
+
+&lt;h3&gt;Passo 3&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^for redirecionado para página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esta parte é bem simples, verificamos se a página tem determinado conteúdo HTML.&lt;/p&gt;
+
+&lt;h3&gt;Passo 4&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^preencher o formulário$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;fill_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Title&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;with: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Lorem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;fill_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Text&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;with: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Lorem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;paragraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Aqui nós estamos preenchendo o formulário com dados &lt;em&gt;faker&lt;/em&gt; (lembre que nós colocamos uma gem só para isso).&lt;/p&gt;
+
+&lt;h3&gt;Passo 5&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^clicar no botão &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;click_button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Outra part simples, simulamos o click no botão &lt;strong&gt;Create Article&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3&gt;Passo 6&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Ent&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ã&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^receberei a mensagem &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para finalizar este cenário, verificamos se exite uma mensagem de &lt;strong&gt;Article was successfully created.&lt;/strong&gt; após criamos
+um article.&lt;/p&gt;
+
+&lt;p&gt;Veja como ficou meu step:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;no&quot;&gt;Dado&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^que estou na página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles_path&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;Quando&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^clicar no link &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;usuario&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;dhh&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;senha&lt;/span&gt;   &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;secret&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;current_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;gsub&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;://&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;://&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;usuario&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;senha&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;@&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;/new&#39;&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;visit&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;articles_path&lt;/span&gt;
+
+  &lt;span class=&quot;n&quot;&gt;click_link&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^for redirecionado para página de &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^preencher o formulário$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;fill_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Title&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;with: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Lorem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sentence&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;fill_in&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&#39;Text&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;ss&quot;&gt;with: &lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Faker&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;::&lt;/span&gt;&lt;span class=&quot;no&quot;&gt;Lorem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;paragraph&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kp&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;E&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^clicar no botão &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;click_button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+
+&lt;span class=&quot;no&quot;&gt;Ent&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;ã&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sr&quot;&gt;/^receberei a mensagem &quot;(.*?)&quot;$/&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;|&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;has_content?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arg1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Com isso feito rode o &lt;em&gt;Cucumber&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul class=&#39;clearing-thumbs small-9 small-centered columns&#39; data-clearing&gt;
+  &lt;li&gt;&lt;a class=&#39;not-animsition&#39; href=&#39;/assets/images/post_02/img_06.png&#39;&gt;&lt;img src=&#39;/assets/images/post_02/img_06.png&#39;&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Perceba que o cenário para criar um articlo esta escrito. Vale ressaltar que essa foi uma forma simples de escrever
+um teste (existem outras formas melhores para isso). Como esse &lt;em&gt;Post&lt;/em&gt; era apenas para mostra o uso e uma configuração
+e não uma aula de teste, preferi fazer da forma mais simples.&lt;/p&gt;
+
+&lt;p&gt;Abaixo vou listar o que é preciso para se trabalhar com o &lt;em&gt;Cucumber&lt;/em&gt; no &lt;em&gt;Rails&lt;/em&gt;, com isso todos serão capazes de
+escreverem testes.&lt;/p&gt;
+
+&lt;div class=&#39;message&#39;&gt;
+  &lt;ul class=&#39;disc&#39;&gt;
+    &lt;li&gt;Para &lt;strong&gt;configuração do projeto&lt;/strong&gt;: &lt;a target=&#39;_blank&#39; href=&#39;https://github.com/cucumber/cucumber-rails&#39;&gt;Cucumber Rails&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Para &lt;strong&gt;features&lt;/strong&gt;: &lt;a target=&#39;_blank&#39; href=&#39;https://github.com/cucumber/cucumber/wiki&#39;&gt;Cucumber&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Para &lt;strong&gt;steps&lt;/strong&gt;: &lt;a target=&#39;_blank&#39; href=&#39;https://github.com/jnicklas/capybara&#39;&gt;Capybara&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;Para &lt;strong&gt;dados falsos&lt;/strong&gt;: &lt;a target=&#39;_blank&#39; href=&#39;https://github.com/stympy/faker&#39;&gt;Faker&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Configurar CentOS 7 com Rails</title>
