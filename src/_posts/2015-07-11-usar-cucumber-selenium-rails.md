@@ -1,10 +1,10 @@
 ---
 layout: post
-date: 2015-07-01
+date: 2015-07-11
 title: Usar Cucumber e Selenium no Rails 4
 permalink: /rails/:title
 categories: rails
-tags: documentos
+tags: rails cucumber testes
 author: igor_rocha
 desc: 'Usar Cucumber com Selenium no Rails 4'
 keywords: ''
@@ -16,7 +16,7 @@ integração com *Rails 4*.
 <!--more-->
 
 Para isso, utilizarei o **Getting Started** da documentação do *Rails* como base de aplicação para criarmos nossos
-testes (<a target='_black' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a>
+testes (<a target='_blank' href='http://guides.rubyonrails.org/getting_started.html'>clique aqui</a>
 para ver o *Getting Started*).
 
 Adicione o trecho de código abaixo no *Gemfile* do projeto:
@@ -173,7 +173,7 @@ Rode o cucumber e veja seu browser entrar em ação.
 </ul>
 
 Não se assuste se o browser abrir e fechar rápido, isso é reflexo da quantidade de testes que escrevemos, como só
-escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, logo
+escrevemos um cenário, que é visitar uma página e checar se aquela página condiz com a página visitada, então
 nossos testes escritos até aqui serão rápidos. O importante é que o *Selenium* entrou em ação juntamente
 com o *Cucumber*.
 
@@ -249,14 +249,14 @@ end
 Essa parte envolve o teste mais complicado, pois como estamos usando o **Getting Started** do *Rails* e este
 tutorial usa **basic access authentication** para fazer alguns procedimentos, então temos que digitar
 um usuário e senha como forma de login, só que para fazer isso no browser, o *Selenium* não tem domínio. A solução
-que encontrei para isso foi visitar a página de **authentication** com usuário e senha corretos, voltar para página
+que encontrei foi visitar a página de **authentication** com usuário e senha corretos, voltar para página
 de articles e só depois clicar no link.
 
 ### Passo 3
 
 ```ruby
 E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
-  has_content?('New Article')
+  has_content?(arg1)
 end
 ```
 
@@ -314,7 +314,7 @@ Quando(/^clicar no link "(.*?)"$/) do |arg1|
 end
 
 E(/^for redirecionado para página de "(.*?)"$/) do |arg1|
-  has_content?('New Article')
+  has_content?(arg1)
 end
 
 E(/^preencher o formulário$/) do
@@ -341,8 +341,14 @@ Perceba que o cenário para criar um articlo esta escrito. Vale ressaltar que es
 um teste (existem outras formas melhores para isso). Como esse *Post* era apenas para mostra o uso e uma configuração
 e não uma aula de teste, preferi fazer da forma mais simples.
 
-Abaixo vou passar o que é preciso para se trabalhar com o *Cucumber*, com isso todos serão capazes de escreverem testes.
+Abaixo vou listar o que é preciso para se trabalhar com o *Cucumber* no *Rails*, com isso todos serão capazes de
+escreverem testes.
 
-* Para configuração do projeto: <a target='_black' href='https://github.com/cucumber/cucumber-rails'>Cucumber Rails</a>
-* Para trabalhar com *features*: <a target='_black' href='https://github.com/cucumber/cucumber/wiki'>Cucumber</a>
-* Para trabalhar com *steps*: <a target='_black' href='https://github.com/jnicklas/capybara'>Capybara</a>
+<div class='message'>
+  <ul class='disc'>
+    <li>Para <strong>configuração do projeto</strong>: <a target='_blank' href='https://github.com/cucumber/cucumber-rails'>Cucumber Rails</a></li>
+    <li>Para <strong>features</strong>: <a target='_blank' href='https://github.com/cucumber/cucumber/wiki'>Cucumber</a></li>
+    <li>Para <strong>steps</strong>: <a target='_blank' href='https://github.com/jnicklas/capybara'>Capybara</a></li>
+    <li>Para <strong>dados falsos</strong>: <a target='_blank' href='https://github.com/stympy/faker'>Faker</a></li>
+  </ul>
+</div>
