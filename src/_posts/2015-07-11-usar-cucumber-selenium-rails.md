@@ -7,7 +7,7 @@ categories: rails
 tags: rails cucumber testes
 author: igor_rocha
 desc: 'Usar Cucumber com Selenium no Rails 4'
-keywords: ''
+keywords: 'rails, cucumber, rails testes, rails cucumber, rails cucumber browser, rails selenium'
 ---
 
 Neste Post vou mostrar como configurar e usar o **Cucumber** com o **Selenium** para fazer nossos teste de
