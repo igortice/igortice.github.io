@@ -4,7 +4,7 @@
  <title>Blog Igor Rocha</title>
  <link href="igortice.com.br/atom.xml" rel="self"/>
  <link href="igortice.com.br/"/>
- <updated>2015-07-11T08:15:50-03:00</updated>
+ <updated>2015-07-12T15:14:38-03:00</updated>
  <id>igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
@@ -788,14 +788,6 @@ rescue LoadError &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span
       &lt;/ul&gt;
     &lt;/div&gt;
   &lt;/dd&gt;
-  &lt;!--&lt;dd class=&#39;accordion-navigation&#39;&gt;
-    &lt;a href=&#39;#panel&#39;&gt;&lt;/a&gt;
-    &lt;div id=&#39;panel&#39; class=&#39;content&#39;&gt;
-      &lt;ul class=&#39;square&#39;&gt;
-        &lt;li&gt;&lt;kbd&gt;&lt;/kbd&gt;&lt;/li&gt;
-      &lt;/ul&gt;
-    &lt;/div&gt;
-  &lt;/dd&gt;&amp;ndash;&gt;
 &lt;/dl&gt;
 </content>
  </entry>
