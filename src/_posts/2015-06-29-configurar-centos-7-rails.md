@@ -499,12 +499,4 @@ end
       </ul>
     </div>
   </dd>
-  <!--<dd class='accordion-navigation'>
-    <a href='#panel'></a>
-    <div id='panel' class='content'>
-      <ul class='square'>
-        <li><kbd></kbd></li>
-      </ul>
-    </div>
-  </dd>-->
 </dl>
