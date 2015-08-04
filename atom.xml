@@ -4,13 +4,123 @@
  <title>Blog Igor Rocha</title>
  <link href="http://igortice.com.br/atom.xml" rel="self"/>
  <link href="http://igortice.com.br/"/>
- <updated>2015-08-04T10:58:20-03:00</updated>
+ <updated>2015-08-04T11:46:30-03:00</updated>
  <id>http://igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
    <email>igortice@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Gem Informante</title>
+   <link href="http://igortice.com.br/gem-informante"/>
+   <updated>2015-08-04T00:00:00-03:00</updated>
+   <id>http://igortice.com.br/gem-informante</id>
+   <content type="html">&lt;p&gt;É com muito prazer que eu disponibilizo minha primeira gem para comunidade de &lt;em&gt;Ruby on Rails&lt;/em&gt;, &lt;strong&gt;Informante&lt;/strong&gt;. 
+Essa é uma simples gem para aplicações &lt;em&gt;Ruby on Rails&lt;/em&gt; com o papel de centralizar dados de configurações em um 
+único local e que possibilite o acesso a esses dados, facilmente, em qualquer ponto de uma aplicação &lt;em&gt;Ruby on Rails&lt;/em&gt;.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Imagine que você precisa registrar informações da sua aplicação como, por exemplo, nome do sistema, ou um 
+email de acesso, ou nome da equipe de desenvolvimento ou armazenar dados de login com twitter ou facebook. 
+Enfim, se você precisa armazenar dados em único ponto que não seja seu banco de dados para ser utilizado em 
+qualquer ponto de uma aplicação &lt;em&gt;Ruby on Rails&lt;/em&gt;, essa gem cumpre este papel perfeitamente.&lt;/p&gt;
+
+&lt;p&gt;Essa gem encontra-se publicada nos seguintes locais:&lt;/p&gt;
+
+&lt;div class=&#39;message&#39;&gt;
+  &lt;ul class=&#39;disc&#39;&gt;
+    &lt;li&gt;&lt;a href=&#39;https://rubygems.org/gems/informante&#39; target=&#39;_blank&#39;&gt;RubyGems.org&lt;/a&gt; – repositório oficial de gem ruby&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&#39;https://www.ruby-toolbox.com/projects/informante&#39; target=&#39;_blank&#39;&gt;The Ruby Toolbox&lt;/a&gt; – repositório oficial de gem rails&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://github.com/igortice/informante&quot; target=&#39;_blank&#39;&gt;GitHub&lt;/a&gt; – versionamento git online&lt;/li&gt;
+    &lt;li&gt;&lt;a href=&quot;https://travis-ci.org/&quot; target=&#39;_blank&#39;&gt;Travis CI&lt;/a&gt; – integração contínua&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Como essa gem encontra-se publicada no GitHub com documentação em inglês, e como fui em que criei essa gem, 
+vou traduzir aqui, nesse post, para facilitar seu uso pela comunidade Brasileira.&lt;/p&gt;
+
+&lt;h2&gt;Informante &lt;a href=&#39;https://travis-ci.org/igortice/informante&#39;&gt;&lt;img src=&#39;https://travis-ci.org/igortice/informante.png?branch=master&#39; alt=&#39;Build Status&#39;&gt;&lt;/a&gt;&lt;/h2&gt;
+
+&lt;p&gt;Simples Rails Gem para configuração de informações globais.&lt;/p&gt;
+
+&lt;p&gt;Essa gem providencia um simples modo de armazenar informações em um lugar e depois utilizar essas informações 
+em qualquer ponto de uma aplicação Rails.&lt;/p&gt;
+
+&lt;h3&gt;Instalação&lt;/h3&gt;
+
+&lt;p&gt;Adicione o trecho de código abaixo no arquivo Gemfile:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;gem &#39;informante&#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Agora, execute o seguinte comando no terminal na raiz da aplicação:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Finalizando, use o rails generator para prover nosso Informante:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;rails g informante:install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&#39;message&#39;&gt;
+  &lt;p&gt;O comando acima é responsável por gerar dois arquivos na nossa aplicação:&lt;/p&gt;
+  &lt;ul class=&#39;disc&#39;&gt;
+    &lt;li&gt;&lt;strong&gt;informante.yml&lt;/strong&gt; – arquivo com marcação yaml para armazenar informações para nossa aplicação.&lt;/li&gt;
+    &lt;li&gt;&lt;strong&gt;informante.rb&lt;/strong&gt; – arquivo com método global informante para nossa aplicação.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;h3&gt;Uso&lt;/h3&gt;
+
+&lt;p&gt;Por padrão, nosso informant.yml contém a seguinte configuração:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;c1&quot;&gt;# -- basic example for informante.yml --&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#&lt;/span&gt;
+&lt;span class=&quot;ss&quot;&gt;system:
+  &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;          &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Name System&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;         &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Title System&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Description System&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;company&lt;/span&gt;       &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;© Company System&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;business&lt;/span&gt;      &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;Business System&#39;&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;developers&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;name&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;email&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;email&#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;site&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&#39;site&#39;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;Você pode armazenar, nesse arquivo, as informações que desejar, basta seguir o formato padrão para yaml e 
+salvar o arquivo informante.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Em qualquer ponto da nossa aplicação, basta usar o método global informante.&lt;/p&gt;
+
+&lt;p&gt;Veja um exemplo no console do rails:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;informante&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:hash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# informante(:hash) == informante&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;informante&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:object&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;informante&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;informante&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;ss&quot;&gt;:string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Exemplo para responder com objeto:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;informante(:object).system.description
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Exemplo para responder como string:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-&quot; data-lang=&quot;&quot;&gt;informante(:string)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Notas&lt;/h3&gt;
+
+&lt;p&gt;Você pode usar o método informante diretamente em:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;controllers&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;views&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;models&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;helpers&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Importante, toda vez que você modificar o arquivo informante.yml será necessário reiniciar a aplicação Rails.&lt;/p&gt;
+
+&lt;h3&gt;Versão&lt;/h3&gt;
+
+&lt;p&gt;0.0.1&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>Usar Cucumber e Selenium no Rails 4</title>

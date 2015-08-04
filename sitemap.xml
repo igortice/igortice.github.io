@@ -2,10 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://igortice.com.br/</loc>
-    <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+    <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+  
+    <url>
+      <loc>http://igortice.com.br/gem-informante</loc>
+      
+        <lastmod>2015-08-04T00:00:00-03:00</lastmod>
+      
+      
+        <changefreq>monthly</changefreq>
+      
+      
+        <priority>0.5</priority>
+      
+    </url>
   
     <url>
       <loc>http://igortice.com.br/rails/usar-cucumber-selenium-rails</loc>
@@ -76,7 +89,7 @@
   <url>
     <loc>http://igortice.com.br/404.html</loc>
     
-      <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+      <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -89,7 +102,7 @@
   <url>
     <loc>http://igortice.com.br/atom.xml</loc>
     
-      <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+      <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -102,7 +115,7 @@
   <url>
     <loc>http://igortice.com.br/</loc>
     
-      <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+      <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -115,7 +128,7 @@
   <url>
     <loc>http://igortice.com.br/sitemap.xml</loc>
     
-      <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+      <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
@@ -128,7 +141,7 @@
   <url>
     <loc>http://igortice.com.br/sobre/</loc>
     
-      <lastmod>2015-08-04T10:58:20-03:00</lastmod>
+      <lastmod>2015-08-04T11:46:30-03:00</lastmod>
     
     
       <changefreq>monthly</changefreq>
