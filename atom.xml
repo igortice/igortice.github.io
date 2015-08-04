@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Blog Igor Rocha</title>
- <link href="http://igortice.com.br//atom.xml" rel="self"/>
- <link href="http://igortice.com.br//"/>
- <updated>2015-08-04T10:52:44-03:00</updated>
- <id>http://igortice.com.br/</id>
+ <link href="http://igortice.com.br/atom.xml" rel="self"/>
+ <link href="http://igortice.com.br/"/>
+ <updated>2015-08-04T10:58:20-03:00</updated>
+ <id>http://igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
    <email>igortice@gmail.com</email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Usar Cucumber e Selenium no Rails 4</title>
-   <link href="http://igortice.com.br//rails/usar-cucumber-selenium-rails"/>
+   <link href="http://igortice.com.br/rails/usar-cucumber-selenium-rails"/>
    <updated>2015-07-11T00:00:00-03:00</updated>
-   <id>http://igortice.com.br//rails/usar-cucumber-selenium-rails</id>
+   <id>http://igortice.com.br/rails/usar-cucumber-selenium-rails</id>
    <content type="html">&lt;p&gt;Neste Post vou mostrar como configurar e usar o &lt;strong&gt;Cucumber&lt;/strong&gt; com o &lt;strong&gt;Selenium&lt;/strong&gt; para fazer nossos teste de
 integração com &lt;em&gt;Rails 4&lt;/em&gt;.&lt;/p&gt;
 
@@ -296,9 +296,9 @@ escreverem testes.&lt;/p&gt;
  
  <entry>
    <title>Configurar CentOS 7 com Rails</title>
-   <link href="http://igortice.com.br//documentação/configurar-centos-7-rails"/>
+   <link href="http://igortice.com.br/documentação/configurar-centos-7-rails"/>
    <updated>2015-06-29T00:00:00-03:00</updated>
-   <id>http://igortice.com.br//documentação/configurar-centos-7-rails</id>
+   <id>http://igortice.com.br/documentação/configurar-centos-7-rails</id>
    <content type="html">&lt;p&gt;Este Post é uma documentação base para configurar uma máquina &lt;strong&gt;CentOS 7&lt;/strong&gt; com os seguintes recursos:&lt;/p&gt;
 
 &lt;div class=&#39;message&#39;&gt;
@@ -794,9 +794,9 @@ rescue LoadError &lt;span class=&quot;p&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span
  
  <entry>
    <title>Expressão Regular CPF CNPJ</title>
-   <link href="http://igortice.com.br//expressao-regular-cpf-cnpj"/>
+   <link href="http://igortice.com.br/expressao-regular-cpf-cnpj"/>
    <updated>2015-06-23T00:00:00-03:00</updated>
-   <id>http://igortice.com.br//expressao-regular-cpf-cnpj</id>
+   <id>http://igortice.com.br/expressao-regular-cpf-cnpj</id>
    <content type="html">&lt;p&gt;Neste Post vamos ver como criar uma &lt;strong&gt;Expressão Regular&lt;/strong&gt; que possa ser usada para validar tanto um
 &lt;strong&gt;CPF&lt;/strong&gt; como um &lt;strong&gt;CNPJ&lt;/strong&gt; ou os dois a mesmo tempo.&lt;/p&gt;
 
@@ -874,9 +874,9 @@ determinada sequência de caracteres, não servindo para validar se um CPF ou CN
  
  <entry>
    <title>Usando o MySQL Workbench</title>
-   <link href="http://igortice.com.br//mysql-workbench"/>
+   <link href="http://igortice.com.br/mysql-workbench"/>
    <updated>2015-06-17T00:00:00-03:00</updated>
-   <id>http://igortice.com.br//mysql-workbench</id>
+   <id>http://igortice.com.br/mysql-workbench</id>
    <content type="html">&lt;p&gt;Nesse Post vamos ver como usar o &lt;em&gt;MySql Workbench&lt;/em&gt;. Vamos entender para que ele serve e como utilizá-lo para gerenciar
 nossos projetos com Banco de Dados MySql.&lt;/p&gt;
 
@@ -1191,9 +1191,9 @@ trabalha com essa ferramenta, passe a usá-lo, pois sua produtividade vai aument
  
  <entry>
    <title>Configurar Jekyll e AngularJS</title>
-   <link href="http://igortice.com.br//angular/configurar-jekyll-angular"/>
+   <link href="http://igortice.com.br/angular/configurar-jekyll-angular"/>
    <updated>2015-06-04T00:00:00-03:00</updated>
-   <id>http://igortice.com.br//angular/configurar-jekyll-angular</id>
+   <id>http://igortice.com.br/angular/configurar-jekyll-angular</id>
    <content type="html">&lt;p&gt;Neste Post vamos aprender como configurar o &lt;strong&gt;AngularJS&lt;/strong&gt; para que ele funcione de forma correta com o &lt;strong&gt;Jekyll&lt;/strong&gt;.&lt;/p&gt;
 
 &lt;!--more--&gt;
