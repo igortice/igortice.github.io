@@ -4,7 +4,7 @@
  <title>Blog Igor Rocha</title>
  <link href="http://igortice.com.br/atom.xml" rel="self"/>
  <link href="http://igortice.com.br/"/>
- <updated>2015-10-12T12:16:00-03:00</updated>
+ <updated>2015-10-12T12:21:04-03:00</updated>
  <id>http://igortice.com.br</id>
  <author>
    <name>Igor Rocha</name>
@@ -23,7 +23,7 @@ Essa é uma simples gem para aplicações &lt;em&gt;Ruby on Rails&lt;/em&gt; com
 
 &lt;!--more--&gt;
 
-&lt;p&gt;Imagine que você precisa registrar informações da sua aplicação como, por exemplo, nome do sistema, ou um 
+&lt;p&gt;Imagine que você necessite registrar informações da sua aplicação como, por exemplo, nome do sistema, ou um 
 email de acesso, ou nome da equipe de desenvolvimento ou armazenar dados de login com twitter ou facebook. 
 Enfim, se você precisa armazenar dados em único ponto que não seja seu banco de dados para ser utilizado em 
 qualquer ponto de uma aplicação &lt;em&gt;Ruby on Rails&lt;/em&gt;, essa gem cumpre este papel perfeitamente.&lt;/p&gt;
