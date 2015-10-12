@@ -16,7 +16,7 @@ Essa é uma simples gem para aplicações *Ruby on Rails* com o papel de central
 
 <!--more-->
 
-Imagine que você precisa registrar informações da sua aplicação como, por exemplo, nome do sistema, ou um 
+Imagine que você necessite registrar informações da sua aplicação como, por exemplo, nome do sistema, ou um 
 email de acesso, ou nome da equipe de desenvolvimento ou armazenar dados de login com twitter ou facebook. 
 Enfim, se você precisa armazenar dados em único ponto que não seja seu banco de dados para ser utilizado em 
 qualquer ponto de uma aplicação *Ruby on Rails*, essa gem cumpre este papel perfeitamente.
