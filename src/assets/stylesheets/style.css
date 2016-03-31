@@ -125,7 +125,7 @@ code, pre {
   font-family: Menlo, Monaco, "Courier New", monospace; }
 
 code {
-  padding: 0.25em 0.5em;
+  padding: .25em .5em;
   font-size: 85%;
   color: #bf616a;
   background-color: #f9f9f9;
@@ -158,7 +158,7 @@ pre {
 
 /* Quotes */
 blockquote {
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
   margin: .8rem 0;
   color: #7a7a7a;
   border-left: .25rem solid #e5e5e5; }
@@ -183,7 +183,7 @@ table {
   border-collapse: collapse; }
 
 td, th {
-  padding: 0.25rem 0.5rem;
+  padding: .25rem .5rem;
   border: 1px solid #e5e5e5; }
 
 tbody tr:nth-child(odd) td, tbody tr:nth-child(odd) th {
@@ -624,8 +624,8 @@ h1, h2, h3, h4, h5, h6 {
   /* 15px */
   color: rgba(255, 255, 255, 0.6);
   background-color: #202020;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out; }
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out; }
   .sidebar a {
     font-weight: normal;
     color: #fff; }
@@ -647,7 +647,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .sidebar-nav-item {
   display: block;
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1); }
   .sidebar-nav-item.active {
     text-decoration: none;
@@ -677,7 +677,7 @@ a.sidebar-nav-item:hover, a.sidebar-nav-item:focus {
   left: 1rem;
   display: block;
   width: 2.2rem;
-  padding: 0.5rem 0.65rem;
+  padding: .5rem .65rem;
   color: #505050;
   background-color: #fff;
   border-radius: 4px;
@@ -726,15 +726,14 @@ a.sidebar-nav-item:hover, a.sidebar-nav-item:focus {
   backface-visibility: hidden; }
 
 .wrap, .sidebar-toggle {
-  -webkit-transition: -webkit-transform 0.3s ease-in-out;
-  transition: transform 0.3s ease-in-out; }
+  -webkit-transition: -webkit-transform .3s ease-in-out;
+  transition: transform .3s ease-in-out; }
 
 #sidebar-checkbox:checked + .sidebar {
   visibility: visible; }
 
 #sidebar-checkbox:checked ~ .sidebar, #sidebar-checkbox:checked ~ .wrap, #sidebar-checkbox:checked ~ .sidebar-toggle {
   -webkit-transform: translateX(14rem);
-  -ms-transform: translateX(14rem);
   transform: translateX(14rem); }
 
 /*
@@ -844,7 +843,6 @@ a.pagination-item:hover {
 
 .layout-reverse #sidebar-checkbox:checked ~ .sidebar, .layout-reverse #sidebar-checkbox:checked ~ .wrap, .layout-reverse #sidebar-checkbox:checked ~ .sidebar-toggle {
   -webkit-transform: translateX(-14rem);
-  -ms-transform: translateX(-14rem);
   transform: translateX(-14rem); }
 
 /*
